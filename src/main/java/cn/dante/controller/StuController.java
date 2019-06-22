@@ -20,7 +20,7 @@ public class StuController {
 
     @RequestMapping("/list")
     public List<Stu> list(){
-        int i = 1 / 0;
+//        int i = 1 / 0;
         return stuService.getList();
     }
 
