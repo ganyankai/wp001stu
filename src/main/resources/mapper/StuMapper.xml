@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.dante.mapper.StuMapper">
+    <resultMap id="stu" type="cn.dante.entity.Stu">
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="province" property="province"/>-->
+        <!--<result column="city" property="city"/>-->
+        <!--<result column="country" property="country"/>-->
+        <!--<result column="create_date" property="createDate"/>-->
+    </resultMap>
+
+    <select id="list" resultMap="stu">
+        select * from stu
+    </select>
+
+    <!--<update id="update">-->
+        <!--update hot_place-->
+        <!--<set>-->
+            <!--<if test="province != null and province !=''">-->
+               <!--province=#{province},-->
+            <!--</if>-->
+            <!--<if test="city != null and city !=''">-->
+                <!--city=#{city},-->
+            <!--</if>-->
+            <!--<if test="country != null and country !=''">-->
+               <!--country=#{country}-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where id = #{id}-->
+    <!--</update>-->
+
+
+    <!--<select id="get" resultMap="hotPlace" parameterType="int">-->
+        <!--select-->
+        <!--<include refid="columns"/>-->
+        <!--from hot_place-->
+        <!--where id =#{id}-->
+    <!--</select>-->
+
+    <!--<delete id="delete" parameterType="int">-->
+        <!--delete from hot_place-->
+        <!--where id = #{id}-->
+    <!--</delete>-->
+
+</mapper>
