@@ -3,7 +3,15 @@ server:
     uri-encoding: UTF-8
   port: 8091
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
 spring:
+  application:
+      name: service-book
+
   jpa:
     database: MYSQL
     database-platform: org.hibernate.dialect.MySQL5Dialect

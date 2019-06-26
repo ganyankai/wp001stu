@@ -1,4 +1,4 @@
-package cn.jpush.api.examples;
+package main.java.cn.jpush.api.examples;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +9,16 @@ import cn.jpush.api.JPushClient;
 public class ClientExample {
 	protected static final Logger LOG = LoggerFactory.getLogger(ClientExample.class);
 
-	private static final String appKey = "dd1066407b044738b6479275";
-	private static final String masterSecret = "e8cc9a76d5b7a580859bcfa7";
+//	private static final String appKey = "dd1066407b044738b6479275";
+
+	private static final String appKey = "e036a343b918462d2aec1873";
+
+//	private static final String masterSecret = "e8cc9a76d5b7a580859bcfa7";
+
+	private static final String masterSecret = "57c37bb533af0fc1808d3c8c";
 
 	public static void main(String[] args) {
-//		testDefaultClient();
+		testDefaultClient();
 //		testCustomClient();
 //		testCustomPushClient();
 	}
