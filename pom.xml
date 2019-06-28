@@ -8,6 +8,7 @@
         <module>wp005eureka-server</module>
         <module>wp006eureka-client</module>
         <module>wp007service-ribbon</module>
+        <module>wp008-num-single</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
