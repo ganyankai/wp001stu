@@ -4,6 +4,24 @@ import org.springframework.util.DigestUtils;
 import sun.security.provider.MD5;
 
 public class Html5 {
+    // my-500688375
+    @Test
+    public void test6(){
+        //ok
+        //        https://mta.qq.com/h5/api/ctr_page_land
+        String secret = "9e1b175737865611c99e06452783086f";
+        Integer app_id = 500688375;
+        //        String sign= secret+"app_id=500688375idx=pv";
+        //        String sign= secret+"app_id=500688196page=1";
+//        String sign= secret+"app_id=500688196&urls=127.0.0.1:8020/test/yemian1.html&start_date=2019-6-26&end_date=2019-6-27";
+        String sign= secret+"app_id=500688375end_date=2019-6-27start_date=2019-6-26urls=/c:/users/lenovo/desktop/h5test-my.html";
+
+        String signSecret = DigestUtils.md5DigestAsHex(sign.getBytes());
+        System.out.println(signSecret);
+
+
+    }
+
     //入口页面8408
 //    var real_url = 'https://mta.qq.com/h5/api/ctr_page_land?app_id=500688408&urls=http://127.0.0.1:8020/test/yemian1.html&start_date=2019-6-26&end_date=2019-6-27';
     @Test

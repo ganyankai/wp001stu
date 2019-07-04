@@ -8,7 +8,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Show {
 
@@ -18,9 +20,14 @@ public class Show {
 //        print(arr);
 //        System.out.println(Arrays.toString(arr));
 //        dataCollect();
-        new Show().dataCollect(arr);
+//        new Show().dataCollect(arr);
 //        print(arr);
-        new Show().printLine(arr,8);
+//        new Show().printLine(arr,8);
+//        new Show().printPlace(arr,5);
+
+        new Show().dataCollect(arr);
+//        new Show().remainNumLine(arr,0);
+        new Show().remainNumCol(arr,8);
     }
 
     public static void print(int arr[][]){
@@ -95,21 +102,22 @@ public class Show {
 
     }
 
-    @Test
-//    public void printPlace(int arr[][],int place) throws Exception {
-    public void printPlace() throws Exception {
-        int[][] arr = new int[9][9];
+//    @Test
+    public void printPlace(int arr[][],int place) throws Exception {
+//    public void printPlace() throws Exception {
+//        int[][] arr = new int[9][9];
 //        print(arr);
 //        System.out.println(Arrays.toString(arr));
 //        dataCollect();
-        new Show().dataCollect(arr);
+//        new Show().dataCollect(arr);
 //        int col = 0;
 
-        int place = 1; //0-2 line; 0-2 col
+//        int place = 1; //0-2 line; 0-2 col
 
-        int lineStart = place/3;
+        int lineStart = (place-1)/3*3;
         int lineEnd = lineStart+3;
-        int colStart = (place%3)*2 -1 ;
+
+        int colStart = ((place-1)%3)*3;
         int colEnd = colStart + 3;
 
         for (int i=lineStart;i<lineEnd;i++){
@@ -125,5 +133,54 @@ public class Show {
     public void test() throws Exception {
         System.out.println(1/3);
     }
+
+    //计算每一行的剩余数字 todo
+//    @Test
+    public List<Integer> remainNumLine(int arr[][],int line){
+//        生成一个list
+        List<Integer> listOri =  Arrays.asList(1,2,3,4,5,6,7,8,9);
+
+        List<Integer> list =  new ArrayList<>();
+        list.addAll(listOri);
+        for (int j=0;j<arr[line].length;j++){
+            if(list.contains(arr[line][j])){
+                list.remove(list.indexOf(arr[line][j]));
+            }
+        }
+
+        System.out.println(list);
+        return list;
+    }
+
+    public List<Integer> remainNumCol(int arr[][],int col){
+//        生成一个list
+        List<Integer> listOri =  Arrays.asList(1,2,3,4,5,6,7,8,9);
+
+        List<Integer> list =  new ArrayList<>();
+        list.addAll(listOri);
+        for (int i=0;i<arr.length;i++){
+            if(list.contains(arr[i][col])){
+                list.remove(list.indexOf(arr[i][col]));
+            }
+        }
+
+        System.out.println(list);
+        return list;
+    }
+
+
+    @Test
+    public void testList(){
+        List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        List<Integer> list = new ArrayList<>();
+        list.addAll(list1);
+        list.remove(9);
+        list.add(12);
+        System.out.println(list);
+        list.add(10);
+//        list.remove(1);
+        System.out.println(list);
+    }
+
 
 }
