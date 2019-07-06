@@ -38,7 +38,7 @@ public class PushExample {
     protected static final String MASTER_SECRET = "860803cf613ed54aa3b941a8";
     protected static final String GROUP_PUSH_KEY = "2c88a01e073a0fe4fc7b167c";
     protected static final String GROUP_MASTER_SECRET = "b11314807507e2bcfdeebe2e";
-	
+
 	public static final String TITLE = "Test from API example";
     public static final String ALERT = "Test from API Example - alert";
     public static final String MSG_CONTENT = "Test from API Example - msgContent";
@@ -77,7 +77,7 @@ public class PushExample {
             e.printStackTrace();
         }
     }
-
+    
 	public static void testSendPush() {
 		ClientConfig clientConfig = ClientConfig.getInstance();
         final JPushClient jpushClient = new JPushClient(MASTER_SECRET, APP_KEY, null, clientConfig);

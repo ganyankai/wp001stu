@@ -27,7 +27,9 @@ public class Show {
 
         new Show().dataCollect(arr);
 //        new Show().remainNumLine(arr,0);
-        new Show().remainNumCol(arr,8);
+//        new Show().remainNumCol(arr,8);
+        new Show().remainNumPlace(arr,9);
+
     }
 
     public static void print(int arr[][]){
@@ -134,6 +136,34 @@ public class Show {
         System.out.println(1/3);
     }
 
+    //计算每一宫的剩余数字 todo
+//    @Test
+    public List<Integer> remainNumPlace(int arr[][],int place){
+//        生成一个list
+        List<Integer> listOri =  Arrays.asList(1,2,3,4,5,6,7,8,9);
+
+        List<Integer> list =  new ArrayList<>();
+        list.addAll(listOri);
+
+        int lineStart = (place-1)/3*3;
+        int lineEnd = lineStart+3;
+
+        int colStart = ((place-1)%3)*3;
+        int colEnd = colStart + 3;
+        for (int i=lineStart;i<lineEnd;i++){
+//            System.out.println();
+            for (int j = colStart;j<colEnd;j++){
+                if(list.contains(arr[i][j])) {
+                    list.remove(list.indexOf(arr[i][j]));
+                }
+            }
+        }
+
+        System.out.println(list);
+        return list;
+    }
+
+
     //计算每一行的剩余数字 todo
 //    @Test
     public List<Integer> remainNumLine(int arr[][],int line){
@@ -165,6 +195,20 @@ public class Show {
         }
 
         System.out.println(list);
+        return list;
+    }
+
+    //计算每一单元格可能的数字
+    public List<Integer> remainNumCell(int arr[][],int row,int col) {
+//        生成一个list
+        List<Integer> listOri = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        List<Integer> list = new ArrayList<>();
+        list.addAll(listOri);
+
+        List<Integer> remainLineList = remainNumLine(arr, row);
+        List<Integer> remainColList = remainNumCol(arr, col);
+        int place = (row+1)/3 * ((col+1)/3);
+
         return list;
     }
 
