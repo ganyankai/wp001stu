@@ -1,4 +1,4 @@
-package cn.jpush.api.examples;
+package main.java.cn.jpush.api.examples;
 
 import java.util.HashSet;
 import java.util.Map;

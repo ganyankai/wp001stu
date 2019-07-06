@@ -1,4 +1,4 @@
-package cn.jpush.api.examples;
+package main.java.cn.jpush.api.examples;
 
 import cn.jpush.api.report.MessageStatus;
 import cn.jpush.api.report.model.CheckMessagePayload;

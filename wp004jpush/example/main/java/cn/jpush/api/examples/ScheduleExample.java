@@ -1,4 +1,4 @@
-package cn.jpush.api.examples;
+package main.java.cn.jpush.api.examples;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
