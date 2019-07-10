@@ -21,12 +21,16 @@ import java.util.List;
 //@MapperScan({"cn.dante"})		//这个注解竟然会报错
 public class Wp003bookApplicationTests {
 
-
 	//	@Autowired
 	//	private StuMapper stuMapper;
 	//	@Autowired
 	//	private LoadBalancerClient loadBalancerClient;
 	//客户端通过 LoadBalancerClient 来获取应用名
+	//获得所有父爷节点的数量
+
+
+
+
 	@Test
 	//	MapperFactoryBean
 	public void test4() {
