@@ -33,7 +33,8 @@ public class RecursionTestMapperTest {
                 System.out.println(map.get("id")+":"+map.get("count"));
 //                recursionTestMapper.getSonIdandCount((Integer) map.get("id"));
 //                count = getAllSonCount((Integer)map.get("id"));
-                //巧妙利用返回值来保存变量
+                //巧妙利用返回值来保存变量,递归的关键在于搞清楚主要方法的参数和返回值,可以先把主要方法结构
+                //补充完整
                 count += getAllSonCount((Integer)map.get("id"));
             }
 //            return count;
