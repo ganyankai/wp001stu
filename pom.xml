@@ -10,6 +10,7 @@
         <module>wp007service-ribbon</module>
         <module>wp008-num-single</module>
         <module>wp009-design-pattern</module>
+        <module>wp010-procedure</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
