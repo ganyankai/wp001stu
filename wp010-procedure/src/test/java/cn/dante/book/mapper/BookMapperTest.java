@@ -26,4 +26,6 @@ public class BookMapperTest {
         PageData<Book> pageData = new PageData<>(page.getPageSize(), page.getPageNum(), page.getTotal(), list);
         System.out.println(pageData);
     }
+
+
 }

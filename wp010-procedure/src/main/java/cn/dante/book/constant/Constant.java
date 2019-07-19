@@ -1,0 +1,54 @@
+package cn.dante.book.constant;
+
+public interface Constant {
+    String TOKEN_PREFIX = "token_";
+    long TOKEN_EXPIRE = 2592000L;
+    String CREDENTIAL_PREFIX = "credential_";
+    long CREDENTIAL_EXPIRE = 1800L;
+    String NICHEN_PROFIX = "qz_";
+    Long ACCESSTOKEN_EXPIRE = 5400L;
+    String VERFI_CODE_PREFIX = "verfiCode_";
+    Long VERFI_CODE_EXPIRE = 300L;
+    String FILE_SEPARATOR = "/";
+    String ALGORITHM_NAME = "md5";
+    int HASH_ITERATIONS = 2;
+    String SALT = "gjakg;jdfdasjk%^$32";
+    String picture = ".bmp,.jpg,.png,.tiff,.gif,.pcx,.tga,.exif,.fpx,.svg,.psd,.cdr,.pcd,.dxf,.ufo,.eps,.ai,.raw";
+    String video = ".avi,.wmv,.mpeg,.mp4,.mov,.mkv,.flv,.f4v,.m4v,.rmvb,.rm";
+    String text = ".txt";
+    String PIRCTURE_DIR = "/img/";
+    String VIDEO_DIR = "/video/";
+    String TEXT_DIR = "/txt/";
+    String OTHER_DIR = "/other/";
+    int WIDTH = 320;
+    int HEIGHT = 240;
+    Integer PERMISSION_PARENT_ID = 0;
+    String FTP_ROOT_DIR = "/home/admin/";
+    String OPEN_PERMISSION_METHOD = "upload,uploadByOss,tx/sendVerifCodeByAliyun,uploadByOssAndCompress,aliPayCallback,wxPayCallback,paymentByH5,sureByH5,getOpenId,/home/freePage,/home/hotPage,/home/recommendPage,/home/sharePage,/customer/get,/customer/freeExperience,/customer/activeVip,view,viewThumb,/customer/codeLogin,download,/admin/login,/customer/login,/customer/register,logout,projectApp/search,/customer/forgetCheckTel,bannerApp/advertisingPage,articleApp/hotPage,projectApp/hotPage,dict/getListValue,getHotKey,getKeyValue,articleApp/page,getProjectKeyValue,projectApp/page,/home/shareRecommendPage,AppPayNotifybannerPictureApp/invitingPage,/customer/checkPhone,/customer/checkCode,/customer/forget,/customer/forgetCheckCode,bannerPictureApp/customAccount,bannerPicture/page,article/page,productApp/page,/home/bannerPicturePage,productApp/get,cooperateApp/page,cooperateApp/get,/ys/notify/app/pay";
+    String OPEN_PERMISSION_URL = "/customer/regist";
+    String INIT_PASS = "123456";
+    String DATE_PATTEN = "yyyy-MM-dd HH:mm:ss";
+    String DICT_CATEGORY_REIDS = "dict_category_reids_key";
+    String DICT_VALUE_REIDS = "dict_value_reids_key";
+    Integer ROLE_CREATE_BY = 0;
+    String ADMIN_PERMISSION = "invest_admin_permission";
+    String USER_AGENT_PERMISSION = "user_agent_permission";
+    String USER_SHOP_PERMISSION = "user_shop_permission";
+    String ALIBAI_ACCOUNT = "alibai_";
+    String FILE_URL_PREFIX = "http://119.23.172.36:8089";
+    String MONEY_UNIT = "人民币";
+    String PUBLIC_KEY = "13a3ab24f0a62d9b988bd778d12ef35a";
+    String ISS_URL = "https://www.kangaroobabycar.com";
+    String PAY_BODY = "起知";
+    String PAY_SUBJECT = "起知支付";
+    String PAY_TRANSFERS_DESC = "qizhi";
+    String FFMPEG = "/usr/bin/ffmpeg";
+    String BANNER_STATUS = "banner_status";
+    String BANNER_UP = "banner_up";
+    String BANNER_DOWN = "banner_down";
+    String BANNER_LINK = "banner_link";
+    String EXTERNAL_LINK = "external_link";
+    String INTERNAL_LINK = "internal_link";
+    String SERIES_LINK = "series_link";
+}
+
