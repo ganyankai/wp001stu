@@ -12,6 +12,14 @@ import java.util.Date;
 
 public class AllTest {
     @Test
+    public void test3() throws Exception{
+        String str = "\\u6cb9\\u5c0f\\u4e8c\\u540e\\u53f0\\u7ba1\\u7406\\u7cfb\\u7edf";
+//        String str2 = new String(str.getBytes("utf-8"));
+
+//        System.out.println(str2);
+    }
+
+    @Test
     public void test2(){
 //        Jwts.parser();
         String jwttoken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNyIsInJvbGVzIjoiY3VzdG9tZXIiLCJpYXQiOjE1NjM4NjkxMDR9.VcJCud8LbN-YWTywcWBPkAs7zs1f2Jnx1Ben8JWI5-E";
