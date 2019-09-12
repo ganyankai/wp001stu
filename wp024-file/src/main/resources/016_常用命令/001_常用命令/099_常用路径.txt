@@ -1,0 +1,10 @@
+常用路径
+hdfs查看:http://mymini2:50070/
+	 http://mymini1:50070/	
+	
+spark: http://mymini2:8080/
+echarts自定义图表：http://tushuo.baidu.com/wave/index
+常用网址：
+jetbrains:https://www.jetbrains.com/
+spark:http://spark.apache.org/
+

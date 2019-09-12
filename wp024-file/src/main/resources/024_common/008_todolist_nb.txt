@@ -1,0 +1,744 @@
+2019年8月26日
+
+
+<div id="094" class="">
+	094 积分规则代码阅读与迁移
+	
+</div>
+
+<div id="093" class="">
+	093 增删改查练习
+
+</div>
+
+<div id="092" class="">
+	092 开始自己的商业项目	A
+		
+</div>
+
+<div id="091" class="">
+	091 将文件以项目的方式备份 B continued 
+		
+</div>
+
+2019年8月15日
+<div id="090" class="">
+	090 
+		05  代码执行时间过长处理	B	
+		04	数据库表重复记录删除	B
+		03  订单一段时间以后自动取消	B
+		02	自己发布一个服务	B
+		01	自己写代码调用服务,带上请求参数  B
+</div>
+
+2019年7月31日
+<div id="089" class="">
+	05  
+		
+	04  以面商城的销售为宗旨开展项目 B
+			
+	03  oilStation	B
+
+	02	前端研究	B
+		
+	01	Cloud Toolkit	研究	B
+	
+</div>
+
+2019年7月26日
+<div id="088" class="">
+	10 如何实现放完http跳转到https
+		
+	09 es 
+		
+	08 临时表与缓存 B
+
+	07 性能测试	B	
+		
+	06 根据数独的行与列判断数字在哪一宫的算法该如何细分 B 
+		把这个算法写活确实困难
+		
+	05 锁机制 B	
+		
+	04 任务调度研究 A o 
+			
+	03 压力测试,数据库瓶颈测试 B
+		
+	02 数据分析与实际应用 B
+		
+	01 数字化,自动化落地方案研究 B
+		
+</div>
+	
+2019年7月23日
+<div id="87" class="">
+
+	10 推荐算法,匹配算法 B
+		
+	09 大数据技能是否成熟 B
+		
+	08 如何来学习安卓 B
+		任何技能都是这样,如何快速的入门,一步步把它搞会
+			https://www.runoob.com/android/android-overview.html
+
+	07 微信code与验证码如何模拟 C
+			
+
+	06 自己的产品要赶紧出雏形 A
+ 		
+
+	05 源码阅读与校验 B
+			
+	04 缓存研究  B
+		
+	03 替换maven默认jar包研究 C
+		
+	02 字符串为空默认取值研究 B
+		
+	01 虚拟机研究(安全配置重点) B
+		
+</div>
+	
+	
+2019年7月15日
+<div id="086" class="">
+	086  
+		05 vue.js 
+			
+		04 微信文档研究 o
+			
+		03 token机制研究与测试 o  50%
+					
+		02 加密与解密研究  
+			
+		01 思考微信接口的调用频	率限制是怎么做的
+			接口名	频率限制
+			通过code换取access_token	5万/分钟
+			获取用户基本信息	5万/分钟
+			刷新access_token	10万/分钟
+</div>
+	
+2019年7月13日
+
+<div id="085" class="">
+	085
+		01	代理模式研究	B
+		02	注解研究		C
+		03	https研究		B
+			http://www.jiguang.cn/
+		04	跨域问题研究	B
+			
+</div>
+
+2019年7月8日
+<div id="084" class="">
+	084 
+		消息模块处理
+		01 根据消息类型将用户对应消息全部已读
+			update sys_message set mark_read = 1,read_date =now()  where reveicer_id =4 and message_type='message_type_indent'
+			
+		02 消息模块查询key值换中文	--need test
+			
+		03 增加消息子标题	title	
+				
+		04 目前的团购秒杀消息都改为订单消息 
+			
+		
+</div>
+	
+<div id="083" class="">
+	083
+		无线递归练习	
+	
+</div>
+
+
+<div id="082" class="">
+	082
+	一下这种方式如何通过注解形式整合到项目中呢
+
+	// 此处配置数据源 省略。。。<br>      
+    <!-- 将数据源映射到sqlSessionFactory中 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+ 
+    <!-- SqlSession模板类实例 -->
+    <bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+</div>
+
+2019年6月26日
+
+<div id="081" class="">
+	081 第一个android程序  B
+</div>
+
+<div id="080" class="">
+	080 客户数据可视化展示 B
+	
+</div>
+
+<div id="079" class="">
+	079 重点用户数据库设计	B
+	
+</div>
+
+<div id="078" class="">
+	078 用户画像研究	B
+	
+</div>
+
+<div id="077" class="">
+	077 常用算法研究	B
+	
+</div>
+
+2019年6月24日
+<div id="076" class="">
+	076 车长功能维护 A o
+	
+</div>
+
+<div id="075" class="">
+	075 竞价消息添加 B 
+	
+</div>
+
+<div id="074" class="">
+	074 统计 a
+	统计所有未读消息
+	统计每个分类下的未读消息
+	批量已读	
+</div>
+ 
+
+2019年6月22日
+<div id="073" class="">
+	073 git代码库研究
+		
+
+</div>
+
+2019年6月19日
+<div id="072" class="">
+	072
+	有些报错竟然更新一下maven依赖就解决了,版本管理也很重要
+	引用一个fegin的jar包竟然会导致这种错误
+		<dependency>
+			<groupId>org.springframework.cloud</groupId >
+			<artifactId>spring-cloud-starter-feign</artifactId>
+			<version>1.4.4.RELEASE</version>
+		</dependency>
+	
+	java.lang.NoSuchMethodError: org.springframework.boot.builder.SpringApplicationBuilder.<init>([Ljava/lang/Object;)V
+
+</div>
+
+<div id="071" class="">
+	071 
+	jar包生成的.class文件竟然搜索不到	
+
+</div>
+
+<div id="070" class="">
+	070
+	消息模块研究 B
+</div>
+
+<div id="069" class="">
+	069
+	任务调度研究 B
+</div>
+
+<div id="068" class="">
+	068
+	状态流程梳理 B 
+</div>
+
+<div id="066" class="">
+	066
+	画出流程图  A	
+</div>
+
+2019年6月15日
+<div id="065" class="">
+	065	
+	你用软件为你做过哪些有用的事情 A
+</div>
+
+<div id="064" class="">
+	064
+	添加时集合元素参数校验	C
+</div>
+
+<div id="063" class="">
+	063 代码生成工具研究
+	GeneratorProperties 为什么会有空指针异常呢	C
+</div>
+	
+<div id="062" class="">
+	062
+	如何款速实现一个单表的可视化增删改查呢?	B
+	
+</div>
+
+<div id="061" class="">
+	061 mybatis 自拼接sql开发	B
+				传入sql开发		B
+	
+</div>
+
+<div id="060" class="">
+	060 虚拟机环境搭建与移植测试  B
+	
+</div>
+	
+
+<div id="059" class="">
+	059 
+	工作常用代码收集	A	continued
+	
+</div>
+
+<div id="058" class="">
+	058
+	可移植es索引库搭建	B	
+	
+</div>
+	
+
+<div id="057" class="">
+	057
+	分页问题研究	B		o
+	
+</div>
+
+2019年6月4日
+057 
+	
+056 查询时如何去除重复数据(如果过滤name,age都相同的数据)
+	08 //该查询结果可能会与原表查询结果错位
+	SELECT min(id) mid,`name`,age,min(sex) FROM stu GROUP BY `name`,age order by mid
+	
+	07
+	//可以,但是查不到id
+	SELECT min(id),`name`,age FROM stu GROUP BY `name`,age order by mid
+	
+	06
+	//yes 然并卵
+	SELECT `name`,age FROM stu where name in 
+	(select DISTINCT(name) from stu )
+	
+	05
+	//可以,但是查不到id
+	SELECT `name`,age FROM stu GROUP BY `name`,age
+	
+	04
+	//no
+	select DISTINCT(name,age) as na from stu
+	
+	03
+	select count(distinct(be_focuser_id)) from my_focus_person where focuser_id = 12 and focus_type = 'focus_cargo'
+	
+	02
+	//no
+	select count(focuser_id,be_focuser_id) from my_focus_person where focuser_id = 12 and focus_type = 'focus_cargo'
+	
+	01 
+	select count(*) from my_focus_person where focuser_id = 12 and focus_type = focus_cargo 
+
+055 车主,货主,管理员认证账号的搜集与备份
+		车主		
+		czdt 
+		A123456.
+		13811112222 
+		person
+	cid	12
+ cus_id	15
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxNSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzgxMTExMjIyMiIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NjA3NTM2MjN9._nX1eMpkOur_dJEpgFuy9uElGL8724Od5cZeOH2F2ww"
+		
+		货主
+		hzxm
+		A123456.
+		13811113333
+		person
+	cid	14
+ cus_id	17
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxNyIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzgxMTExMzMzMyIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU2MDgyNjY3OH0.Gtwc0OtSxotuvx1oKCcxw3exxF_jFPIWAi10ko9Thr8"
+ 
+054	查询运单项对应的车辆 车牌 司机 压货人
+		别名好像可以帮助mybatis快捷映射
+		ok
+		select wbd.id,c.car_no as carNo,cp.name as driverName,cp.id_card as driverIdCard,
+		cp2.name as supercargoName,cp2.id_card as supercargoIdCard 
+		from waybill wb,waybill_detail wbd,car c,car_person cp ,car_person cp2
+
+		where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+		
+		and  wbd.driver_id = cp.id
+
+		and  wbd.supercargo_id = cp2.id
+
+		and  wb.car_ownner_id = 15
+		
+		
+
+053 快速搜索研究 B	80	
+	@PostMapping("/carOwnerPage")
+	
+052 统计：定位中心的数量（问题1中车辆的数量），推荐货源的数量，关注货主的数量，关注车主的数量，熟车的数量 A	o
+	
+052 获取车主或货主名下的运单项的车辆信息（运输中的运单）A	o
+	
+051 文件上传研究 B 
+		
+050 研究更优雅的数据库交互方式 B
+	
+049 本地redis环境搭建 B o
+	
+048 
+	//大于号后面都是获取times十五分钟后的时间
+	//ok
+	select	* from cargo where now() >= SUBDATE(create_date,interval - 1 day)
+047 消息推送代码调整
+	
+046 抢标方式超时时间sql研究	B
+	如果货源方式为抢标,且当前时间 - 创建时间 < 1天 不返回相应记录结果	now() <= date_add(create_date,interval + 1 day)		
+	否则返回货源信息
+	
+	//分离测试解决时间异常的bug
+	select * from cargo where tender_way = 'bid_mark' and   now() <= date_add(create_date,interval + 1 day)	
+	
+	//ok
+	select * from cargo where tender_way != 'bid_mark' or   now() > date_add(create_date,interval + 1 day)	
+	
+	//ok  use
+	select * from cargo where logo = 'logo' and pay_type = 'wechat' and (tender_way != 'bid_mark' or  now() > date_add(create_date,interval + 1 day))	
+	
+
+045	审核发送消息
+		throw new BusinessException(112, "车主不能为空");
+
+	01 
+		车主，货主，司机审核需推送系统消息	
+		
+		车主 /admin/carCargoOwner/approveCarOwner	ok
+					sys_message		SysMessage	
+					entity		res
+		货主 /admin/carCargoOwner/approveCargoOwner	 ok
+		
+
+		司机 /admin/carPerson/driverApprove		ok
+		
+044 消息表增加约束 A
+	
+043 货源,运单代码熟悉 A  
+	
+042 token机制研究	B
+	
+
+041 推荐货源分页	B	o
+	
+040 推荐货源接口	B   o
+	select * from cargo c,cargo_send_record csr WHERE c.id = csr.cargo_id and csr.car_ownner_id = 166
+	
+	select * from cargo,cargo_send_record  
+		
+039 随机取5条数据  o
+	SELECT * FROM sys_article ORDER BY RAND() LIMIT 5;
+	
+	SELECT id FROM car_cargo_ownner cco where type = "car_owner" ORDER BY RAND() LIMIT 5;
+	
+038 后台资讯接口测试	B  o
+	
+037 分布式项目研究与落地	B
+	
+036 推荐算法研究	B
+	
+
+035 货源审核通过后
+	根据审核同意
+	货源类型为抢标	
+	随机选几个车主推送消息	
+	存入推送记录表	cargo_send_record
+	
+	
+034 车源问题修改
+	
+	车源按照起止地,车辆类型模糊搜索,车辆载重,创建日期排序,
+	
+	按照剩余运输量排序
+	
+	目前都是一对一关联
+	
+034 消息推送 
+	CargoServiceImpl
+		adminCheckCargoSource
+			pushGoodSource
+033 货源表里的logo废掉,换成用户表的logo
+	
+
+2019年5月28日
+032	热门货源地前后台接口提供	 A
+		HotPlace hot_place	hotPlace
+		
+		e		d		c		s		dao		m		error	文档
+		o		o		o		o		
+
+032 比价网新闻资讯研究 A
+	01  数据库地址: 47.94.173.245
+		相关数据库表
+		sys_article		o
+		sys_article_category	
+		sys_article_comment		
+		sys_article_like_collect	
+		
+		sys_file	
+		sys_file_relation	
+		
+	02  接口整理:		o		
+		01 公告中心		/notice/noticePage
+		02 新闻资讯		/information/inforPage
+		03 公告详情		/notice/get	
+		04 公告评论		/articleComment/articlePage
+		05 留成会客厅	/receptionroom/loungePage
+		
+		
+	03 代码整理			
+		/notice			
+					e		d		c		s		dao		m		o
+																	
+		/information
+					e		d		c		s		dao		m		o	
+
+		/articleComment/articlePage
+					e		d		c		s		dao		m		o	
+
+		/receptionroom/loungePage
+					e		d		c		s		dao		m		
+					o		o		o		
+					
+031 副业研究与实践	A	
+	私活研究	
+	app开发研究		
+	微信小程序研究	
+	
+030 数据加密安全研究与落地	B
+		
+029 代码模板研究	B	
+	
+028	规则数据研究	B	
+
+027 常用路线接口	A	o
+						
+026 消息推送机制研究 B	50   
+
+025 测试一下这个里面的接口，然后写一下接口文档，按照报价单文档的格式写  o
+	
+024 设计便于扩展,清晰明了的软件数据库 o 
+	技能表(skill):
+	
+	id						int				32			primary
+	名称(name)				str				255	
+	类别id(cid)				int				32		
+	掌握程度(degree)		int				1-100						
+	上级id(pid)				int				32
+	备注(remark)			str				255								
+	详情(detail)			str				16384
+	手动编号(manual_id)		int				32
+	关键字(keyword)			str				255
+	创建时间(create_date)	date			
+	修改时间(update_date)	date			
+	
+									
+	分类表(category):
+	id
+	名称(name)				str				255	
+	上级分类id(pid)			int				32
+	手动编号(manual_id)		int				32
+	创建时间(create_date)	date
+	修改时间(update_date)	date			    
+	
+	
+023 动态代理研究	B	
+	
+022 微信摘要设计	C	
+	
+021 提醒软件   B	
+	
+020 二叉树研究 B  80  
+	
+019 如何通过pd查看表关系 B	
+	
+018 远程服务器文件下载到本地 C	o
+	sz filename
+
+2019年5月22日
+017 热部署研究	o
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+	热部署的控制是可以输出的 
+	
+016 我的关注人与关注线路测试 o
+	### 1.添加关注车主或货主
+
+	*** 描述:添加要关注的车主或货主
+	
+	
+	**URL**
+	>/focusOn/add
+	
+	
+	**请求参数**
+	
+	``` json
+	{
+	  "openid": "string",
+	  "params": 
+	{
+				       "focuserId": 5,//关注人Id
+				       "beFocuserId": 15,//被关注的人Id
+				       "focusType": ""//关注类型;关注的是货主还是车主;
+	  },
+	   "device":2 //设备类型1 manage，2PC，3 andriod，4 ios，5 h5
+	}
+	```
+	
+	
+	**响应示例**
+
+	``` json
+	{
+	    "code": 1,
+	    "msg": "success"
+	}
+	```
+
+
+015 车主货主注册跳过认证之后，后面再补充认证资料和后台管理员审核的接口 接口测试	A o
+	车主与货主	car_cargo_ownner	
+	
+	## 2.管理员 - 待审批的车主分页 ##
+	
+	车主注册    
+	货主注册
+	
+	管理员登录
+	
+
+014 多表查询 两种方式	B
+	1   表关联	o
+	2   对象关联	o
+
+    批量关注 两种方式	B	50 
+	1   表关联	o
+	2   对象关联	
+    按照名称删除	B
+    
+
+013 剩下接口 
+	## 2.车主及车主子账号 - 删除报价单 ## o
+	
+
+012 接口整理 o
+	## 1.车主及车主子账号 - 报价 ##		/api/cargoMatter/add		存在   无需修改
+	{
+    	"params": {
+            "cargoId": "10",             
+			"matterPrice":"10.12"       
+    	},
+    	"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg1OTcyMjd9.eNotsxnf3neY72rh7uDF2G4cqgbifOF4lXtqYuIlfqE"
+	}
+	
+	## 2.车主及车主子账号 - 修改报价单 ##	/api/cargoMatter/update		存在   无需修改
+	
+	{
+    	"params": {
+            "id": "34",             
+	    	"matterPrice":"10.32"       
+    	},
+    	"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg1OTcyMjd9.eNotsxnf3neY72rh7uDF2G4cqgbifOF4lXtqYuIlfqE"
+	}
+
+	
+	## 3.车主及车主子账号 - 报价单分页 ##	/api/cargoMatter/page		存在	需要修改
+	
+	
+	4 详情   o
+
+
+011 货主与车主相关数据收集 B o
+	{
+        "params": {
+            "userAccount": "lisi",
+            "password": "A123456."
+        }
+    }
+   货主   
+    客户id 69  本身id 4
+    token	eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1ODYwNTQwNH0.3lqdPKHeObF736oUzGf7M62qnqR9XtTAKy4hQeuEx-c
+    
+
+    ------
+	/api/customer/carOwner/login
+   {
+        "params": {
+            "userAccount": "zhangsan",
+            "password": "A123456."
+        }
+    }
+    车主
+    客户id 68  本身id 3
+    token 	eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg1MTgzNzN9.Sp8m5Zq-7HfAsJ8oE9nK2-EQimSYaAKHxJe0FA6Kd1k
+    
+    
+010 关注代码测试 B o
+
+009 补全相关数据校验 C  o
+
+008 补全接口文档 C o
+
+007 车辆的接口文档和代码 A o
+	
+006 mybatis批量操作(比如批量添加关注人) A o
+
+005 idea快键键 C	continued
+	12 切换大小写		crtl+shift+u
+	11 快捷添加依赖		alt+insert	
+
+	10 方法抽取			crtl+alt+m
+	09 查看方法调用栈	crtl+alt+h	最上层为直接调用者
+	08 显示调用该方法的方法 alt+f7
+	07 显示类继承结构 crtl + H 
+	06 格式化代码 crtl+alt+l
+	
+	05 回到上次代码位置 ctrl+alt+方向键
+	04 全局查找替换 crtl + R 可以选择范围与是否包含 
+	03 全局搜索 crtl+shift+f 
+	02 按文件名搜索 双击shift 或者crtl+shift+n o
+	01 按类名搜索 crtl + N o
+	
+004 删除方法修改 B o
+	
+003 车主货主关注代码测试 B o 
+	
+002 事务注解方法转移 B o 
+	
+001 mybatis多表关联分页查询  A 100 o
+	select f.id,f.cargo_ownner_id,f.car_ownner_id,f.create_date,c.* from familiar_car f,car_cargo_ownner c where f.cargo_ownner_id = 3 and c.id = f.car_ownner_id
+	
+	查找对应的关注人列表
+	select f.id,f.cargo_ownner_id,f.car_ownner_id,f.create_date,c.name from familiar_car f,car_cargo_ownner c where f.cargo_ownner_id = 3 and c.id = f.car_ownner_id 
+	
+	

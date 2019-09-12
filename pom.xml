@@ -12,6 +12,7 @@
         <module>wp009-design-pattern</module>
         <module>wp010-procedure</module>
         <module>wp011-web-vue</module>
+        <module>wp024-file</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

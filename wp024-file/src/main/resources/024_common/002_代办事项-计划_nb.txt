@@ -1,0 +1,98 @@
+2019年6月27日
+012 设计程序解决实际问题(shudu,majiang)
+	
+011 
+	算法		A
+	设计模式	B
+	分布式		B
+	数据结构	B
+	
+2019年6月26日
+	
+
+
+	
+010 关注  取消  分页查询
+	familiar_car	familiarCar    familiarcar	FamiliarCar
+	
+	entity o
+	- dto  o 
+	- controller
+	- service 
+	- dao(resp) 
+	- mapper
+	- 测试
+	
+	-- ----------------------------
+	-- Table structure for familiar_car
+	-- ----------------------------
+	DROP TABLE IF EXISTS `familiar_car`;
+	CREATE TABLE `familiar_car`  (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `cargo_ownner_id` int(11) NULL DEFAULT NULL COMMENT '关注者Id',
+	  `car_ownner_id` int(11) NULL DEFAULT NULL COMMENT '被关注者Id',
+	  `create_date` datetime(0) NULL DEFAULT NULL,
+	  PRIMARY KEY (`id`) USING BTREE
+	) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '车主可以关注货主，货主可以关注车主，车主不可以关注车主，货主不可以关注货主' ROW_FORMAT = Compact;
+
+	-- ----------------------------
+	-- Records of familiar_car
+	-- ----------------------------
+	INSERT INTO `familiar_car` VALUES (1, 3, 4, NULL);
+	INSERT INTO `familiar_car` VALUES (2, 4, 3, NULL);
+
+	SET FOREIGN_KEY_CHECKS = 1;
+	
+
+009 名称 OfenLocation
+	
+008 进入实现类crtl+alt+b
+
+007 参数校验
+    货主id处理  Customer customer = RequestUtil.getCurrentUser(Customer.class); 
+    创建时间 
+    BindingResult result o 
+    controller 移到前端controller o
+    
+006 idea快捷键
+	知道类名查找类:Ctrl+Shift+Alt+N; 
+    生成注释
+	IDEA可以使用快捷键添加行注释Ctrl+/、块注释Ctrl+Shift+/，还可以快速生成类注释、方法注释等,下面就介绍这几种快捷键的用法
+	/**
+
+005 `ofen_location`
+	entity - dto - controller - service -  dao(resp) - 测试
+	
+	DROP TABLE IF EXISTS `ofen_location`;
+	CREATE TABLE `ofen_location`  (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系人名称',
+	  `tel` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系人手机号',
+	  `province` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '省',
+	  `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '市',
+	  `county` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '县',
+	  `detailed_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '详细地址',
+	  `longitude` decimal(10, 6) NULL DEFAULT NULL COMMENT '经度',
+	  `latitude` decimal(10, 6) NULL DEFAULT NULL COMMENT '纬度',
+	  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+	  `cargo_owner_id` int(11) NULL DEFAULT NULL COMMENT '货主Id',
+	  PRIMARY KEY (`id`) USING BTREE
+	) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '货主常用地址' ROW_FORMAT = Compact;
+	
+
+004 跑通项目 o
+
+003 原型梳理  o 
+
+002 搞定git环境  o
+
+001 总结数据库的问题 o 
+	
+
+	04 个人中心的足迹应该查哪个表
+
+	03 推送记录表可以认为是历史的交易记录吗
+
+	02 用户注册登录功能只与客户表有关吗,与车主货主表无关?
+
+	01 通用属性表和状态表的作用

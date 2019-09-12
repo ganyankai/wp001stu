@@ -1,0 +1,7 @@
+
+
+第一个单机版wordcount
+val lines = Array("hello tom","hello jerry tom","hello kitty")
+lines.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).map(t =>(t._1,t._2.size)).toList.sortBy(_._2).reverse
+
+lines.flatMap(_.split(" ")).map((_,1)).groupBy(_._1).mapValues(_.foldLeft(0)((x,y)=>x+y._2))

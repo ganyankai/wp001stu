@@ -1,0 +1,87 @@
+04/ Zookeeper 集群部署
+4.1 Zookeeper工作机制
+1、Zookeeper集群角色
+Zookeeper集群的角色：  Leader 和  follower  （Observer）
+zk集群最好配成奇数个节点
+只要集群中有半数以上节点存活，集群就能提供服务
+
+4.2 Zookeeper部署
+4.2.1 机器准备
+1/ 安装到3台虚拟机上
+2/ 安装好JDK
+3/ 上传安装包。上传用工具。
+4/ 解压
+su - hadoop（切换到hadoop用户）
+tar -zxvf zookeeper-3.4.5.tar.gz（解压）
+5/ 重命名
+mv zookeeper-3.4.5 zookeeper（重命名文件夹zookeeper-3.4.5为zookeeper）
+可以删除里面一些源码工程相关的文件，剩下的是这些：
+
+4.2.2修改环境变量
+（注意：3台zookeeper都需要修改）
+1/ su – root(切换用户到root)
+2/ vi /etc/profile(修改文件)
+3/ 添加内容：
+export ZOOKEEPER_HOME=/home/hadoop/zookeeper
+export PATH=$PATH:$ZOOKEEPER_HOME/bin
+4/ 加载环境配置：
+source /etc/profile
+5/ 修改完成后切换回hadoop用户：
+su - hadoop
+
+4.2.3 修改Zookeeper配置文件
+1、用root用户操作
+cd zookeeper/conf
+cp zoo_sample.cfg zoo.cfg
+
+2、vi zoo.cfg
+
+3、添加内容：
+dataDir=/root/apps/zookeeper/zkdata
+dataLogDir=/home/hadoop/zookeeper/log
+server.1=mini1:2888:3888     ## (心跳端口、选举端口)
+server.2=mini2:2888:3888
+server.3=mini3:2888:3888
+
+4、创建文件夹：
+cd /home/hadoop/zookeeper/
+mkdir zkdata
+mkdir -m 755 log
+
+5、在data文件夹下新建myid文件，myid的文件内容为：
+cd zkdata
+echo 1 > myid
+4.2.4 分发安装包到其他机器
+scp -r /root/apps root@mini2:/root/
+scp -r /root/apps root@mini3:/root/
+
+4.2.5 修改其他机器的配置文件
+1、修改myid文件
+到mini2上：修改myid为：2
+到mini3上：修改myid为：3
+
+4.2.6 启动（每台机器）
+注：
+1、事先将三台服务器的防火墙都关掉
+2、全网统一hosts映射
+先配好一台上的hosts
+然后：
+scp  /etc/hosts  mini2:/etc
+scp  /etc/hosts  mini3:/etc
+
+3、然后一台一台地启动
+bin/zkServer.sh start
+
+
+或者编写一个脚本来批量启动所有机器：
+for host in "mini1 mini2 mini3"
+do
+ssh $host "source/etc/profile;/root/apps/zookeeper/bin/zkServer.sh start"
+
+4.2.7 查看集群状态
+1、jps（查看进程）
+2、zkServer.sh status（查看集群状态，主从信息）
+
+有时zookeeper报错可以删除zkdata下的version文件夹再重启
+
+注意关闭防火墙

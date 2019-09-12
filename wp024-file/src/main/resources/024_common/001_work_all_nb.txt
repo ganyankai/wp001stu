@@ -1,0 +1,699 @@
+2019年8月21日
+
+
+094 短信验证码参考 SmsController
+	全局搜索好像不能搜索jar包里面的路径
+
+093 将非maven中央仓库管理jar包引入本地后,代码中不会报错,但引用会报错
+		
+092 可变参数可以传入数组
+	
+091 方法
+	具体步骤实现法 
+	 
+
+090 打开ie
+	运行 iexplore 
+	命令行输入	start iexplore.exe
+089 处理这种配置问题
+		02 字符串拼接模式
+		01 层级模式
+
+088 idea中有些未跟踪的文件可以在查看时直接删除,idea编译后的文件可备份后手动删除
+	
+087 mysql中创建时间的默认值可设为CURRENT_TIMESTAMP
+	
+086 加油站的代码可暂时先放到consumer里面
+	
+085 难道代码中不能直接执行sql吗
+	
+084 我们做事情的特性都是采用最简单,最快速的办法
+	
+083 身份校验建议顺序
+	主人
+	自身认证
+	状态认证
+	
+
+	Customer customer = RequestUtil.getCurrentUser(Customer.class);
+
+	//取得车主信息
+	CarCargoOwnner carOwner = customer.getCarOwner();
+	Car car = carService.assertCarBelongToCurrentUser(requestParams.getParams().getId(), carOwner.getId());
+	carService.assertCarCertified(car);
+			
+	//校验车辆状态必须为空闲
+	if(!car.getStatus().equalsIgnoreCase(CarConstants.CAR_STATUS_FREE)){
+		throw new BusinessException(112, "车辆不是空闲状态");
+	}
+	
+
+082 重新加载类后对aop作用的注解好像无效果,为什么
+
+081 数据校验放在c层可能好一点
+
+080 
+	为什么今天迟迟不愿意动手做,因为你觉得问题太复杂了,找不到入口,先从简单功能起步,快速做出决定
+	
+079	获取token代码
+	public String getToken(Customer customer) {
+		String jwtToken = Jwts.builder().setId(String.valueOf(customer.getId())).setIssuer(Constant.ISS_URL)
+				.setSubject(customer.getTel())
+//				.claim("roles", userExtendInfo.getRole(RequestUtil.currentRequest().getRequestURI()))
+//				.claim("roles", null))
+				.setIssuedAt(new Date())
+				.signWith(SignatureAlgorithm.HS256, Constant.PUBLIC_KEY).compact();
+		String tokenStr = TokenUtil.obtainToken(customer, jwtToken);//放入redis缓存
+		return tokenStr;
+	}
+
+078 校验token代码不通过是不会进controller了的
+
+077 shiro和用户信息竟然竟然可以连接不同的redis服务器
+
+076 为什么现在物流项目只能连245的redis了
+
+075 难道只有执行这行代码时会报无效的token
+	User user = RequestUtil.getCurrentUser(User.class);
+
+074 像这种根据当前时间更新的测试方法最好是在程序里新增测试
+	设计接口时可以考虑接口之间的互相调用
+	
+2019年8月2日
+073 直接查看软件改变状态好最源头的文件变化是调试错误的极好方法
+
+072 项目放在tomcat目录问题及路径访问问题上次浪费了大量时间,还是应该尽量搞明白
+
+2019年7月23日
+071 每次部署增加版本号,启动后查看版本号与当前版本是否一致
+	
+070
+	jRebel 环境搭建与破解 B 
+	好像改了配置文件jrebel不会自动编译
+		编译日志
+		JRebel: Reloading class 
+		改了配置后还需再改一行代码
+		JRebel: Reconfiguring bean
+	
+	@Value("${code.length}")
+	private String length;
+	
+	System.out.println("jjjj");
+	System.out.println("23456");
+	System.out.println("length:"+length);
+	
+069	
+	
+	校验验证码
+
+	//校验验证码 手机号,验证码
+	@Autowired
+    private ICache cache;
+	
+//        smsService.checkCode(dto.getTel(),dto.getSmsCode());
+
+        String code = cache.get(Constant.VERFI_CODE_PREFIX + dto.getTel());
+        if (!dto.getSmsCode().equalsIgnoreCase(code)) {
+            throw new BusinessException(112,"验证码校验错误");
+        }
+	
+068	
+	INSERT INTO `advanceManage`.`sys_customer`(`id`, `user_account`, `tel`, `password`, `user_name`, `logo`, `app_open_id`, `open_id`, `union_id`, `extend`, `customer_type`, `user_status`, `create_by`, `create_date`, `is_active`) VALUES (32, '18627011956', '18627011956', NULL, '你再试试', NULL, NULL, 'oGcsIsy2NaHMpqYUA1eWtuQXHx24', NULL, NULL, NULL, 1, NULL, '2019-07-22 15:17:45', NULL);
+	
+	
+	第二次code
+	081zTxUs07BLuf1mIMTs0KzyUs0zTxUu
+	
+	openid:	
+	oGcsIsy2NaHMpqYUA1eWtuQXHx24
+068
+	13277098261  王皇宝
+			
+	openid = "oGcsIs-MsphqgxgKvJDYuZ3T6V_0"
+	
+		以前的openId 011mjUOH0czImg2WzXQH0XRUOH0mjUOP
+
+	以前的openId 
+	
+
+067
+	第一次code
+		
+	"tel"		18627011956
+	"code":"081SaHGI0EfZZe2kKNFI0RRrGI0SaHGC"          
+	
+	"openid": "oGcsIsy2NaHMpqYUA1eWtuQXHx24",
+	
+	"data": {
+        "isAuthorization": "0",
+        "snsUserInfo": {
+            "openid": "oGcsIsy2NaHMpqYUA1eWtuQXHx24",
+            "nickname": "Elvis",
+            "sex": 1,
+            "province": "Beijing",
+            "city": "Haidian",
+            "country": "CN",
+            "headimgurl": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTK7w1ic4GGvrLMfIvBTmfR3ld4BiaBZH8US14aAtqYhc2RANOFLFmw8YbeX1PyYNUJGthaBC91Hl9zg/132",
+            "unionid": "oKBLd5u8IlS98uyaHXB8kEgwTfns",
+            "language": "zh_CN",
+            "privilege": []
+        },
+
+
+066
+	{
+		"code": 1,
+		"msg": "success",
+		"data": {
+			"isAuthorization": "0",
+			"customer": null
+		}
+	}
+
+065 
+	redis不设置密码也可能报空指针异常
+	
+
+2019年7月18日
+064 灵活利用项目右侧maven中的+
+	项目中pom文件右键也可以操作
+	被maven管理的项目左侧或有大写的M字符
+	
+2019年7月13日
+063 
+	tomcat配置(注意环境变量配置)  证书密码123456
+		server.xml   可配置不同应用不同端口
+		web.xml		 配置首页
+		webapps/ROOT 注意不要省略应用根目录	
+		
+2019年7月11日
+062
+	http://localhost/home.html
+	
+061
+		单例模式下会共享普通成员变量和静态成员变量,多例模式下普通成员变量不共享,静态成员共享. 
+	在开发中,springMVC优先使用单例模式,而且尽量不要在controller中设定成员变量. 
+	如果要定义成员变量并为成员变量赋值可以配置source.properties,通过读取配置文件为成员变量初始化. 
+
+2019年7月10日
+060 
+	基础jar包的应该还连接了其他的redis
+	
+2019年7月8日
+059	项目已经严重依赖redis,redis出了问题不好切换
+	
+058
+	思考jar包里面的代码如何修改
+
+057
+	昨天排redis错误的体会,只有搞明白项目启动流程才能明确排错的方向
+	
+	关注
+	com.zrytech.framework.common.config.ShiroConfig
+	
+	public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost("127.0.0.1");
+        redisManager.setPort(6379);
+        redisManager.setExpire(604800);
+        redisManager.setTimeout(5000);
+        redisManager.setPassword("123456");
+        return redisManager;
+    }
+	
+
+	 public RedisManager redisManager() {
+        PropertySource<?> propertySource = ConfigLoaderUtil.loadYml(ShiroConfig.class, "application-dev.yml");
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(propertySource.getProperty("spring.redis.host").toString());
+        redisManager.setPort((Integer)propertySource.getProperty("spring.redis.port"));
+        int day = 7;
+        if (propertySource.containsProperty("spring.redis.cache_day")) {
+            day = (Integer)propertySource.getProperty("spring.redis.cache_day");
+        }
+
+        redisManager.setExpire(86400 * day);
+        redisManager.setTimeout(5000);
+        redisManager.setPassword(propertySource.getProperty("spring.redis.password").toString());
+        return redisManager;
+    }
+
+056 
+	--spring.profiles.active=my
+	
+	秒杀	tb_seckill_product 	
+	
+	支付接口	PayBussinessServiceImpl 
+	
+	消息文档	消息.md
+	
+	
+2019年6月15日
+055
+	一个团队的定海神针，就是能把问题转化成目标函数的那个人——哪怕他连开源工具都不会用。100万找到这样的人，可真是捡了个大便宜。
+	
+054	
+	江畔何人初见月,江月何年初照人
+	Who by the riverside first saw the moon arise,When did the moon first see a man by riverside
+	
+	鸿雁长飞光不度，鱼龙潜跃水成文。
+	Hongyan Chang Fei-ray, fish and dragons written submersible water jump. 
+	
+	But message-bearing swans can't fly out of moonlight,Nor can letter-sending fish leap out of their place
+	
+053	
+	当前token	微信登录
+	"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxOCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxODY3NDA3MDI3MiIsImlhdCI6MTU2MjMxODUxMX0.y2-fc_hvmy5QKlKAMsnc2eVzCgvusxMOWDnPnG-yAx8"
+	
+052	
+	会员%s购买并支付了%s商品，请及时处理（有分配门店消息推送给门店，没分配推送给渠道）
+	
+051	模糊查询
+	private String userName;
+	private String tel;
+	
+	OfenLocation ofenLocation= BeanUtil.copy(ofenLocationDto,OfenLocation.class);
+	
+050	客服查询代码参考
+	<select id="getUserAgentListParam" resultMap="user">
+        select su.* from sys_user su,sys_user_role sur,sys_role sr
+        <trim prefix="where " prefixOverrides="and ">
+            user_type = 'user_admin'
+            and su.id = sur.user_id and sur.role_id = sr.id
+            and sr.role_name = '客服'
+            <if test="user.userName != null and user.userName !=''">
+                and su.user_name like concat('%',#{user.userName},'%')
+            </if>
+            <if test="user.tel != null and user.tel !=''">
+                and su.tel like concat('%',#{user.tel},'%')
+            </if>
+        </trim>
+    </select>
+	
+
+049 平台客服查询可以查询自己客服的数据(现在先处理平台的数据)
+
+	渠道和门店客服
+	
+048	git发现文件与远程冲突
+	可以 stash change
+	
+
+047 虚拟机备份方式
+	直接复制vmx当前目录下的所有文件
+	用vm打开时选择我已复制该虚拟机 vm会重新给复制的虚拟机分配ip地址
+	
+046 navicat竟然支持全库扫描查找
+	
+	SELECT * FROM `logistics`.`sys_dict` WHERE CAST
+	(`logistics`.`sys_dict`.`dict_key` AS CHAR CHARACTER SET utf8)
+	COLLATE utf8_general_ci LIKE '%three%' OR CAST
+	(`logistics`.`sys_dict`.`dict_value` AS CHAR CHARACTER SET utf8)
+	COLLATE utf8_general_ci LIKE '%three%' OR CAST(`logistics`.`sys_dict`.`remark` AS CHAR CHARACTER SET utf8) 
+	COLLATE utf8_general_ci LIKE '%three%' OR CAST(`logistics`.`sys_dict`.`logo` AS CHAR CHARACTER SET utf8)
+	COLLATE utf8_general_ci LIKE '%three%' OR CAST(`logistics`.`sys_dict`.`field_s` AS CHAR CHARACTER SET utf8)
+	COLLATE utf8_general_ci LIKE '%three%' OR CAST(`logistics`.`sys_dict`.`create_time` AS CHAR CHARACTER SET utf8)
+	COLLATE utf8_general_ci LIKE '%three%'
+	
+045 项目部署
+	cd /home/app/logistics
+	mv zrytech-framework-app-1.0-SNAPSHOT.jar bak/
+	rz 
+		D:\001_work\007_mypro\HazardousLogistics_dev\zrytech-framework-app\target\zrytech-framework-app-1.0-SNAPSHOT.jar 
+	netstat -ntlp|grep 8392	
+	
+	kill -9 
+	./start.sh
+	tail -f nohup.out
+		
+	
+	./start.sh
+
+	netstat -ntlp|grep 8181	
+	nohup java -Dfile.encoding=utf-8 -jar     zrytech-framework-app-1.0-SNAPSHOT.jar --spring.profiles.active=aliyun &
+	
+044 spring cloud版本控制	
+	"spring-cloud": {
+	“Edgware.SR5”: “Spring Boot >=1.5.0.RELEASE and <=1.5.20.RELEASE”,
+	“Edgware.BUILD-SNAPSHOT”: “Spring Boot >=1.5.999.BUILD-SNAPSHOT and <2.0.0.M1”,
+	“Finchley.M2”: “Spring Boot >=2.0.0.M3 and <2.0.0.M5”,
+	“Finchley.M3”: “Spring Boot >=2.0.0.M5 and <=2.0.0.M5”,
+	“Finchley.M4”: “Spring Boot >=2.0.0.M6 and <=2.0.0.M6”,
+	“Finchley.M5”: “Spring Boot >=2.0.0.M7 and <=2.0.0.M7”,
+	“Finchley.M6”: “Spring Boot >=2.0.0.RC1 and <=2.0.0.RC1”,
+	“Finchley.M7”: “Spring Boot >=2.0.0.RC2 and <=2.0.0.RC2”,
+	“Finchley.M9”: “Spring Boot >=2.0.0.RELEASE and <=2.0.0.RELEASE”,
+	“Finchley.RC1”: “Spring Boot >=2.0.1.RELEASE and <2.0.2.RELEASE”,
+	“Finchley.RC2”: “Spring Boot >=2.0.2.RELEASE and <2.0.3.RELEASE”,
+	“Finchley.SR3”: “Spring Boot >=2.0.3.RELEASE and <2.0.999.BUILD-SNAPSHOT”,
+	“Finchley.BUILD-SNAPSHOT”: “Spring Boot >=2.0.999.BUILD-SNAPSHOT and <2.1.0.M3”,
+	“Greenwich.M1”: “Spring Boot >=2.1.0.M3 and <2.1.0.RELEASE”,
+	“Greenwich.SR1”: “Spring Boot >=2.1.0.RELEASE and <2.1.5.BUILD-SNAPSHOT”,
+	“Greenwich.BUILD-SNAPSHOT”: “Spring Boot >=2.1.5.BUILD-SNAPSHOT”
+	},
+	
+043 注意spring boot与spring cloud版本兼容性
+
+042 切面pointcut配置
+	//匹配cn及其子包下的所有controller
+    @Pointcut("execution(* cn..*.controller..*(..))")
+
+	
+041 如何给我的拦截器设置拦截路径呢?
+		
+	
+040	
+	@Configuration
+
+	加入了这个注解的类被认为是 Spring Boot 的配置类，我们知道可以在 application.yml 设置一些配置，也可以通过代码设置配置。
+
+	如果我们要通过代码设置配置，就必须在这个类上标注 Configuration 注解。如下代码：
+
+	@Configuration
+	public class WebConfig extends WebMvcConfigurationSupport{
+	 
+		@Override
+		protected void addInterceptors(InterceptorRegistry registry) {
+			super.addInterceptors(registry);
+			registry.addInterceptor(new ApiInterceptor());
+		}
+	}
+
+
+039 命名配置
+	mybatis:
+	  configuration:
+		 #配置项：开启下划线到驼峰的自动转换. 作用：将数据库字段根据驼峰规则自动注入到对象属性。
+		 map-underscore-to-camel-case: true
+
+038 实用注解
+	@Value("${cargo.bidWaitTime : 24}")
+	private String bidWaitTime;
+	
+	@Autowired<span class=""></span>
+//	@Qualifier("carCargoExtImpl")
+	private CarCargoOwnerService carCargoOwnerService;
+	
+037 linxu中查找文件的命令
+	find /home -name 'dist*'
+	
+036 idea中默认的源文件好像是resources目录下面读取
+
+035 判断启动环境
+	搜索 active
+	
+034 日志级别配置:
+	logging:
+	  level:
+		com.zry.framework.mapper: trace
+		root: warn
+
+033 mysql多次分页
+	select b.* from (select a.* from cargo a limit 1,10) b limit 1,5 
+
+032 测试环境加了配置文件idea就会默认去读取了
+
+031 为什么 @Select中不能使用<![CDATA[ from user_info where user_id = #{userId} ]]>  
+	
+030 
+	
+	
+029	BeanUtils.copyProperties(dto, car);			//会覆盖car的原有属性
+
+028	
+	sql中原样输出
+	<![CDATA[ from user_info where user_id = #{userId} ]]>  
+	
+027 项目启动参数 
+	--spring.profiles.active=mystart	？为什么这么切换会有问题	
+		应该是分类分级的合并	
+	
+	nohup java -jar zrytech-framework-app-1.0-SNAPSHOT.jar --spring.profiles.active=142 &
+	
+026 mapper用法举例
+	@Select("SELECT AVG(`evaluate_level`) FROM `evaluate` WHERE `appraiser_by_id` = #{appraiserById}")
+	BigDecimal levelAVG(@Param("appraiserById") Integer appraiserById);
+	
+025 新增一个字段来处理这种货源公开的问题我觉得较为合适
+	在货源表(cargo)中新增一个是否公开展示字段,发布货源时
+	
+	查询货源时只查看发布中的货源
+	
+024 配置无需回滚的异常
+	@Transactional(noRollbackFor = BusinessException.class)
+	
+023 今日关键字
+	可维护	
+	
+022 hotplace 
+	建表时加上唯一性约束
+	CREATE TABLE `t_user` (
+		  `Id` int(11) NOT NULL AUTO_INCREMENT,  -- 自增
+		  `username` varchar(18) NOT NULL unique,  -- 唯一性约束
+		  `password` varchar(18) NOT NULL,
+		  PRIMARY KEY (`Id`)
+	) ENGINE=InnoDB AUTO_INCREMENT=1018 DEFAULT CHARSET=gbk;
+
+	给已经建好的表加上唯一性约束
+	ALTER TABLE `hot_place` ADD unique(`city`);
+	
+
+021 目前这个表车主id和用户的id目前是不一样的,注意区别开
+	
+020 推送记录批量插入	
+	void batch(@Param("list") List<Integer> list, @Param("id") Integer id,@Param("date") Date date);
+	
+	<insert id="batch" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into cargo_send_record
+        (
+        cargo_id,
+        car_ownner_id,
+        create_date
+        )
+        values
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (
+            #{id},
+            #{item},
+            #{date}
+            )
+        </foreach>
+    </insert>
+	
+
+019 //加了hotPlace以后
+	加了@Param("hotPlace")
+	mapper.xml中需要hotPlace.
+	
+018 
+	
+	
+017 mysql时间报错
+	show variables like '%time_zone%';
+
+	set global time_zone='+08:00';
+	
+016	正则表达式搜集
+	
+015 linux 命令
+	netstat -ntlp  查看进程id即端口
+	free 查看内存
+	top  查看进程内存占用率
+	
+014 集合校验参考
+	/** 车源的车辆司机压货人 */
+	@Valid
+	@NotNull(message = "车辆不能为空")
+	@Size(min = 1, message = "至少有一个车辆")
+	List<CarSourceCarAddDto> carSourceCars;
+
+013 通过数据查看接口是不错的选择
+	
+012 批量保存参考
+	carRecordPlaceRepository.save(lines);
+	
+011 对象转json
+	JSON.toJSONString(temp)
+	
+010 @Transient表示数据库表中无此字段
+	
+
+009 query示例
+	@Modifying
+	@Query("update Car set status = ?2 where id = ?1")
+	int updateStatusById(Integer id, String status);
+
+008 选择正则表达式
+	/** 车辆核载量单位:正则 */
+	public static final String REG_EX_CAR_UNIT = "^(" + CAR_UNIT_TON + ")|(" + CAR_UNIT_LITRE + ")|()$";
+
+007 mapper注意
+	 List<Car> selectSelective(CarPageDto record); 
+	 <select id="selectSelective" parameterType="Object" resultMap="BaseResultMap">
+
+006 git命令
+	查看用户名 cat ~/.gitconfig 
+ 
+005_token
+	eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1ODQxNzc0Nn0.sKe5_CF2OT28OxQPqyVxv4Nk-S7kxvS4RCvsd-53lHY
+	
+	货主id 4
+004_项目dev文件启动
+	program arguments --spring.profiles.active=dev
+
+003_接口测试
+	 http://localhost:8392/ofenLocation/page
+	
+	{
+	  "params":{} ,
+	  "page":{
+		"pageNum": 1,   
+	    "pageSize": 10
+	   },
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data": {
+		"total": 1,
+		"list": [
+		    {
+			"id": 1,
+			"name": "xm",
+			"tel": "134",
+			"province": "湖北",
+			"city": "武汉",
+			"county": null,
+			"detailedAddress": null,
+			"longitude": null,
+			"latitude": null,
+			"createDate": null,
+			"cargoOwnerId": null
+		    }
+		]
+	    }
+	}
+	
+	新增 http://localhost:8392/ofenLocation/add
+	入参简易:
+	{
+	  "params":{
+		"id":4,
+		"name":"xhhhh"
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	详细
+	{
+	  "params":{
+		"id":5,
+		"name":"xm",
+		"tel":"134",
+		"province":"湖北",
+		"city":"武汉",
+		
+		"county":"洪山",
+		"detailedAddress":"光谷贸易中心",
+		"longitude":18,
+		"latitude":19
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	返回
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data": "添加成功"
+	}
+	
+	
+	修改 http://localhost:8392/ofenLocation/update
+	入参:
+	{
+	  "params":{
+		"id":3,
+		"name":"xhhhh"
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	详细:
+	{
+	  "params":{
+		"id":1,
+		"name":"xmxmxm",
+		"tel":"134",
+		"province":"湖北",
+		"city":"武汉",
+		
+		"county":"洪山",
+		"detailedAddress":"光谷贸易中心",
+		"longitude":18,
+		"latitude":19
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	返回:
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data": null
+	}
+
+	http://localhost:8392/ofenLocation/get
+	输入
+	{
+	  "params":{
+		"id":1
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	返回
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data": {
+		"id": 1,
+		"name": "xmxmxm",
+		"tel": "134",
+		"province": "湖北",
+		"city": "武汉",
+		"county": "洪山",
+		"detailedAddress": "光谷贸易中心",
+		"longitude": 18,
+		"latitude": 19,
+		"createDate": null,
+		"cargoOwnerId": 4
+	    }
+	}
+	
+	http://localhost:8392/ofenLocation/delete
+	输入
+	{
+	  "params":{
+		"id":1
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+	返回
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data": null
+	}
+
+002_本地数据库配置
+    
+	
+001_物流网项目
+    zrytech-framework-baseProject
+
+	

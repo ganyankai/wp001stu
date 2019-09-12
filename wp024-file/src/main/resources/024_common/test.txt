@@ -1,0 +1,893 @@
+2019年7月25日
+
+
+018 maven安装本地文件
+	本地安装的文件和maven中央仓库管理的配置文件是有差别的
+
+	mvn install:install-file
+	-Dfile=C:\Users\lenovo\.m2\repository\com\allinpay\yunst-sdk\0.0.1-SNAPSHOT\yunst-sdk-0.0.1-SNAPSHOT.jar
+	-DgroupId=com.allinpay -DartifactId=yunst-sdk -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar
+	
+	mvn install:install-file -Dfile=C:\Users\lenovo\Desktop\test\04_tmp\01_current\yunst-sdk-0.0.1-SNAPSHOT.jar -DgroupId=com.allinpay -DartifactId=yunst-sdk -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar
+	
+017 
+	D:\002_software\apache-tomcat-8.0.53
+	C:\Users\lenovo\Desktop\apache-tomcat-7.0.42
+	
+	-Djava.security.egd=file:/dev/./urandom
+
+016 
+	org.apache.maven.plugins:maven-checkstyle-plugin:2.4:checkstyle failed. NullPointerException
+	mvn install -Dmaven.test.skip=true
+	
+015	
+	02 framework
+		框架，骨架；结构，构架
+	01 detected 
+		检测到的 
+	
+014
+	物流功能梳理
+	
+	05 货源 
+
+	04 车源
+	
+	03 审核	
+		
+	02 登录
+
+	01 注册
+
+
+013
+	%Android_SDK_HOME%\platform-tools;%Android_SDK_HOME%\tools;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;%JAR_HOME%;C:\WINDOWS\system32;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;%SYSTEMROOT%\System32\OpenSSH\;D:\Git\git\bin;D:\Git\gitpre\Git\cmd;E:\Nodejs\node-v8.11.1-win-x64;E:\SVN\apk\bin;%CATALINA_HOME%\bin\;F:\ffmpeg\ffm\bin;D:\Program Files\Git\cmd
+
+012
+	CustomConstants
+	
+011  推荐货源
+
+## 12.车主-推荐货源  ##
+
+Customer customer = RequestUtil.getCurrentUser(Customer.class);
+cargo.setLogo(customer.getLogo());
+
+
+
+**URL**
+>/api/cargoSource/recommendCargo
+
+
+**请求参数**
+    
+    {
+    	"params": {
+            "carOwnnerId":355		//（必填）（int） 车主id
+    	},
+    	"token": ""
+    }
+
+**测试入参**
+
+    {
+	 "params": 
+	  {
+			"carOwnnerId":355
+	  },
+	  "token": ""
+    }
+
+**响应示例**
+
+	{
+		"code": 1,
+		"msg": "success",
+		"data": [
+			{
+				"id": 45,
+				"isOffer": null,
+				"isFocus": null,
+				"cargoLocations": null,
+				"cargoOwnerName": null,
+				"cargoOwnerTel": null,
+				"cargoMatterCount": null,
+				"cargoMatter": null,
+				"name": "medium_lng",
+				"logo": "logo",
+				"qty": 1,
+				"mulShipment": false,
+				"mulUnload": false,
+				"packaged": true,
+				"matterPrice": null,
+				"realPrice": null,
+				"marketPrice": null,
+				"startProvince": "湖北省",
+				"startCity": "武汉市",
+				"startCountry": "汉阳区",
+				"endProvince": "山西省",
+				"endCity": "运城市",
+				"endCountry": "闻喜县",
+				"line": null,
+				"canShare": false,
+				"arrivalDate": "2019-05-20 12:00:00",
+				"pickupDate": "2019-05-20 12:00:00",
+				"endDate": "2019-05-21 12:00:00",
+				"remark": "",
+				"createBy": 339,
+				"createDate": "2019-06-04 17:20:46",
+				"weightUnit": "ton",
+				"tenderWay": "bid_mark",
+				"payType": "bankpay",
+				"priceUnit": "price_yuan",
+				"priceType": null,
+				"carType": "car_tractor",
+				"status": "cargo_source_status_release",
+				"carTypeCN": "牵引车",
+				"statusCN": "发布中",
+				"weightUnitCN": "吨",
+				"priceTypeCN": "",
+				"priceUnitCN": "元",
+				"tenderWayCN": "抢标",
+				"nameCN": "天然气",
+				"payTypeCN": null
+			}
+		]
+	}
+	
+<br><br><br>
+
+	
+
+010	
+	http://www.cnblogs.com/Files/cj723/
+
+009  货源,报价单接口核对	http://1ocalhost:8392
+	lisi 4 
+	
+	 "token": "eyJhbGciOiJIUzI1NiJ9.
+	 eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1OTA5Njk4Mn0.
+	 z0UCPyxZCsZrQMyFeT13nVxvD_vPxpR311voDtYFXOM"
+
+	前台	
+		货源	
+			## 1.货主 - 发布货源 ##		http://localhost:8392/api/cargoSource/saveCargoSource  o
+				
+			## 2.货主 - 更新货源装卸地 ##	http://localhost:8392/api/cargoSource/updateCargoLocations  o
+					                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+			## 3.货主 - 取消货源 ##		/api/cargoSource/cancel		o
+
+			## 4.货主 - 货源提交审核 ##	/api/cargoSource/submitChcek	o
+		
+			## 5.货主 - 货源下架 ##		/api/cargoSource/down		o
+
+			## 6.货主 - 修改货源不需要审核的内容 ##	/api/cargoSource/updateNoCheck	o
+
+			## 7.货主 - 修改货源需要审核的内容 ##	/api/cargoSource/updateCheck o
+
+			## 8.货主 - 货源分页 ##	/api/cargoSource/myCargoSourcePage o
+			
+			## 9.货主 - 货源详情 ##	/api/cargoSource/myCargoSourceDetails	o
+			
+			## 10.公开 - 货源分页 ## /api/cargoSource/openPage o
+
+			## 11.公开 - 货源详情 ## /api/cargoSource/openDetails o
+
+			
+		报价单	
+			## 1.车主及车主子账号 - 报价 ##	  /api/cargoMatter/add	o
+
+			## 2.车主及车主子账号 - 修改报价单 ##	/api/cargoMatter/update o
+
+			## 3.车主及车主子账号 - 报价单分页 ##	/api/cargoMatter/carOwnerCargoMatterPage o
+
+			## 4.车主及车主子账号 - 报价单详情 ##	/api/cargoMatter/carOwnerCargoMatterDetails	o
+
+			## 5.车主及车主子账号 - 删除报价单 ##	/api/cargoMatter/delete	o
+
+			## 6.车主账号 - 抢标 ##		/api/cargoMatter/bid o
+			
+			## 1.货主账号 - 查看货源的报价单列表 ##	/api/cargoMatter/cargoOwnerGetCargoMatterByCargoId o
+
+			## 2.货主账号 - 中标 ##	/api/cargoMatter/tender o
+			
+
+	后台	
+		货源
+			
+			## 1.管理员 - 货源信息列表 ##	/goodsSource/page	o
+
+			## 2.管理员 - 货源详情 ##	/goodsSource/get	o
+
+			## 3.管理员 - 货源审核 ##	/goodsSource/adminCheckCargoSource	o
+
+
+
+		报价单	
+			## 1.管理员 - 报价单分页 ##	/admin/cargoMatter/page		o
+
+			## 2.管理员 - 某一个车主的报价单分页 ##		/admin/cargoMatter/oneCarOwnerCargoMatterPage	o
+
+			## 3.管理员 - 某一个货主的报价单分页 ##		/admin/cargoMatter/oneCargoOwnerCargoMatterPage o
+
+			## 4.管理员 - 报价单详情 ##	/admin/cargoMatter/details	o
+
+
+			
+			
+
+008 启动mysql
+	2019-05-29T01:57:54.993501Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+	
+007	
+	http://192.168.0.142:8392/shipper/certificationPage
+		
+006 后台接口核对
+	
+	01 车主管理
+		select * from car_cargo_ownner where type='car_owner' and customer_type = 'person'
+		01 车主管理 - 查看详情 - 车主信息 - 修改免审核状态 - 返回货主不存在
+			admin/carCargoOwner/updateCargoOwnerAvoidAudit
+			
+	
+
+005 我的关注人与关注线路测试
+	
+
+	### 4.添加关注路线
+
+	*** 描述:添加要关注的路线
+
+
+	**URL**
+	>/line/add
+
+	
+	**请求参数**
+
+	``` json
+	{
+	  "openid": "string",
+	  "params": 
+	{
+					      "startProvince": "",
+					      "startCity": "",
+					      "startCountry": "",
+					      "endProvince": ,
+					      "endCity": "",
+					      "endCountry": ""
+	  },
+	   
+	}
+	```
+	
+
+	**响应示例**
+
+	``` json
+	{
+	    "code": 1,
+	    "msg": "success"
+	}
+	```
+	
+
+	### 03 关注详情
+	**请求参数**
+	
+	{
+	  "openid": "string",
+	  "params": 
+	{
+		 "id": 2,
+		 "startPlace":"",
+		 "targetPlace":""     
+	  },
+	   "device":2,
+	    "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg2ODE5OTd9.nSHitFVf3UTy3mOwjVLf6mTrWzjLQeKOk2iJoyDUeZs"
+	}
+
+	============返回货源信息列表======================
+
+	**响应示例**
+
+	``` json
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data":
+	    [
+	       {
+		 "id": 7,//货源id
+		 "name": "",//货物介质
+		 "logo": 123,//logo头像
+		 "logoUrl": "",//logo头像url
+		 "qty": ,//数量
+		 "weightUnit": "",//重量单位
+		 "weightUnitCN": "",//重量单位CN
+		 "tenderWay":"",//发标方式;招标(tender_mark);抢标(bid_mark)
+		 "tenderWayCN":"",//发标方式;招标(tender_mark);抢标(bid_mark)
+		 "payType":"",//付款方式;1:线下支付(offline_pay);2:微信支付(wechat);3:支付宝支付(alipay);4:银行卡支付(bankpay)
+		 "payTypeCN":"",//付款方式;1:线下支付(offline_pay);2:微信支付(wechat);3:支付宝支付(alipay);4:银行卡支付(bankpay)
+		 "mulShipment":true,//多点装货;true:表示是多点装货;false:否
+		 "mulUnload":true, //多点卸货;true:表示是多点卸货;false:否
+		 "matterPrice":12, //发标价
+		 "realPrice":34, //中标价
+		 "marketPrice":23, //市场价
+		 "priceUnit":"", //价格单位
+		 "priceUnitCN":"", //价格单位CN
+		 "priceType":"", //价格类型
+		 "priceTypeCN":"", //价格类型CN
+		 "startPlace":"",//出发地
+		 "endPlace":"",//目的地
+		 "line":"",//路线
+		 "canShare":true,//是否拼单;true是;false否;
+		 "status":"", //状态;1:拒绝(product_refuse);2:上架(product_up);3:下架(product_down);4:过期(product_expired)
+		 "arrivalDate":"", //送达日期
+		 "endDate":"",//截止日期
+		 "remark":"",//备注
+		 "createDate":"" //创建日期
+		 }
+	    ]
+	}
+	```
+
+	### 02 我的关注信息展示
+	>/focusOn/selectMyFocus
+
+			**请求参数**
+
+			``` json
+			{
+			  "openid": "string",
+			  "params": 
+			 {
+						       "focuserId": 3	//关注人Id(选传):当前登录的用户(车主或货主)
+			  },
+			   "device":2 //设备类型1 manage，2PC，3 andriod，4 ios，5 h5
+			}
+			```
+			
+			测试入参
+			{
+			  "openid": "string",
+			  "params": 
+			{
+				 "focuserId": 3	
+						    
+			  },
+			   "device":2,
+			    "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg2ODE5OTd9.nSHitFVf3UTy3mOwjVLf6mTrWzjLQeKOk2iJoyDUeZs"
+			}
+
+			 
+			**响应示例**
+
+			``` json
+			{
+			"code":1,
+			"msg":"success",
+			"data":{
+						      "linList": [   //关注线路集合
+							{
+							     "id":1,//线路ID
+							     "startProvince": "",//出发省
+							     "startCity": "",//出发市
+							     "startCountry": "",//出发县
+							     "endProvince": ,//到达省
+							     "endCity": "",//到达市
+							     "endCountry": "",//到达县
+							     "createBy":,//创建人
+							     "createDate":""//创建日期
+							}
+						      ],
+						      "focusList":[ //关注客户集合(货主或车主)
+							 {
+							     "id": 8,//账号Id
+							     "beFocuserId": 15,//被关注的人Id
+							     "focusType": "",//关注类型;关注的是路线还是货主;
+							     "focusTypeCN": "",//关注类型;关注的是路线还是货主;
+							     "name":""//被关注人的企业名称
+							 }
+						      ]
+			}
+			}
+			```
+
+
+
+
+		### 1.添加关注车主或货主
+
+		*** 描述:添加要关注的车主或货主
+
+
+		**URL**
+		>/focusOn/add
+
+
+
+		**请求参数**
+
+		``` json
+		{
+		  "openid": "string",
+		  "params": 
+		{
+					       "focuserId": 5,//关注人Id
+					       "beFocuserId": 15,//被关注的人Id
+					       "focusType": ""//关注类型;关注的是货主还是车主;
+		  },
+		   "device":2 //设备类型1 manage，2PC，3 andriod，4 ios，5 h5
+		}
+		```
+
+
+		**响应示例**
+
+		``` json
+		{
+		    "code": 1,
+		    "msg": "success"
+		}
+		```
+
+
+	### 01.添加关注车主或货主
+	
+
+	*** 描述:添加要关注的车主或货主
+	
+
+	**URL**
+	>/focusOn/add
+	
+	
+
+	**请求参数**
+
+	``` json
+	{
+	  "openid": "string",
+	  "params": 
+	{
+				       "focuserId": 5,//关注人Id
+				       "beFocuserId": 15,//被关注的人Id
+				       "focusType": ""//关注类型;关注的是货主还是车主;
+	  },
+	   "device":2 //设备类型1 manage，2PC，3 andriod，4 ios，5 h5
+	}
+
+	```
+	测试用参:
+	{
+	  "openid": "string",
+	  "params": 
+	{
+				       "focuserId": 3,
+				       "beFocuserId": 4,
+				       "focusType": "focus_customer_cargo"
+	  },
+	   "device":2,
+	    "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg2ODE5OTd9.nSHitFVf3UTy3mOwjVLf6mTrWzjLQeKOk2iJoyDUeZs"
+	}
+	
+	
+	**响应示例**
+
+	``` json
+	{
+	    "code": 1,
+	    "msg": "success"
+	}
+	```
+
+
+004 车主货主注册
+	08		## 1.个人货主修改认证信息 ##
+
+	**URL**
+	>/api/carCargoOwner/cargoOwnerUpdatePersonInfo
+
+	**请求参数**
+
+	    {
+		"params": {
+		    "legalerName": "Zs",                         （必填）（str）姓名
+		    "legalerIdCardNo": "1122334455667788X",      （必填）（str）身份证号码
+		    "legalerIdCardFront": "/img/001X.jpg",       （必填）（str）身份证照片
+		    "tel": "13211111112"                         （必填）（str）联系方式
+		},
+		// token 必传
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExNyIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1Mzc0MjA1MX0.VHoQjHdFYxi05FgfysNRBJ89IfMOJlMRFoXGz3s8LdU"
+	    }
+
+	**测试入参**
+
+	    {
+		"params": {
+		    "legalerName": "张三X",
+		    "legalerIdCardNo": "1122334455667788X",
+		    "legalerIdCardFront": "/img/001X.jpg",
+		    "tel": "13211111112"
+		},
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExNyIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1Mzc0MjA1MX0.VHoQjHdFYxi05FgfysNRBJ89IfMOJlMRFoXGz3s8LdU"
+	    }
+
+
+	07 管理员-货主审核
+	**URL**
+	>/admin/carCargoOwner/approveCargoOwner
+	http://localhost:8392/admin/carCargoOwner/approveCargoOwner
+	
+	**备注**
+
+
+	**请求参数**
+
+	    {
+		"params": {
+		    "businessId": "",     （必填）（int）货主Id
+		    "content": "",        （必填）（str）审核意见
+		    "result": ""          （必填）（str）审核结果（字典取值）
+		},
+		"token": ""
+		}
+
+	**测试入参**
+
+	    {
+		"params": {
+		    "businessId": "1",
+		    "content": "审核通过", 
+		    "result": "agree" 
+		},
+		"token": "admin"
+		}
+
+**响应示例**
+
+    {
+        "code": 1,
+        "msg": "success",
+        "data": "审批成功"
+    }
+
+<br><br>
+
+	06 
+	## 企业货主修改认证信息 ##	o
+
+**URL**
+>/api/carCargoOwner/cargoOwnerUpdateOrganizeInfo  
+	http://localhost:8392//api/carCargoOwner/cargoOwnerUpdateOrganizeInfo
+
+**请求参数**
+
+    {
+        "params": {
+        	"name": "武汉XX公司",                         （必填）（str）企业名称
+        	"creditCode": "ASD1234567",                  （必填）（str）信用代码
+        	"businessLicense": "/img/yyzz.png",          （必填）（str）营业执照照片
+    	    "legalerName": "Zs",                         （必填）（str）姓名
+            "legalerIdCardNo": "1122334455667788X",      （必填）（str）身份证号码
+            "legalerIdCardFront": "/img/001X.jpg",       （必填）（str）身份证照片
+            "tel": "13211111112"                         （必填）（str）联系方式
+        },
+        // token 必传
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1Mzc0MjYwM30.8I1bAbl03U942DEs21RjmvF5TecfiqQpbmD5KGv--RQ"
+    }
+
+**测试入参**
+
+    {
+        "params": {
+        	"name": "武汉XX公司",
+        	"creditCode": "ASD1234567",
+        	"businessLicense": "/img/yyzz.png",
+    	    "legalerName": "张三X",
+            "legalerIdCardNo": "1122334455667788X",
+            "legalerIdCardFront": "/img/001X.jpg",
+            "tel": "13211111112"
+        },
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1Mzc0MjYwM30.8I1bAbl03U942DEs21RjmvF5TecfiqQpbmD5KGv--RQ"
+    }
+
+**响应示例**
+
+    {
+        "code": 1,
+        "msg": "success",
+        "data": "修改成功"
+    }
+
+	05 货主登录
+		http://localhost:8392//api/customer/cargoOwner/login
+	请求
+		{
+			"params": {
+			    "userAccount": "hzxh",
+			    "password": "A123456."
+			}
+		    }
+	
+	响应
+	{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "user": {
+            "id": 117,
+            "userName": "货主小红",
+            "userAccount": "hzxh",
+            "tel": "13512341236",
+            "userStatus": 1,
+            "langType": null,
+            "logo": "1",
+            "appOpenid": null,
+            "openid": null,
+            "unionid": null,
+            "extend": null,
+            "customerType": "cargo_owner",
+            "createBy": 0,
+            "createDate": "2019-05-24 14:15:11",
+            "isActive": true,
+            "carOwner": null,
+            "cargoOwner": {
+                "id": 32,
+                "name": null,
+                "creditCode": null,
+                "businessLicense": null,
+                "legalerName": null,
+                "legalerIdCardNo": null,
+                "legalerIdCardFront": null,
+                "tel": null,
+                "longitude": null,
+                "latitude": null,
+                "province": null,
+                "city": null,
+                "county": null,
+                "addressDetail": null,
+                "intro": null,
+                "customerType": "person",
+                "customerTypeCN": "个人",
+                "avoidAudit": false,
+                "closeRate": null,
+                "favorableLevel": null,
+                "status": "uncertified",
+                "statusCN": "未认证",
+                "gender": null,
+                "customerId": 117,
+                "refereesId": 68,
+                "headImg": null,
+                "customer": null,
+                "createDate": "2019-05-24 14:15:11",
+                "approveStatus": "not_approved",
+                "approveStatusCN": "审批未通过",
+                "approveContentCN": null,
+                "type": "cargo_owner",
+                "typeCN": "货主",
+                "genderCN": ""
+            }
+        },
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMTciLCJpc3MiOiJodHRwczovL3d3dy5rYW5nYXJvb2JhYnljYXIuY29tIiwic3ViIjoiMTM1MTIzNDEyMzYiLCJyb2xlcyI6ImNhcmdvT3duZXIiLCJpYXQiOjE1NTg2Nzg3OTV9.slpgHjzzTyeqn2NdQ6lDFee4Sia5Q2k_k5cN3UyEu-I"
+    }
+}
+	
+   04  货主注册		api/carCargoOwner/cargoOwnerRegister	
+	http://localhost:8392/api/carCargoOwner/cargoOwnerRegister
+	{
+		"params": {
+		    "tel": "13512341236",
+		    "userAccount": "hzxh",
+		    "password": "A123456.",
+		    "code": "123456",
+		    "userName": "货主小红",
+		    "logo": "1",
+		    "referrerTel": "13611111111",
+		    "carCargoOwner": {
+			"jump": "true",
+			"longitude": "22.14758",
+			"latitude": "23.12456",
+			"province": "湖北省",
+			"city": "武汉市",
+			"county": "洪山区",
+			"addressDetail": "武汉市洪山区光谷大道现代世贸中心",
+			"intro": "企业简介",
+			"customerType": "person",
+			"name": "武汉xxx有限公司",
+			"creditCode": "XECOQWE11111XX21",
+			"businessLicense": "营业执照照片",
+			"legalerName": "法人姓名",
+			"legalerIdCardNo": "421123199910101231",
+			"legalerIdCardFront": "身份证照片",
+			"tel": "13612341231",
+			"gender": "1"
+		    },
+		    "oftenAddress": [
+			{
+			    "cargoName": "天然气",
+			    "beginProvince": "浙江省",
+			    "beginCity": "杭州市",
+			    "beginCounty": "下城区",
+			    "endProvince": "湖北省",
+			    "endCity": "武汉市",
+			    "endCounty": "洪山区"
+			}
+		    ]
+		}
+	    }
+	
+
+
+   03 个人车主修改认证信息			o
+	http://localhost:8392/api/carCargoOwner/carOwnerUpdatePersonInfo
+
+**请求参数**
+
+    {
+        "params": {
+    	    "legalerName": "Zs",                         （必填）（str）姓名
+            "legalerIdCardNo": "1122334455667788X",      （必填）（str）身份证号码
+            "legalerIdCardFront": "/img/001X.jpg",       （必填）（str）身份证照片
+            "tel": "13211111112"                         （必填）（str）联系方式
+        },
+        // token 必传
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NiIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTM3MzY5NDd9.fR_T2s5_HMGDUUaAR_Of3cjvpsXE1nZ5cDz7esWTm6g"
+    }
+    
+**测试入参**
+
+   {
+        "params": {
+    	    "legalerName": "xmX",
+            "legalerIdCardNo": "1122334455667788X",
+            "legalerIdCardFront": "/img/001X.jpg",
+            "tel": "13611111117"
+        },
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMTIiLCJpc3MiOiJodHRwczovL3d3dy5rYW5nYXJvb2JhYnljYXIuY29tIiwic3ViIjoiMTM0MTIzNDEyMzQiLCJyb2xlcyI6ImNhck93bmVyIiwiaWF0IjoxNTU4Njc0MjMzfQ.DJielvXWixiQcmDUUn7yTaEoS4A5oYlFeZafwLTBaYs"
+    }
+
+
+## 2.企业车主修改认证信息 ##	o
+
+**URL**
+>	http://localhost:8392/api/carCargoOwner/carOwnerUpdateOrganizeInfo
+
+**请求参数**
+
+    {
+        "params": {
+        	"name": "武汉XX公司",                         （必填）（str）企业名称
+        	"creditCode": "ASD1234567",                  （必填）（str）信用代码
+        	"businessLicense": "/img/yyzz.png",          （必填）（str）营业执照照片
+    	    "legalerName": "Zs",                         （必填）（str）姓名
+            "legalerIdCardNo": "1122334455667788X",      （必填）（str）身份证号码
+            "legalerIdCardFront": "/img/001X.jpg",       （必填）（str）身份证照片
+            "tel": "13211111112"                         （必填）（str）联系方式
+        },
+        // token 必传
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTM3MzgxODN9.7V8BWoygGwVd1sW7FXNDO8LiSlcTL_tDuf3cr2K7lb8"
+    }
+
+**测试入参**
+
+    {
+        "params": {
+        	"name": "武汉XX公司",
+        	"creditCode": "ASD1234567",
+        	"businessLicense": "/img/yyzz.png",
+    	    "legalerName": "xmX",
+            "legalerIdCardNo": "1122334455667788X",
+            "legalerIdCardFront": "/img/001X.jpg",
+            "tel": "13611111117"
+        },
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMTIiLCJpc3MiOiJodHRwczovL3d3dy5rYW5nYXJvb2JhYnljYXIuY29tIiwic3ViIjoiMTM0MTIzNDEyMzQiLCJyb2xlcyI6ImNhck93bmVyIiwiaWF0IjoxNTU4Njc0MjMzfQ.DJielvXWixiQcmDUUn7yTaEoS4A5oYlFeZafwLTBaYs"
+    }
+
+
+	## 3.管理员 - 车主审核 ##    o
+	**URL**
+	>	http://localhost:8392/admin/carCargoOwner/approveCarOwner
+
+	**备注**
+
+	**请求参数**
+
+	    {
+		"params": {
+		    "businessId": "",     （必填）（int）车主Id
+		    "content": "",        （必填）（str）审核意见
+		    "result": ""          （必填）（str）审核结果
+		},
+		"token": ""
+		}
+
+	**测试入参**
+		
+	    {
+		"params": {
+		    "businessId": "27",
+		    "content": "审核通过", 
+		    "result": "agree" 
+		},
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaXNzIjoiaHR0cHM6Ly93d3cua2FuZ2Fyb29iYWJ5Y2FyLmNvbSIsInN1YiI6IjEzMTYzMzQwNTY3Iiwicm9sZXMiOiJ1c2VyIiwiaWF0IjoxNTU4NjY3OTMxfQ.g4w6Hqphj5ih-okGnOS_yOUQDwSumaR_VFp5WjTwBE8"
+		}
+
+	## 2.管理员 - 待审批的车主分页 ## 	
+	 http://localhost:8392/admin/carCargoOwner/approvePendingCarOwnerPage
+
+	
+		
+	车主注册   >	 http://localhost:8392/api/carCargoOwner/carOwnerRegister 
+		{
+		"params": {
+		    "tel": "13611111117",
+		    "userAccount": "czxm",
+		    "password": "A123456.",
+		    "code": "123456",
+		    "userName": "车主小明",
+		    "logo": "1",
+		    "referrerTel": "13611111111",
+		    "carCargoOwner": {
+			"jump": "true",
+			"longitude": "22.14758",
+			"latitude": "23.12456",
+			"province": "湖北省",
+			"city": "武汉市",
+			"county": "洪山区",
+			"addressDetail": "武汉市洪山区光谷大道现代世贸中心",
+			"intro": "企业简介",
+			"customerType": "person",
+			"name": "武汉xxx有限公司",
+			"creditCode": "XECOQWE11111XX21",
+			"businessLicense": "营业执照照片",
+			"legalerName": "法人姓名",
+			"legalerIdCardNo": "421123199910101231",
+			"legalerIdCardFront": "身份证照片",
+			"tel": "13612341231",
+			"gender": "1"
+		    },
+		    "oftenAddress": [
+			{
+			    "cargoName": "天然气",
+			    "beginProvince": "浙江省",
+			    "beginCity": "杭州市",
+			    "beginCounty": "下城区",
+			    "endProvince": "湖北省",
+			    "endCity": "武汉市",
+			    "endCounty": "洪山区"
+			}
+		    ]
+		}
+	    }
+	
+	
+	货主注册
+	
+	管理员登录
+
+	
+003 数据字典接口
+	{
+
+	    "params":{"categorys":["cargo_source_status"]},
+
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMSIsInJvbGVzIjoiY2FyT3duZXIiLCJpYXQiOjE1NTg1MTgzNzN9.Sp8m5Zq-7HfAsJ8oE9nK2-EQimSYaAKHxJe0FA6Kd1k"
+	}
+
+002  
+	车辆、司机、压货人 
+
+	（前台）车辆.md
+	/api/car/add  o
+	/api/car/myCarPage o 
+	/api/car/details  o
+	/api/car/updateNoCheck o
+	/api/car/updateCheck o
+	
+	/api/car/delete o 
+	
+	
+001   http://localhost:8392/familiarCar/page
+	

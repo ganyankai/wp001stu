@@ -1,0 +1,1303 @@
+004 p008bos-ext
+	10. /*和/**的区别
+		/**可以匹配当前目录下的所有子目录
+		/*只能匹配当前目录
+
+	9.shiro框架的核心功能
+		1.认证
+		2.授权
+		3.会话管理
+		4.加密
+		
+
+	8.常见的权限控制方式
+		1.基于拦截器的实现
+		2.基于方法注解的实现
+		
+	7.认证和授权
+		认证:系统提供的用于识别用户身份的功能,通常登录功能就是认证功能-------让系统知道你是谁
+		授权:系统授予用户可以访问哪些功能的许可(证书)----让系统知道你能做什么??
+		
+	6.权限管理实现
+		4.配置拦截器进行权限校验,对于需要判断权限的路径判断用户是否拥有权限
+		3.在页面遍历用户所有的角色,再遍历角色所拥有的权限,判断权限名称是要显示
+		2.配置监听器,在项目启动时读取所有的权限地址,放到jsp页面可以读取到的权限作用域
+		1.设计权限表 包含权限的名称,权限的请求地址,权限的层级
+			
+	5.业务受理数据库设计
+		业务通知单
+		工单
+		工作单
+
+	4.业务受理需求分析
+	
+	3.给xm授权:  (偶然发现远程连接root用户竟然不需要密码)
+		grant all on test.* to xm;
+	2.bos数据库mysql采用192.168.1.195-redis-solr服务器
+	1. wsimport -s . -p com.gan.crm http://localhost:8080/p011crm_gan/service/customer?wsdl
+	
+
+003 p009xyshop
+
+	24.	一台服务器一万
+		部署一个完整电商项目需要50台服务器
+		nginx最好是一主一背服务器处理请求
+		
+	23.mycat可以用来管理mysql集群
+		 ./mycat console	前端启动
+		默认端口:8066
+		
+
+	22.mysql设置密码
+		1.用root 进入mysql后(好像不靠谱)
+		mysql>set password =password('你的密码');    
+		mysql>flush privileges;
+		2.使用GRANT语句 
+		mysql>grant all on *.* to 'root'@'%' IDENTIFIED BY '123456' with grant option ;
+		      grant all on *.* to 'root'@'localhost' IDENTIFIED BY '123456' with grant option ;
+		mysql>flush privileges;
+
+		3.进入mysql库修改user表
+		mysql>use mysql;
+		mysql>update user set password=password('你的密码') where user='root'; 
+		mysql>flush privileges;
+	
+		update user set password='123456' where user='root'; 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+	21.使用yum安装mysql
+		要同时安装客户端和服务器
+
+	20.解压jdk安装包 
+		 tar -zxvf jdk-7u55-linux-i586.tar.gz  -C /usr/local/
+		 vi /etc/profile
+			 JAVA_HOME=/usr/local/jdk1.7
+			 export_PATH=$JAVA_HOME/bin:$PATH
+		 source /etc/profile
+
+		 注意64位系统安装32位程序会报错
+		 
+		 文件批量重命名
+		 rename .repo .repo.bak *
+		
+	19.暂时关闭防火墙
+		service iptables stop
+		关闭防火墙的方法为：
+
+		1. 永久性生效
+
+		开启：chkconfig iptables on
+
+		关闭：chkconfig iptables off
+
+		关机和reboot命令竟然是有区别的
+
+
+	18.删除数据库表中唯一的元素
+		SELECT
+                id
+		FROM (SELECT
+		id
+		FROM `test`
+		GROUP BY aa,bb,cc) 
+		该sql语法有误,派生表必须有自己的别名
+		
+		
+		SELECT
+                id
+		FROM (SELECT
+		id
+		FROM `test`
+		GROUP BY aa,bb,cc) t
+		语法正确
+		
+		DELETE
+		FROM test
+		WHERE id NOT IN(SELECT
+				  id
+				FROM (SELECT
+					id
+				      FROM `test`
+				      GROUP BY aa,bb,cc) t )
+		语法正确,可删除表中按分组列重复的元素
+
+		
+		SELECT
+                  id
+                FROM (SELECT
+                        id
+                      FROM `test`
+                      GROUP BY aa,bb,cc) t
+		思考这张表为何语法有误
+		DELETE
+		FROM test
+		WHERE id NOT IN  (SELECT
+					id
+				      FROM `test`
+				      GROUP BY aa,bb,cc) t
+
+		     
+	17.activemq
+		启动: /root/apache-activemq-5.12.0/bin/activemq start
+		http://192.168.1.191:8161/
+
+	16.solr集群搭建
+		1.zookeeper集群
+		mkdir /usr/local/solr-cloud
+		cp -r zookeeper-3.4.6 /usr/local/solr-cloud/zookeeper01
+		cp -r zookeeper-3.4.6 /usr/local/solr-cloud/zookeeper02
+		cp -r zookeeper-3.4.6 /usr/local/solr-cloud/zookeeper03
+		
+		创建数据文件
+		 cd /usr/local/solr-cloud/
+		  cd zookeeper01
+		  mkdir data
+		  cd data
+		  touch myid
+		  vim myid
+		  cat myid
+		vi /usr/local/solr-cloud/zookeeper01/conf/zoo.cfg
+		dataDir=/usr/local/solr-cloud/zookeeper02/data/
+		clientPort=2181
+		server.1=192.168.1.195:2881:3881
+		server.2=192.168.1.195:2882:3882
+		server.3=192.168.1.195:2883:3883
+		
+		 echo 3 > data/myid
+		编写脚本启动集群
+		cd /usr/local/solr-cloud
+		/usr/local/solr-cloud/start-all.sh
+		/usr/local/solr-cloud/zookeeper01/bin/zkServer.sh start
+
+		start-all.sh:
+		cd zookeeper01/bin
+		./zkServer.sh start
+		cd ../../
+		cd zookeeper02/bin
+		./zkServer.sh start
+		cd ../../
+		cd zookeeper03/bin
+		./zkServer.sh start
+		cd ../../
+		chmod u+x start-all.sh 
+		
+		./start-all.sh
+		zookeeper01/bin/zkServer.sh start
+		zookeeper01/bin/zkServer.sh status
+		zookeeper02/bin/zkServer.sh status
+
+		zookeeper01/bin/zkServer.sh stop
+		
+		2.solr集群
+		cp -r apache-tomcat-7.0.47 /usr/local/solr-cloud/tomcat01
+		 cp -r ../solr/tomcat/webapps/solr/ tomcat01/webapps/
+
+		cd /usr/local/solr-cloud/
+		 vim tomcat01/conf/server.xml 
+		改三个地方端口号 
+		
+		为每一个solr配置solrhome
+		
+		[root@mymini3 solr-cloud]#
+		cp -r ../solr/solrhome/ solrhome01
+		[root@mymini3 solr-cloud]# vim tomcat01/webapps/solr/WEB-INF/web.xml 
+
+		配置每一个solr的ip和端口号
+		cd /usr/local/solr-cloud/solrhome01
+		vim solr.xml
+		<solrcloud>
+		    <str name="host">192.168.1.195</str>
+		    <int name="hostPort">8480</int>
+		    <str name="hostContext">${hostContext:solr}</str>
+		    <int name="zkClientTimeout">${zkClientTimeout:30000}</int>
+		    <bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
+		  </solrcloud>
+
+		配置solr和zookeeper的关系
+		vim catalina.sh
+		 cd tomcat01/bin
+		 # ----- Execute The Requested Command -----------------------------------------
+		 JAVA_OPTS="-DzkHost=192.168.1.195:2181,192.168.1.195:2182,192.168.1.195:2183"
+
+		 vi /usr/local/solr-cloud/tomcat03/bin/catalina.sh
+
+		用zookeeper集中管理配置文件
+		cd /root/solr-4.10.3/example/scripts/cloud-scripts
+		上传配置文件
+		./zkcli.sh -zkhost 192.168.1.195:2181,192.168.1.195:2182,192.168.1.195:2183 -cmd upconfig -confdir /usr/local/solr-cloud/solrhome01/collection1/conf -confname myconf
+		检验是否成功:cd /usr/local/solr-cloud/zookeeper01
+		cd bin
+		 ./zkCli.sh -server 192.168.1.195:2182
+		 ls /configs/myconf 看看有没有我们上传的文件
+		 quit
+		 启动tomcat
+		
+		 chmod u+x start-tomcat-all.sh 
+		 /usr/local/solr-cloud/tomcat01/bin/startup.sh
+		 /usr/local/solr-cloud/tomcat02/bin/startup.sh
+		 /usr/local/solr-cloud/tomcat03/bin/startup.sh
+		 /usr/local/solr-cloud/tomcat04/bin/startup.sh
+
+		 chmod u+x stop-tomcat-all.sh 
+		 /usr/local/solr-cloud/tomcat01/bin/shutdown.sh
+		 /usr/local/solr-cloud/tomcat02/bin/shutdown.sh
+		 /usr/local/solr-cloud/tomcat03/bin/shutdown.sh
+		 /usr/local/solr-cloud/tomcat04/bin/shutdown.sh
+
+		 /usr/local/solr-cloud/start-tomcat-all.sh 
+		 ./start-tomcat-all.sh 
+		 ./stop-tomcat-all.sh 
+		 /usr/local/solr-cloud/stop-tomcat-all.sh 
+		查看启动日志:
+		 tail -f /usr/local/solr-cloud/tomcat01/logs/catalina.out 
+
+		 访问测试
+		 192.168.1.195:8180/solr
+
+		 在浏览器窗口创建新的切片
+		 http://192.168.1.195:8180/solr/admin/collections?action=CREATE&name=collection2&numShards=2&replicationFactor=2
+		 
+		 删除不用的collections
+		 http://192.168.1.195:8180/solr/admin/collections?action=DELETE&name=collection1
+
+	15.数据导入索引库
+		SELECT
+		  a.id,
+		  a.title,
+		  a.sell_point,
+		  a.price,
+		  a.image,
+		  b.name          category_name
+		FROM tb_item a
+		  LEFT JOIN tb_item_cat b
+		    ON a.cid = b.id
+		WHERE a.status = 1
+	
+	14.solr
+		01.启动tomcat
+			[root@mymini3 tomcat]# bin/startup.sh
+			[root@mymini3 tomcat]# tail -f logs/catalina.out 
+					       bin/shutdown.sh 
+
+					   
+		02.安装solr
+			解压后拷贝到tomcat下
+			cp solr-4.10.3.war /usr/local/solr/tomcat/webapps/solr.war
+			拷贝/root/solr-4.10.3/example/lib/ext下相关jiar包
+			[root@mymini3 ext]# cp * /usr/local/solr/tomcat/webapps/solr/WEB-INF/lib/
+			复制家目录/root/solr-4.10.3/example
+			[root@mymini3 example]# cp -r solr /usr/local/solr/solrhome
+			修改配置文件
+			vim tomcat/webapps/solr/WEB-INF/web.xml 
+			
+			启动tomcat并测试 http://192.168.1.195:8080/solr/
+
+			添加中文分析器
+			cp IKAnalyzer2012FF_u1.jar /usr/local/solr/tomcat/webapps/solr/WEB-INF/lib/
+
+			导入相关配置文件
+			mkdir /usr/local/solr/tomcat/webapps/solr/WEB-INF/classes
+			[root@mymini3 IK Analyzer 2012FF_hf1]# cp ext_stopword.dic IKAnalyzer.cfg.xml mydict.dic /usr/local/solr/tomcat/webapps/solr/WEB-INF/classes/
+		
+			配置业务域
+			cd /usr/local/solr/solrhome/collection1/conf
+			 vim schema.xml 
+			 增加以下内容
+			 <fieldType name="text_ik" class="solr.TextField">
+			  <analyzer class="org.wltea.analyzer.lucene.IKAnalyzer"/>
+			</fieldType>
+
+			<field name="item_title" type="text_ik" indexed="true" stored="true"/>
+			<field name="item_sell_point" type="text_ik" indexed="true" stored="true"/>
+			<field name="item_price"  type="long" indexed="true" stored="true"/>
+			<field name="item_image" type="string" indexed="false" stored="true" />
+			<field name="item_category_name" type="string" indexed="true" stored="true" />
+
+			<field name="item_keywords" type="text_ik" indexed="true" stored="false" multiValued="true"/>
+			<copyField source="item_title" dest="item_keywords"/>
+			<copyField source="item_sell_point" dest="item_keywords"/>
+			<copyField source="item_category_name" dest="item_keywords"/>
+
+			重启tomcat
+
+	13.策略模式
+		redis单机版和集群版代码不一样,可以为接口定义不同的实现类,这其实是一种策略模式
+		@Test
+		public void testJedisClient() throws Exception{
+			//初始化spring容器
+			ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-redis.xml");
+			//从容器中获得JedisClient对象
+			JedisClient jedisClient = applicationContext.getBean(JedisClient.class);
+			jedisClient.set("mytest", "jedisClient");
+			String string = jedisClient.get("mytest");
+			System.out.println(string);
+		}
+		
+		<!-- 连接redis单机版 -->
+		<!-- <bean id="jedisClientPool" class="cn.xyshop.common.jedis.JedisClientPool">
+			<property name="jedisPool" ref="jedisPool"></property>
+		</bean>
+		
+		<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+			<constructor-arg name="host" value="192.168.1.195"></constructor-arg>
+			<constructor-arg name="port" value="6379"></constructor-arg>
+		</bean> -->
+		
+		<!-- 连接redis集群 -->
+		<bean id="jedisClientCluster" class="cn.xyshop.common.jedis.JedisClientCluster">
+			<property name="jedisCluster" ref="jedisCluster"/>
+		</bean>
+		<bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+			<constructor-arg name="nodes">
+				<set>
+					<bean class="redis.clients.jedis.HostAndPort">
+						<constructor-arg name="host" value="192.168.1.195"/>
+						<constructor-arg name="port" value="7001"/>
+					</bean>
+					<bean class="redis.clients.jedis.HostAndPort">
+						<constructor-arg name="host" value="192.168.1.195"/>
+						<constructor-arg name="port" value="7002"/>
+					</bean>
+					<bean class="redis.clients.jedis.HostAndPort">
+						<constructor-arg name="host" value="192.168.1.195"/>
+						<constructor-arg name="port" value="7003"/>
+					</bean>
+					<bean class="redis.clients.jedis.HostAndPort">
+						<constructor-arg name="host" value="192.168.1.195"/>
+						<constructor-arg name="port" value="7004"/>
+					</bean>
+					<bean class="redis.clients.jedis.HostAndPort">
+						<constructor-arg name="host" value="192.168.1.195"/>
+						<constructor-arg name="port" value="7005"/>
+					</bean>
+					<bean class="redis.clients.jedis.HostAndPort">
+						<constructor-arg name="host" value="192.168.1.195"/>
+						<constructor-arg name="port" value="7006"/>
+					</bean>
+				</set>
+			</constructor-arg>
+		</bean>
+
+	12.连接jedis集群
+		Set<HostAndPort> nodes = new HashSet<>();
+		nodes.add(new HostAndPort("192.168.1.195", 7001));
+		nodes.add(new HostAndPort("192.168.1.195", 7002));
+		nodes.add(new HostAndPort("192.168.1.195", 7003));
+		nodes.add(new HostAndPort("192.168.1.195", 7004));
+		nodes.add(new HostAndPort("192.168.1.195", 7005));
+		nodes.add(new HostAndPort("192.168.1.195", 7006));
+		//创建一个JedisCluster对象,有一个参数nodes是一个set类型,set中包含若干个HostAndPort对象
+		JedisCluster jedisCluster = new JedisCluster(nodes);
+		//直接使用JedisCluster对象操作redis
+		jedisCluster.set("test", "123");
+		String string = jedisCluster.get("test");
+		System.err.println(string);
+		//关闭JedisCluster
+		jedisCluster.close();
+	11.连接单机版jedis
+		//创建一个连接池对象,两个参数host,port
+		JedisPool jedisPool = new JedisPool("192.168.1.195", 6379);
+		//从连接池获得一个连接,就是一个jedis对象
+		Jedis jedis = jedisPool.getResource();
+		//使用jedis操作redis
+		String string = jedis.get("test123");
+		//关闭连接,每次使用完毕后关闭连接,连接池回收资源
+		System.out.println(string);
+		//关闭连接
+		jedis.close();
+		//关闭连接池
+		jedisPool.close();
+        10.搭建虚拟机伪集群
+		出现交换文件解决方案:
+		删除目录下交换文件即可 ll -a
+		
+		在同一台虚拟机上复制多个redis目录
+		修改redis.conf配置文件设置集群模式为真和修改端口号
+		创建批处理文件启动集群
+		start-all.sh
+
+		./redis-server redis.conf
+		cd redis01
+		./redis-server redis.conf
+		cd ..
+		cd redis02
+		./redis-server redis.conf
+		cd ..
+		cd redis03
+		./redis-server redis.conf
+		cd ..
+		cd redis04
+		./redis-server redis.conf
+		cd ..
+		cd redis05
+		./redis-server redis.conf
+		cd ..
+		cd redis06
+		./redis-server redis.conf
+		
+		
+		chmod u+x start-all.sh
+		[root@mymini3 redis-cluster]# ./start-all.sh 
+		/usr/local/redis-cluster/start-all.sh 
+
+		从源代码中找到rb脚本文件
+		ll *.rb
+		cp redis-trib.rb /usr/local/redis-cluster/
+
+		安装rb相关的软件
+		yum install ruby
+		yum install rubygems
+
+		打开mymini1相关的配置,并开启httpd 服务:	service httpd start
+		
+
+		./redis-trib.rb create --replicas 1 192.168.1.195:7001 192.168.1.195:7002 192.168.1.195:7003 192.168.1.195:7004 192.168.1.195:7005  192.168.1.195:7006
+		无误及搭建完成
+		真实搭集群和我们这里的步骤一模一样,关闭服务器集群防火墙
+		测试连接:
+		redis01/redis-cli -p 7004 
+		redis01/redis-cli -p 7004 -c //集群模式
+	9.redis
+		04 其他数据类型
+			lpush list1 1 2 3 4 5 6 从左边添加,可认为新元素在过去元素的左边
+			rpush list1 a b c d e 
+			lrange list1 0 -1
+			
+			lpop list1:从左边取一个元素,取完之后没了
+			rpop list1
+			
+			sadd set1 a b c b c d
+			smembers set1
+			
+			sadd seta a b c d e
+			sadd setb c d e f g
+			sdiff seta setb    //a b
+			sdiff setb seta	   //f g
+
+			 sinter seta setb
+			 sunion seta setb
+			 
+			 zadd zset1 1 a 3 b 2 c 5 d
+			 zrange zset1 0 -1
+		
+			  zrem zset1 a  //删除a
+			  zrevrange zset1 0 -1 //降序排列
+			  zrevrange zset1 0 -1 withscores //排序并带上分数
+
+			  001_设置有效期
+			  expire key1 100
+			  ttl key1 查询
+			  -1:永久保存 -2:不存在 整数说明在倒计时
+			  persist key1 持久化
+
+		03 存取 set str1 abc
+			get str1
+			keys *: 显示所有keys
+			incr key1 :自增
+			decr key2 :自减
+			del key2  :删除
+			hset hash1 field1 1 
+			hget hash1 field1
+			hkeys hash1
+			hvals hash1
+			hgetall hash2 :取得所有的键和值
+			hdel hash2 field1:删除hash2中某一键
+
+		02 远程连接redis ./redis-cli -h 192.168.1.195 -p 6379
+		   健康检查 ping
+		01 启动redis
+		   /usr/local/redis/bin/redis-server redis.conf	
+		   kill pid 关闭进程
+		   kill -9 强制关闭
+		
+	8.虚拟机异常
+		今天虚拟机又发生了突然连接不上的奇怪现象
+		将桥接模式改为nat模式后连接成功,发现vmvare虚拟机中编辑网络中没有了桥接模式
+		而且能否连上虚拟机跟虚拟网络编辑器中的子网ip有很大联系
+	
+	虚拟机克隆后网络不通:可以删除 /etc/udev/rules.d/70-persistent-net.rules 所有内容
+	7.竟然可以不通过tomcat自己通过spring手动发布服务
+		@Test
+		public void publishService() throws Exception{
+			ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
+			while(true){
+				Thread.sleep(1000);
+			}
+		}
+
+	6.富文本编辑器的使用
+		第一步：在jsp中引入KindEditor的css和js代码。
+		第二步：在表单中添加一个textarea控件。是一个富文本编辑器的载体。类似数据源。
+		第三步：初始化富文本编辑器。使用官方提供的方法初始化。
+		第四步：取富文本编辑器的内容。
+		表单提交之前，把富文本编辑器的内容同步到textarea控件中。
+
+	5.虚拟机配置
+		修改网卡 vi /etc/sysconfig/network-scripts/ifcfg-Auto_eth2 
+		删除约束 rm -rf /etc/udev/rules.d/70-persistent-net.rules
+
+		一定要灵活使用虚拟机快照功能
+
+		netstat -unltp|grep fdfs
+
+		就执行了这句就把文件上传功能就好使了
+		/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+
+		发现以前金山的文档里就少了一个d
+		/usr/bin/fdfs_storage /etc/fdfs/storage.conf restart
+
+	4.tomcat配置与启动
+		启动:tomcat-sina/bin/startup.sh
+
+		修改首页:vim tomcat-sina/webapps/ROOT/index.jsp
+		
+		查看启动日志:tail -f tomcat-sina2/logs/catalina.out
+		
+	3.网站就是域名
+		一个域名只能绑定一个ip地址
+		nginx可通过域名访问不同的虚拟主机
+
+
+	2.桥接模式下需要将虚拟机与主机设置成同一ip网段
+		如 192.168.1.8 与192.168.1.192
+		
+
+	1.常用软件安装校验
+	1.1 nginx是C语言开发，建议在linux上运行，本教程使用Centos6.5作为安装环境。
+	gcc
+		安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：yum install gcc-c++ 
+		gcc -v
+		which gcc
+	PCRE
+		PCRE(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。
+	yum install -y pcre pcre-devel
+	注：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。
+		rpm -qa pcre
+	zlib
+		zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。
+	yum install -y zlib zlib-devel
+		rpm -qa zlib
+	openssl
+		OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。
+		nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。
+	yum install -y openssl openssl-devel
+		rpm -qa openssl
+	文件搜索
+	find / -name PCRE 
+	
+	手动下载
+	[root@localhost src]# wget http://www.openssl.org/source/openssl-fips-2.0.10.tar.gz
+	省略安装内容...
+	[root@localhost src]# wget http://zlib.net/zlib-1.2.11.tar.gz
+	省略安装内容...
+	[root@localhost src]# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.gz
+
+	
+	一键安装
+
+	1.2 找寻pcre安装目录(被坑死)
+	find / -name pcre-*
+	find / -name zlib-*
+	正确启动:
+	./configure \
+	--prefix=/usr/local/nginx \
+	--pid-path=/var/run/nginx/nginx.pid \
+	--lock-path=/var/lock/nginx.lock \
+	--error-log-path=/var/log/nginx/error.log \
+	--http-log-path=/var/log/nginx/access.log \
+	--with-http_gzip_static_module \
+	--http-client-body-temp-path=/var/temp/nginx/client \
+	--http-proxy-temp-path=/var/temp/nginx/proxy \
+	--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+	--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+	--http-scgi-temp-path=/var/temp/nginx/scgi \
+	--with-zlib=/usr/local/zlib-1.2.11 \
+	--with-openssl=/usr/local/openssl-fips-2.0.10
+	
+
+	可能有误:
+	./configure \
+	--prefix=/usr/local/nginx \
+	--pid-path=/var/run/nginx/nginx.pid \
+	--lock-path=/var/lock/nginx.lock \
+	--error-log-path=/var/log/nginx/error.log \
+	--http-log-path=/var/log/nginx/access.log \
+	--with-http_gzip_static_module \
+	--http-client-body-temp-path=/var/temp/nginx/client \
+	--http-proxy-temp-path=/var/temp/nginx/proxy \
+	--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+	--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+	--http-scgi-temp-path=/var/temp/nginx/scgi \
+	--with-zlib=/usr/local/zlib-1.2.11
+	
+	--with-pcre=/usr/share/doc/pcre-7.8 \
+	\
+	--with-openssl=/usr/share/doc/openssl-1.0.1e
+	\
+	--without-http_rewrite_module
+
+	级联创建文件
+	mkdir -p
+	
+	启动nginx:
+	sbin/nginx
+
+	查看进程:
+	ps aux | grep nginx
+	
+
+	启动结果
+	root      21427  0.0  0.0  17768   604 ?        Ss   01:16   0:00 nginx: master process ./nginx
+	nobody    21428  0.0  0.1  18196  1192 ?        S    01:16   0:00 nginx: worker process
+	root      21444  0.0  0.0 103308   852 pts/1    S+   01:20   0:00 grep nginx
+	
+	停止命令:
+	sbin/nginx -s stop
+
+	开机刷新配置:
+	sbin/nginx -s reload
+
+002 p008bos
+	一.搭建数据库环境(使用mysql3307非默认端口)
+	1.创建数据库 
+		create database bos32 character set utf8;
+	2.创建一个数据库用户
+		create user xiaolizi identified by '123';
+	3.为新用户授权
+		grant all on bos32.* to xiaolizi;
+	4.使用新用户登录mysql
+		退出root exit;
+		远程连接不上可能是数据库出了问题,用mysql5.5 解决了
+
+		mysql -uxiaolizi -p123
+
+		查看用户
+		 USE mysql;
+		SELECT * FROM USER;
+	
+	二.maven环境
+		1.创建父工程p008bos-parent
+		跳过骨架
+		提供pom.xml 打包方式pom
+		2.创建子工程p008bos-utils
+		3.创建子工程p008bos-domain...
+		4.配置
+			web.xml
+			struts.xml
+			log4j.properties
+			applicationContext.xml
+			创建项目的目录结构
+			讲项目使用的资源文件复制到项目中
+			
+	三.svn环境
+		1.创建一个svn数据仓库
+		2.修改配置
+			修改svnserver.conf
+			passwd
+			authz
+		3.启动svn服务
+		D:\003_studyDir\001_svn>svnserve -d -r D:\003_studyDir\001_svn
+		svnserve -d -r D:\003_studyDir\001_svn 
+		
+		svn://192.168.0.102/001_svn
+		4.将本地代码共享到svn仓库 svn://192.168.0.102:3690/  (思考如何在仓库增加后缀如bos32)
+		
+		删除svn保存的密码
+		删除 Subversion\auth\svn.simple文件夹下的文件即可
+
+	四.主页插件
+		将easyUI的资源文件引入到页面中
+			<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css">
+			<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/js/easyui/themes/icon.css">
+			<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.8.3.js"></script>
+			<script type="text/javascript" src="${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"></script>
+		1.layout页面布局
+			只需加几个简单的样式即可实现布局
+			<body class="easyui-layout">
+				<!-- 使用div元素描述每个区域 -->
+				<div style="height: 100px" data-options="region:'north'">北部</div>
+				<div style="width: 200px" data-options="region:'west'">西部</div>
+				<div data-options="region:'center'">中心</div>
+				<div style="width: 100px" data-options="region:'east'">东部</div>
+				<div style="height: 50px" data-options="region:'south'">南部</div>
+			</body>
+
+		2.according折叠面板
+		3.tabs
+
+		4.引入jquery ztree插件
+		<link rel="stylesheet" href="../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+		<script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.ztree.all-3.5.js"></script>
+		5.<!--使用简单json构造ztree   重点 -->  非常经典的方式,值得效仿借鉴
+				<script type="text/javascript">
+				
+					$(function(){
+						//动态创建ztree
+						var setting2 = {
+								data: {
+									simpleData: {
+										enable: true //使用简单json数据构造ztree节点
+									}
+								}
+						};
+						
+						//构造节点数据
+						var zNodes2 = [
+						              {"id":"1","pId":"2","name":"节点一"},
+						              {"id":"2","pId":"3","name":"节点二"},
+						              {"id":"3","pId":"0","name":"节点三"}
+						              ];       
+						//调用API初始化ztree
+						$.fn.zTree.init($("#ztree2"), setting2, zNodes2);
+						
+					});
+				</script>
+		6.发送ajax请求获取json数据构造ztree
+		7.为ztree节点绑定单击事件
+	五.工具使用
+		1.PowerDesigner工具的使用
+	六.项目底层代码构建
+		1.持久层代码抽取
+			public interface IBaseDao<T> {
+	
+			public void save(T entity);
+			public void delete(T entity);
+			public void update(T entity);
+			public T findById(Serializable id);
+			public List<T> findAll();
+
+			}	
+		2.表现层代码抽取
+	七.实现用户登录
+		INSERT INTO t_user(id,username,PASSWORD) VALUES ('1','admin',MD5('1234'));
+	
+	八.自定义拦截器实现用户未登陆自动跳转到登陆页面
+		1.需要继承struts2框架的MethodFilterInterceptor
+
+			/**
+			 * @author admin
+			 *	自定义拦截器,实现用户未登陆自动跳转到登陆页面
+			 */
+			public class BOSLoginInterceptor extends MethodFilterInterceptor{
+				//拦截方法
+				protected String doIntercept(ActionInvocation invocation) throws Exception {
+					//从session中获取用户对象
+			//		User user = (User) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+					User user = BOSUtils.getLoginUser();
+					if(user == null){
+						//没有登陆，跳转到登陆页面
+						return "login";
+					}
+					//放行
+					return invocation.invoke();
+				}
+				
+			}
+		
+		2.配置拦截器struts拦截器
+	九.实现修改密码功能
+		1.validatebox表单校验
+			1.1 非空校验
+
+				<td><input required="required" id="txtNewPass" type="Password" class="txt01 easyui-validatebox" /></td>
+
+			1.2 validType指定
+				email url length[0,100],remote
+				<td><input required="required" data-options="validType:'length[4,6]'" id="txtRePass" type="Password" class="txt01 easyui-validatebox" /></td>
+			
+			1.3 为确定按钮绑定事件
+				
+			1.4 服务端处理
+	十.设计数据库表格，完成基础domain类和映射文件的编写的编写
+	十一.完成取派员管理功能
+		1.页面调整
+		1.1.扩展一个手机号校验规则
+			<script type="text/javascript">
+				$(function() {
+					var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+					
+					$.extend($.fn.validatebox.defaults.rules, { 
+						
+						telephone: { 
+
+						validator: function(value, param){ 
+							
+							return reg.test(value); 
+
+						}, 
+
+						message: '手机号输入有误' 
+							
+						} 
+						}); 
+				});
+				
+				
+			</script>	
+		1.2.应用规则
+			<input type="text" data-options="validType:'telephone'" name="telephone" class="easyui-validatebox" required="true"/>
+		1.3.为保存按钮绑定事件
+		
+		2.服务端实现
+	十二.datagrid的使用
+		1. <!-- 方式-:将静态的HTML渲染为datagrid的样式 -->
+			<table class="easyui-datagrid">
+				<thead>
+					<tr>
+						<th data-options="field:'id'">编号</th>
+						<th data-options="field:'name'">姓名</th>
+						<th data-options="field:'age'">年龄</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>001</td>
+						<td>小明</td>
+						<td>90</td>
+					</tr>
+					<tr>
+						<td>002</td>
+						<td>老王</td>
+						<td>3</td>
+					</tr>
+				</tbody>
+			</table>
+
+		2.<!-- 方式二:发送ajax请求获取json数据创建datagrid , 请求不需要我们手动发-->
+			<table data-options="url:'${pageContext.request.contextPath }/json/datagrid_data.json'" class="easyui-datagrid">
+				<thead>
+					<tr>
+						<th data-options="field:'id'">编号</th>
+						<th data-options="field:'name'">姓名</th>
+						<th data-options="field:'age'">年龄</th>
+					</tr>
+				</thead>
+			</table>
+		
+			file:07_datagrid.jsp
+			[
+				{"id":"001","name":"小莉","age":100},
+				{"id":"002","name":"小红","age":100},
+				{"id":"003","name":"小白","age":100}
+			]
+	十二.实现取派员分页查询
+		1.修改页面中datagrid的url地址
+		2.服务端实现
+		2.1 包装pageBean
+			public class PageBean {
+				private int currentPage; //当前页码
+				private int pageSize;  //每页显示的记录数
+				//不管做什么样的条件过滤,直接往这个对象里面封装
+				private DetachedCriteria detachedCriteria; //查询条件
+				private int total;  //总记录数
+				private List rows; //当前页需要展示的数据集合
+				
+			}
+		2.2在BaseDao中扩展通用分页查询方法
+			public void pageQuery(PageBean pageBean);
+
+			/* (non-Javadoc)
+			 * 通用分页查询方法
+			 */
+			@Override
+			public void pageQuery(PageBean pageBean) {
+				int currentPage = pageBean.getCurrentPage();
+				int pageSize = pageBean.getPageSize();
+				DetachedCriteria detachedCriteria = pageBean.getDetachedCriteria();
+				
+				//查询total --总的数据量
+				//指定hibernate发送sql的形式(不要查所有数据)select count(*)
+				detachedCriteria.setProjection(Projections.rowCount());
+				List<Long> countList = (List<Long>) this.getHibernateTemplate().findByCriteria(detachedCriteria);
+				Long count = countList.get(0);
+				pageBean.setTotal(count.intValue());
+				
+				//查询rows --当前页需要展示的数据集合
+				detachedCriteria.setProjection(null);//指定hibernate框架发出sql的形式
+				int firstResult = (currentPage - 1)*pageSize;
+				int maxResults = pageSize;
+				List rows = this.getHibernateTemplate().findByCriteria(detachedCriteria,firstResult,maxResults);
+				pageBean.setRows(rows);
+			}
+
+		2.3 在StaffAction中提供分页查询方法
+	十三.取派员批量删除
+		在取派员表中存在一个删除标识位deltag,1表示已删除,0表示未删除
+		1.页面调整
+			getSelections  返回所有选定的行,当没有记录被选中,我将返回空数组。 
+			修改页面删除按钮对应的绑定事件
+		2.服务端实现
+			在StaffAction中创建deleteBatch批量删除方法
+			在Service中提供批量删除方法
+			在staff.hbm.xml中提供hql语句
+		
+	十三.取派员修改功能
+		1.页面调整
+			为数据表格绑定双击事件
+			复制增加的div和相关代码,修改id属性,最好不要增加修改一个页面
+		2.服务端实现
+			在staffAction中创建edit方法
+			public String edit(){
+				//先查询数据库,根据id查询原始数据
+				Staff staff = staffService.findbyId(model.getId());
+				
+				//使用页面提交的数据进行覆盖
+				staff.setName(model.getName());
+				staff.setTelephone(model.getTelephone());
+				staff.setHaspda(model.getHaspda());
+				staff.setStandard(model.getStandard());
+				staff.setStation(model.getStation());
+				
+				staffService.update(staff);
+				return LIST;
+			}
+	
+	十四.实现区域导入功能
+		1.jquery OCUpload 一键上传插件使用
+			1.1 将js文件引入页面
+				<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.8.3.js"></script>
+				<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.ocupload-1.1.2.js"></script>
+			
+			1.2 在页面提供任意一个元素
+				
+
+			1.3 调用插件的upload方法,动态修改HTML元素
+			
+
+		2.服务器端接收
+			在Action中提供一个File类型的属性,名称和上传文件输入框的name属性一致
+			//属性驱动,接收上传的文件
+			private File regionFile;
+
+			public void setRegionFile(File regionFile) {
+				this.regionFile = regionFile;
+			}		
+
+		3.apache POI技术
+			1.下载压缩包
+				
+			@Test
+			public void test1() throws FileNotFoundException, IOException{
+				String filePath="F:\\005_javaStudy\\005_物流bos\\BOS-day05\\BOS-day05\\资料\\区域导入测试数据.xls";
+				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(filePath))); 
+				//读取文件中第一个Sheet标签页
+				HSSFSheet hssfSheet = workbook.getSheetAt(0);
+				//遍历标签页中所有的行
+				for (Row row : hssfSheet) {
+					int rowNum = row.getRowNum();
+					if(rowNum == 0)continue;
+					for (Cell cell : row) {
+						String value = cell.getStringCellValue();
+						System.out.print(value+" ");
+					}
+					System.out.println();
+				}
+			}
+		
+		4.pinyin4J
+			@Test
+			public void test1(){
+				String province = "河北省";
+				String city = "石家庄市";
+				String district = "桥西区";
+				//简码 ---->> HBSJZQX
+				province = province.substring(0,province.length()-1);
+				city = city.substring(0,city.length()-1);
+				district = district.substring(0,district.length()-1);
+				
+				String info = province + city + district;
+				//城市编码----> shijiazhuang
+		//		System.out.println(info);
+				@SuppressWarnings("unused")
+				String[] headByString = PinYin4jUtils.getHeadByString(info);
+				String shortcode = StringUtils.join(headByString);
+				System.out.println(shortcode);
+				
+				String cityCode = PinYin4jUtils.hanziToPinyin(city,"");
+				System.out.println(cityCode);
+			}
+	
+	十四.区域数据分页查询
+			/*
+			 * 分页查询
+			 */
+			public String pageQuery() throws IOException{
+				PageBean pageBean = new PageBean();
+				pageBean.setCurrentPage(page);
+				pageBean.setPageSize(rows);
+				
+				DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Region.class);
+				pageBean.setDetachedCriteria(detachedCriteria );
+				regionService.pageQuery(pageBean);
+				
+				JsonConfig jsonConfig = new JsonConfig();
+				jsonConfig.setExcludes(new String[]{"currentPage","detachedCriteria","pageSize"});
+		//		指定哪些属性不需要转json
+				//思考如何将这个对象本地化保存
+				String json = JSONObject.fromObject(pageBean,jsonConfig).toString();
+				
+				ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
+				ServletActionContext.getResponse().getWriter().print(json);
+				
+				return NONE;
+			}
+		
+	十五.重构分页代码
+		将重复的代码统一抽取到BaseAction
+		protected PageBean pageBean = new PageBean();
+		//创建离线提交查询对象
+		DetachedCriteria detachedCriteria = null;	
+
+
+		//这样也可以接收到页面传过来的参数并赋值
+		public void setPage(int page) {
+			pageBean.setCurrentPage(page);
+		}
+
+		public void setRows(int rows) {
+			pageBean.setPageSize(rows);
+		}
+		
+		//在动态方法中动态获取实体类型，通过反射来创建model对象
+		public BaseAction() {
+			ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
+			@SuppressWarnings("unchecked")
+			Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+			//方法抽取时尽量保证不要报错
+			detachedCriteria = DetachedCriteria.forClass(entityClass);
+			pageBean.setDetachedCriteria(detachedCriteria);
+			//通过反射来创建对象
+			try {
+				model = entityClass.newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/*
+		 * 将指定java对象转成json并响应到客户端
+		 */
+		public void java2Json(Object o,String[] exclueds){
+			JsonConfig jsonConfig = new JsonConfig();
+			jsonConfig.setExcludes(exclueds);
+	//		指定哪些属性不需要转json
+			//思考如何将这个对象本地化保存
+			String json = JSONObject.fromObject(o,jsonConfig).toString();
+			ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
+			try {
+				ServletActionContext.getResponse().getWriter().print(json);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	
+	十六.分区数据添加功能
+		区域范围很大,对区域进行细分产生分区,
+		1.easyui  combobox的使用
+			<input data-options="url:'${pageContext.request.contextPath }/json/combobox_data.json',valueField:'id',textField:'name'" class = "easyui-combobox">
+
+			combobox_data.json:
+				[
+					{"id":100,"name":"小明"},
+					{"id":200,"name":"小红"},
+					{"id":300,"name":"小黑"}
+				]
+
+		2.使用combobox展示区域数据,竟然自带模糊查询,过滤功能,并自己实现更灵活的模糊查询
+			第一步：修改页面中combobox：
+					<tr>
+						<td>选择区域</td>
+						<td>
+					<!-- 自带模糊查询功能 -->
+							<input class="easyui-combobox" name="region.id"  
+    							data-options="valueField:'id',textField:'name',
+    							mode:'remote',
+    							url:'regionAction_listajax.action'" />  
+						</td>
+					</tr>
+			第二步：在RegionAction中提供listajax方法
+				/**
+				 * 查询所有区域,写会json数据
+				 * @return
+				 */
+				public String listajax(){
+					List<Region> list = null;//regionService.findAll(); 2018年10月11日15:58:04
+					//实现模糊查询
+					if(StringUtils.isNoneBlank(q)){
+						list = regionService.findListByQ(q);
+					}else{
+						list = regionService.findAll();
+					}
+					this.java2Json(list, new String[]{"subareas"});
+					return NONE;
+				}
+
+			第三步：在RegionDao中扩展方法
+				public List<Region> findListByQ(String q) {
+					String hql = "FROM Region r WHERE r.shortcode LIKE ? OR r.citycode LIKE ? OR r.province LIKE ? OR r.city LIKE ? OR r.district LIKE ?";
+					List<Region> list = (List<Region>) this.getHibernateTemplate().find(hql, "%"+q+"%","%"+q+"%","%"+q+"%","%"+q+"%","%"+q+"%");
+					return list;
+				}
+
+			第四步：为添加窗口中保存按钮绑定事件
+
+				<script type="text/javascript">			
+					$(function(){
+						$("#save").click(function(){
+							//表单校验
+							var r = $("#addSubareaForm").form('validate');
+							if(r){
+								 $("#addSubareaForm").submit();
+							}
+						});
+					});
+				</script>
+				
+		3.服务端实现
+		创建分区对应的Action、Service、Dao
+
+		4.分页查询问题
+		将Java对象转为json过程中，因为对象之间有相互引用关系，会发生死循环问题，解决方式，排除其中属性
+	
+	十七.分区组合条件分页查询
+		1.分区分页查询 没有过滤条件
+			页面：WEB-INF/pages/base/subarea.jsp
+			第一步：修改jsp页面中datagrid的URL地址
+
+			第二步：在SuareaAction中提供分页查询方法pageQuery
+
+			第三步：修改subarea.hbm.xml(关闭懒加载)
+
+		2.分区分页查询 带有过滤条件
+			第一步：提供一个工具方法，可以将指定的form表单中所有的输入项转为json数据，用于参数提交
+				$("#btn").click(function(){
+					//将指定的form表单中所有的输入项转为json数据{key:value,key:value}
+					var p = $("#searchForm").serializeJson();
+					console.info(p);
+					//调用数据表格的load方法，重新发送一次ajax请求，并且提交参数
+					$("#grid").datagrid("load",p);
+					//关闭查询窗口
+					$("#searchWindow").window("close");
+				});
+			第二步：为查询窗口中查询按钮绑定事件
+				$("#btn").click(function(){
+					//将指定的form表单中所有的输入项转为json数据{key:value,key:value}
+					var p = $("#searchForm").serializeJson();
+					console.info(p);
+					//调用数据表格的load方法，重新发送一次ajax请求，并且提交参数
+					$("#grid").datagrid("load",p);
+					//关闭查询窗口
+					$("#searchWindow").window("close");
+				});
+	十八.分区数据导出功能
+		1.页面调整
+			1.1.为页面导出按钮绑定事件
+				function doExport(){
+					//发送请求,请求action,进行文件下载
+					//用ajax请求无法弹出保存对话框
+					window.location.href = "subareaAction_exportXls.action";
+				}
+		2.服务端实现
+			2.1 查询所有的分区数据
+			2.2 使用poi将数据写到Excel文件中
+			2.3 使用输出流进行文件下载
+				//使用输出流进行文件下载(一个流,两个头)
+				String filename = "分区数据.xls";
+				String contentType = ServletActionContext.getServletContext().getMimeType(filename);
+				
+				ServletOutputStream out = ServletActionContext.getResponse().getOutputStream();
+				ServletActionContext.getResponse().setContentType(contentType);
+				
+				//获取客户端浏览器类型
+				String agent = ServletActionContext.getRequest().getHeader("User-Agent");
+				filename = FileUtils.encodeDownloadFilename(filename, agent);
+		//		%E5%88%86%E5%8C%BA%E6%95%B0%E6%8D%AE.xls(分区数据.xls)
+				System.out.println(filename);
+				ServletActionContext.getResponse().setHeader("content-disposition", "attachment;filename="+filename);
+				workbook.write(out);
+	十九.定区添加
+		页面:WEB-INF/pages/base/decidedzone.jsp
+		1.页面调整
+			1.1使用combobox下拉框展示取派员数据
+					<tr>
+						<td>选择取派员</td>
+						<td>
+							<input class="easyui-combobox" name="staff.id"  
+    							data-options="valueField:'id',textField:'name',url:'staffAction_listajax.action'" />  
+						</td>
+					</tr>
+				
+				在StaffAction中提供listajax方法，查询所有未删除的取派员，返回json
+
+				在BaseDao中扩展一个通用查询方法
+
+				在StaffService中扩展方法，查询未删除的取派员
+					public List<Staff> findListNotDelete() {
+						DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Staff.class);
+						//添加过滤条件,deltag等于0
+						detachedCriteria.add(Restrictions.eq("deltag", "0"));
+				//		detachedCriteria.add(Restrictions.ne("deltag", "1"));
+						return staffDao.findByCriteria(detachedCriteria);
+					}
+
+			1.2使用datagrid展示分区数据
+				第一步：修改页面中datagrid的URL地址
+					
+				第二步：在SubareaAction中提供listajax方法，查询所有未关联到定区的分区，返回json	
+					
+				第三步：在SubareaService中扩展方法，查询未关联到定区的分区
+					public List<Subarea> findListNotAssociation() {
+						DetachedCriteria detachedCriteria=DetachedCriteria.forClass(Subarea.class);
+						//添加过滤条件,分区对象中decidedzone属性为null
+						detachedCriteria.add(Restrictions.isNull("decidedzone"));
+						return subareaDao.findByCriteria(detachedCriteria);
+					}
+
+			1.3为保存按钮添加事件,提交表单
+					问题一：提交的表单中存在多个id参数
+					解决方案：将datagrid的filed由id改为subareaid
+					问题二：提交的表单中subareaid参数的值为null
+					解决方案：在分区类中提供getSubareaid方法
+		2.服务端实现
+			创建定区的Action、Service、Dao
+	二十.定区分页查询
+		第一步：修改定区jsp页面中datagrid的URL地址
+		第二步：在定区Action中提供pageQuery方法
+		第三步：在Decidedzone.hbm.xml中修改，查询定区对象时需要立即加载关联的取派员对象
+
+	二十一.分页查询死循环问题
+		1、页面不需要展示关联数据时
+		解决：将关联对象属性排除掉
+
+		2、页面需要展示关联数据时
+		解决：将关联对象改为立即加载，并且将关联对象中的属性排除
+
+	二十二.webservice入门
+		1.不同语言开发的应用程序可以用webservice来进行数据交互
+		2.调用网络上的webservice服务
+		3.SOAP和wsdl的概念
+		4.Web服务描述语言	
+	二十三.基于jdk1.7来发布一个webservice服务
+		@WebService
+		public class HelloService {
+			public String sayHello(String name,int i){
+				System.out.println("服务端的sayHello方法被调用了......");
+				return "hello:"+name;
+			}
+			
+			public static void main(String[] args) {
+				String address = "http://192.168.0.103:8080/hello";
+				Object implementor = new HelloService();
+				Endpoint.publish(address, implementor);
+			}
+		}
+		
+001.Java高并发秒杀API
+    1.尝试从官网获取配置
+    2.mvn创建项目(不推荐)
+    mvn archetype:create -Dgroupld=org.seckill -DartifactId=seckill -DarchetypeArtifactId=maven-archetype-webapp
+    mvn archetype:generate -Dgroupld=org.seckill -DartifactId=seckill -DarchetypeArtifactId=maven-archetype-webapp
+    mvn archetype:generate -DgroupId=org.seckill -DartifactId=seckill -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false 
+    

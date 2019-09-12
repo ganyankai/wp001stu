@@ -1,0 +1,73 @@
+007 从版本库移除文件 
+	02 一步删除
+		git rm -r -f target;git commit -m target
+
+	01 两步删除
+		git rm -r --cached .idea	--//本地需要该文件
+		git commit -m ".idea"
+		-f 强制删除
+		
+		--//本地需要该文件
+		git rm -r --cached .gitignore	
+		git commit -m ".gitignore"
+	
+006 
+	注意git环境的push与pull都是可以选择远程路径与分支的
+	
+005	
+	首先是你的项目中有和和历史不符的东西 
+	Push rejected: Push to origin/master was rejected 
+							mygit/master
+	推拒绝：推送到起源/主人被拒绝 
+	直接是解决办法，直接打开你要上传代码的文件夹位置鼠标右键git Bash Here然后直接下面两行命令解决问题
+	
+	git pull origin master –allow-unrelated-histories 
+
+	--ok
+	git push -u mygit master -f
+	git push -u wuliu-my master -f
+	
+004	合并主分支
+	git pull --rebase origin master
+
+
+003 
+	git修改远程仓库地址 
+
+
+	方法有三种：
+
+	1.修改命令
+	//no
+	git remote origin set-url https://github.com/ganyankai/myresp.git		
+
+	2.先删后加
+
+	git remote rm origin
+	git remote add origin [url]
+
+	3.直接修改config文件
+	
+
+002	上传本地项目到github
+
+	5.1      git init //把这个目录变成Git可以管理的仓库
+
+	5.2      git add README.md //文件添加到仓库
+		
+	5.2.1      git add . //不但可以跟单一文件，还可以跟通配符，更可以跟目录。一个点就把当前目录下所有未追踪的文件全部add了
+
+	5.3      git commit -m “文件的简介” //把文件提交到仓库
+
+	5.4      git remote add origin git@github.com:stepqian/Android-Bluetooth-Low-Energy.git //关联远程仓库
+			 
+			 git remote add origin git@github.com:ganyankai/myresp.git
+
+			 git remote add origin https://github.com/ganyankai/myresp.git
+
+			 git push -u origin master 
+			
+001 我的远程
+	https://github.com/ganyankai/wp001stu.git
+	git@github.com:ganyankai/myresp.git
+

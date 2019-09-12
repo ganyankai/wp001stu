@@ -1,0 +1,18 @@
+bin/sqoop import \
+--connect jdbc:mysql://mymini1:3306/userdb \
+--username root \
+--password 123456 \
+--table emp \
+--m 1
+
+导入关系表到HIVE
+bin/sqoop import --connect jdbc:mysql://mymini1:3306/userdb --username root --password 123456 --table emp --hive-import --m 1
+
+下面的命令用来导入emp_add表数据的子集。子集查询检索员工ID和地址，居住城市为：Secunderabad:
+bin/sqoop import \
+--connect jdbc:mysql://mymini1:3306/userdb \
+--username root \
+--password 123456 \
+--where "city ='sec-bad'" \
+--target-dir /wherequery \
+--table emp_add --m 1

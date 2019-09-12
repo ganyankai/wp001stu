@@ -1,0 +1,5 @@
+查看服务器版本：
+SELECT VERSION();
+
+show databases;
+

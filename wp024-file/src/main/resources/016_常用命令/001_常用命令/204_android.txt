@@ -1,0 +1,156 @@
+2019年7月25日
+04 
+	
+
+03 Android 应用程序组件
+		应用程序组件是一个Android应用程序的基本构建块。这些组件由应用清单文件松耦合的组织。AndroidManifest.xml描述了应用程序的每个组件，以及他们如何交互。
+
+	以下是可以在Android应用程序中使用的四个主要组件。
+
+	组件	描述
+	Activities	描述UI，并且处理用户与机器屏幕的交互。
+	Services	处理与应用程序关联的后台操作。
+	Broadcast Receivers	处理Android操作系统和应用程序之间的通信。
+	Content Providers	处理数据和数据库管理方面的问题。
+	Activities
+	一个活动标识一个具有用户界面的单一屏幕。举个例子，一个邮件应用程序可以包含一个活动用于显示新邮件列表，另一个活动用来编写邮件，再一个活动来阅读邮件。当应用程序拥有多于一个活动，其中的一个会被标记为当应用程序启动的时候显示。
+
+	一个活动是Activity类的一个子类，如下所示：
+
+	public class MainActivity extends Activity {
+
+	}
+	Services
+	服务是运行在后台，执行长时间操作的组件。举个例子，服务可以是用户在使用不同的程序时在后台播放音乐，或者在活动中通过网络获取数据但不阻塞用户交互。
+
+	一个服务是Service类的子类，如下所示：
+
+	public class MyService extends Service {
+
+	}
+	Broadcast Receivers
+	广播接收器简单地响应从其他应用程序或者系统发来的广播消息。举个例子，应用程序可以发起广播来让其他应用程序知道一些数据已经被下载到设备，并且可以供他们使用。因此广播接收器会拦截这些通信并采取适当的行动。
+
+	广播接收器是BroadcastReceiver类的一个子类，每个消息以Intent对象的形式来广播。
+
+	public class MyReceiver  extends  BroadcastReceiver {
+
+	}
+	Content Providers
+	内容提供者组件通过请求从一个应用程序到另一个应用程序提供数据。这些请求由ContentResolver类的方法来处理。这些数据可以是存储在文件系统、数据库或者其他其他地方。
+
+	内容提供者是ContentProvider类的子类，并实现一套标准的API，以便其他应用程序来执行事务。
+
+	public class MyContentProvider extends  ContentProvider {
+
+	}
+	我们将在独立的章节中通过这些标签的细节来涵盖应用程序组件。
+
+	附件组件
+	有一些附件的组件用于以上提到的实体、他们之间逻辑、及他们之间连线的构造。这些组件如下：
+
+	组件	描述
+	Fragments	代表活动中的一个行为或者一部分用户界面。
+	Views	绘制在屏幕上的UI元素，包括按钮，列表等。
+	Layouts	控制屏幕格式，展示视图外观的View的继承。
+	Intents	组件间的消息连线。
+	Resources	外部元素，例如字符串资源、常量资源及图片资源等。
+	Manifest	应用程序的配置文件。
+	 Android 架构 Android Hello World实例 
+	1 篇笔记  写笔记
+	   菜鸟道
+
+	  ive***vip.qq.com
+
+	   参考地址
+
+	松耦合系统通常是基于消息的系统，此时客户端和远程服务并不知道对方是如何实现的。客户端和服务之间的通讯由消息的架构支配。只要消息符合协商的架构，则客户端或服务的实现就可以根据需要进行更改，而不必担心会破坏对方。
+
+	松耦合通讯机制提供了紧耦合机制所没有的许多优点，并且它们有助于降低客户端和远程服务之间的依赖性。但是，紧耦合性通常可以提供性能好处，便于在客户端和服务之间进行更为紧密的集成。
+
+	人们越来越热衷于比较应用程序交互的松耦合方法和紧耦合方法。
+
+	造成这个趋势的主要技术原因是：使用UDDI(Universal Description, Discovery and Integration，通用描述、发现和集成)等标准，Web服务可以动态地发现和绑定到其他服务。
+
+	而主要业务原因是：企业越来越需要灵活地处理业务流程的更改以及与合作伙伴的交互方式。松耦合系统的优点在于更新一个模块不会引起其它模块的改变。
+
+	传统上，业务流程是在企业范围，甚至在企业的不同业务单元内开发。这些活动在详细的实时信息的帮助下进行管理。跨多个业务单元或跨企业的流程必须更加灵活，以应对各种各样的需求。在这种情况下，可能出现更多的不确定性：参与者及其角色不断变化，所需的交互类型也不断变化。
+
+02 Android 架构
+	
+	Linux内核
+	在所有层的最底下是 Linux - 包括大约115个补丁的 Linux 3.6。它提供了基本的系统功能，比如进程管理，内存管理，设备管理（如摄像头，键盘，显示器）。同时，内核处理所有 Linux 所擅长的工作，如网络和大量的设备驱动，从而避免兼容大量外围硬件接口带来的不便。
+
+	程序库
+	在 Linux 内核层的上面是一系列程序库的集合，包括开源的 Web 浏览器引擎 Webkit ，知名的 libc 库，用于仓库存储和应用数据共享的 SQLite 数据库，用于播放、录制音视频的库，用于网络安全的 SSL 库等。
+
+	Android程序库
+	这个类别包括了专门为 Android 开发的基于 Java 的程序库。这个类别程序库的示例包括应用程序框架库，如用户界面构建，图形绘制和数据库访问。一些 Android 开发者可用的 Android 核心程序库总结如下：
+
+	android.app - 提供应用程序模型的访问，是所有 Android 应用程序的基石。
+	android.content - 方便应用程序之间，应用程序组件之间的内容访问，发布，消息传递。
+	android.database - 用于访问内容提供者发布的数据，包含 SQLite 数据库管理类。
+	android.opengl - OpenGL ES 3D 图片渲染 API 的 Java 接口。
+	android.os - 提供应用程序访问标注操作系统服务的能力，包括消息，系统服务和进程间通信。
+	android.text - 在设备显示上渲染和操作文本。
+	android.view - 应用程序用户界面的基础构建块。
+	android.widget - 丰富的预置用户界面组件集合，包括按钮，标签，列表，布局管理，单选按钮等。
+	android.webkit - 一系列类的集合，允许为应用程序提供内建的 Web 浏览能力。
+	看过了 Android 运行层内的基于 Java 的核心程序库，是时候关注一下 Android 软件栈中的基于 C/C++ 的程序库。
+
+	Android运行时
+	这是架构中的第三部分，自下而上的第二层。这个部分提供名为 Dalvik 虚拟机的关键组件，类似于 Java 虚拟机，但专门为 Android 设计和优化。
+
+	Dalvik 虚拟机使得可以在 Java 中使用 Linux 核心功能，如内存管理和多线程。Dalvik 虚拟机使得每一个 Android 应用程序运行在自己独立的虚拟机进程。
+
+	Android 运行时同时提供一系列核心的库来为 Android 应用程序开发者使用标准的 Java 语言来编写 Android 应用程序。
+
+	应用框架
+	应用框架层以 Java 类的形式为应用程序提供许多高级的服务。应用程序开发者被允许在应用中使用这些服务。
+
+	活动管理者 - 控制应用程序生命周期和活动栈的所有方面。
+	内容提供者 - 允许应用程序之间发布和分享数据。
+	资源管理器 - 提供对非代码嵌入资源的访问，如字符串，颜色设置和用户界面布局。
+	通知管理器 - 允许应用程序显示对话框或者通知给用户。
+	视图系统 - 一个可扩展的视图集合，用于创建应用程序用户界面。
+	应用程序
+	顶层中有所有的 Android 应用程序。你写的应用程序也将被安装在这层。这些应用程序包括通讯录，浏览器，游戏等。
+	
+01 Android 开发环境搭建
+		首先，你可以在以下的操作系统开始 Android 应用程序开发：
+
+	Microsoft Windows XP 或更高版本。
+	带有英特尔芯片的 Mac OS X10.5.8或更高版本。
+	包括 GNU C 库2.7或更高版本的 Linux 系统。
+	第二，开发 Android 应用程序所需的所有工具都是免费的，可以从网上下载。以下是开始开发 Android 应用程序需要用到的软件列表。
+	
+	Java JDK5 或 以后版本
+	Android SDK
+	Java运行时环境（JRE）
+	Android Studio
+	(可选的)Java开发者使用的Eclipse IDE
+	(可选的)Android开发工具(ADT)Eclipse插件
+	最后两个组件是可选的，如果是在 Windows 机器上工作，这些组件将方便于开发基于 Java 的应用程序。因此，让我们来看看如何来设置所需的环境。
+
+	安装 Java 开发工具包(JDK)
+	你可以从 Oracle 的 Java 网站：JDKJava SE下载下载最新版本的 Java 。在下载的文件中找到安装JDK的说明文档，按照给定的说明来安装和配置设置。最后设置 PATH 和 JAVA_HOME 环境变量来引用包含 javac 和 java的目录，通常分别为 java_install_dir/bin 和 java_install_dir。
+
+	如果运行的是 Windows，把 JDK 安装在 C:\jdk1.6.0_15，在 C:\autoexec.bat 文件添加以下内容：
+
+	set PATH=C:\jdk1.6.0_15\bin;%PATH%
+	set JAVA_HOME=C:\jdk1.6.0_15
+	你也可以右键单击"我的电脑"，选择"属性"=》"高级"=》"环境变量"，然后通过按下"确定"按钮来更新 PATH 值。
+
+	在 Linux 上，如果 SDK 安装在 /usr/local/jdk1.6.0_15 下，并且使用的是 C shell，把下面的代码到写入 .cshrc 文件。
+	
+	setenv PATH /usr/local/jdk1.6.0_15/bin:$PATH
+	setenv JAVA_HOME /usr/local/jdk1.6.0_15
+	如果你使用集成开发环境 Eclipse，那么它自动知道 Java 已安装在哪里。
+
+	Android IDE
+	有许多复杂而精巧的技术来开发 Android 应用程序。目前主要使用且相似的技术主要是以下两种：
+
+	Android Studio
+	Eclipse ID
+
+	

@@ -1,0 +1,1041 @@
+
+
+
+
+登录 | 注册
+zhangyulin54321的专栏
+目录视图摘要视图订阅
+CSDN学院招募微信小程序讲师啦      程序员简历优化指南！        【观点】移动原生App开发 PK HTML 5开发     云端应用征文大赛，秀绝招，赢无人机！
+ 要想学好SQL语句必会的50题，也是考试常考的点
+标签： sqlinsert数据库tableumlnull
+2012-09-07 21:22 8525人阅读 评论(3) 收藏 举报
+ 分类： SQL（10）  
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+
+  标准的 SQL 的解析顺序为:
+   (1).FROM 子句, 组装来自不同数据源的数据
+   (2).WHERE 子句, 基于指定的条件对记录进行筛选
+   (3).GROUP BY 子句, 将数据划分为多个分组
+   (4).使用聚合函数进行计算
+   (5).使用 HAVING 子句筛选分组
+   (6).计算所有的表达式
+   (7).使用 ORDER BY 对结果集进行排序
+
+   举例说明: 在学生成绩表中 (暂记为 tb_Grade), 把 "考生姓名"内容不为空的记录按照 "考生姓名" 分组, 并且筛选分组结果, 选出 "总成绩" 大于 600 分的.
+   标准顺序的 SQL 语句为: 
+   select 考生姓名, max(总成绩) as max总成绩
+   from tb_Grade
+   where 考生姓名 is not null
+   group by 考生姓名
+   having max(总成绩) > 600
+   order by max总成绩
+
+-- 一、创建教学系统的数据库，表，以及数据
+--student(sno,sname,sage,ssex) 学生表
+--course(cno,cname,tno) 课程表
+--sc(sno,cno,score) 成绩表
+--teacher(tno,tname) 教师表
+
+--1.创建数据库test1
+use master
+GO
+
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = 'test1')
+    DROP DATABASE test1
+GO
+
+CREATE DATABASE test1
+GO
+
+use test1
+GO
+
+--2.创建教师表
+CREATE TABLE [dbo].[teacher](
+    [tno] [int] NOT NULL PRIMARY KEY,
+    [tname] [nvarchar](20) NOT NULL
+)
+我的版本
+CREATE TABLE teacher(
+    tno INT NOT NULL PRIMARY KEY,
+    tname VARCHAR (20) NOT NULL
+);
+
+--插入数据
+INSERT INTO teacher(tno,tname)VALUES(1,'张老师')
+INSERT INTO teacher(tno,tname)VALUES(2,'王老师')
+INSERT INTO teacher(tno,tname)VALUES(3,'李老师')
+INSERT INTO teacher(tno,tname)VALUES(4,'赵老师')
+INSERT INTO teacher(tno,tname)VALUES(5,'刘老师')
+INSERT INTO teacher(tno,tname)VALUES(6,'向老师')
+INSERT INTO teacher(tno,tname)VALUES(7,'李文静')
+INSERT INTO teacher(tno,tname)VALUES(8,'叶平')
+my:
+INSERT INTO teacher(tno,tname)VALUES(1,'张老师');
+INSERT INTO teacher(tno,tname)VALUES(2,'王老师');
+INSERT INTO teacher(tno,tname)VALUES(3,'李老师');
+INSERT INTO teacher(tno,tname)VALUES(4,'赵老师');
+INSERT INTO teacher(tno,tname)VALUES(5,'刘老师');
+INSERT INTO teacher(tno,tname)VALUES(6,'向老师');
+INSERT INTO teacher(tno,tname)VALUES(7,'李文静');
+INSERT INTO teacher(tno,tname)VALUES(8,'叶平');
+
+--3.创建学员表
+CREATE TABLE [dbo].[student](
+    [sno] [int] NOT NULL PRIMARY KEY,
+    [sname] [nvarchar](20) NOT NULL,
+    [sage] [datetime] NOT NULL,
+    [ssex] [char](2) NOT NULL
+)
+CREATE TABLE student(
+    sno int NOT NULL PRIMARY KEY,
+    sname varchar(20) NOT NULL,
+    sage datetime NOT NULL,
+    ssex char(2) NOT NULL
+);
+
+--插入数据
+INSERT INTO student(sno,sname,sage,ssex) VALUES(1,'张三','1980-1-23','男')
+INSERT INTO student(sno,sname,sage,ssex) VALUES(2,'李四','1982-12-12','男')
+INSERT INTO student(sno,sname,sage,ssex) VALUES(3,'张飒','1981-9-9','男')
+INSERT INTO student(sno,sname,sage,ssex) VALUES(4,'莉莉','1983-3-23','女')
+INSERT INTO student(sno,sname,sage,ssex) VALUES(5,'王弼','1982-6-21','男')
+INSERT INTO student(sno,sname,sage,ssex) VALUES(6,'王丽','1984-10-10','女')
+INSERT INTO student(sno,sname,sage,ssex) VALUES(7,'刘香','1980-12-22','女')
+my
+INSERT INTO student(sno,sname,sage,ssex) VALUES(1,'张三','1980-1-23','男');
+INSERT INTO student(sno,sname,sage,ssex) VALUES(2,'李四','1982-12-12','男');
+INSERT INTO student(sno,sname,sage,ssex) VALUES(3,'张飒','1981-9-9','男');
+INSERT INTO student(sno,sname,sage,ssex) VALUES(4,'莉莉','1983-3-23','女');
+INSERT INTO student(sno,sname,sage,ssex) VALUES(5,'王弼','1982-6-21','男');
+INSERT INTO student(sno,sname,sage,ssex) VALUES(6,'王丽','1984-10-10','女');
+INSERT INTO student(sno,sname,sage,ssex) VALUES(7,'刘香','1980-12-22','女');
+
+--4.创建课程表
+CREATE TABLE [dbo].[course](
+    [cno] [int] NOT NULL PRIMARY KEY,
+    [cname] [nvarchar](20) NOT NULL,
+    [tno] [int] NOT NULL
+)
+my
+CREATE TABLE course(
+    cno INT NOT NULL PRIMARY KEY,
+    cname NVARCHAR(20) NOT NULL,
+    tno INT NOT NULL
+);
+--创建外键
+ALTER TABLE [dbo].[course] WITH CHECK ADD 
+CONSTRAINT [FK_course_teacher] FOREIGN KEY([tno])
+REFERENCES [dbo].[teacher] ([tno])
+
+my
+ALTER TABLE course  ADD 
+CONSTRAINT FK_course_teacher FOREIGN KEY(tno)
+REFERENCES teacher (tno)
+
+mysql添加外键：
+为已经添加好的数据表添加外键：
+语法:alter table 表名 add constraint FK_ID foreign key(你的外键字段名) REFERENCES 外表表名(对应的表的主键字段名)；
+例: alter table tb_active add constraint FK_ID foreign key(user_id) REFERENCES tb_user(id)
+
+--插入数据
+insert into course(cno,cname,tno) values(1,'企业管理',3);
+insert into course(cno,cname,tno) values(2,'马克思',1);
+insert into course(cno,cname,tno) values(3,'UML',2);
+insert into course(cno,cname,tno) values(4,'数据库',5);
+insert into course(cno,cname,tno) values(5,'物理',8);
+
+--5.创建成绩表
+CREATE TABLE [dbo].[sc](
+    [sno] [int] NOT NULL,
+    [cno] [int] NOT NULL,
+    [score] [int] NOT NULL
+)
+
+CREATE TABLE sc(
+    sno int NOT NULL,
+    cno int NOT NULL,
+    score int NOT NULL
+)
+
+
+--创建外键
+ALTER TABLE [dbo].[sc] WITH CHECK ADD CONSTRAINT [FK_sc_course] FOREIGN KEY([cno])
+REFERENCES [dbo].[course] ([cno])
+
+ALTER TABLE [dbo].[sc] WITH CHECK ADD CONSTRAINT [FK_sc_student] FOREIGN KEY([sno])
+REFERENCES [dbo].[student] ([sno])
+
+my:
+ALTER TABLE sc  ADD CONSTRAINT FK_sc_course FOREIGN KEY(cno)
+REFERENCES course (cno)
+
+ALTER TABLE sc  ADD CONSTRAINT FK_sc_student FOREIGN KEY(sno)
+REFERENCES student (sno)
+
+
+--插入数据
+INSERT INTO sc(sno,cno,score)VALUES(1,1,80);
+INSERT INTO sc(sno,cno,score)VALUES(1,2,86); 
+INSERT INTO sc(sno,cno,score)VALUES(1,3,83) ;
+INSERT INTO sc(sno,cno,score)VALUES(1,4,89) ;
+
+INSERT INTO sc(sno,cno,score)VALUES(2,1,50) ;
+INSERT INTO sc(sno,cno,score)VALUES(2,2,36) ;
+--INSERT INTO sc(sno,cno,score)VALUES(2,3,43); 
+INSERT INTO sc(sno,cno,score)VALUES(2,4,59);
+
+INSERT INTO sc(sno,cno,score)VALUES(3,1,50) ;
+INSERT INTO sc(sno,cno,score)VALUES(3,2,96) ;
+--INSERT INTO sc(sno,cno,score)VALUES(3,3,73); 
+INSERT INTO sc(sno,cno,score)VALUES(3,4,69) ;
+
+INSERT INTO sc(sno,cno,score)VALUES(4,1,90) ;
+INSERT INTO sc(sno,cno,score)VALUES(4,2,36) ;
+INSERT INTO sc(sno,cno,score)VALUES(4,3,88) ;
+--INSERT INTO sc(sno,cno,score)VALUES(4,4,99);
+
+INSERT INTO sc(sno,cno,score)VALUES(5,1,90) ;
+INSERT INTO sc(sno,cno,score)VALUES(5,2,96) ;
+INSERT INTO sc(sno,cno,score)VALUES(5,3,98) ;
+INSERT INTO sc(sno,cno,score)VALUES(5,4,99);
+
+INSERT INTO sc(sno,cno,score)VALUES(6,1,70) ;
+INSERT INTO sc(sno,cno,score)VALUES(6,2,66) ;
+INSERT INTO sc(sno,cno,score)VALUES(6,3,58) ;
+INSERT INTO sc(sno,cno,score)VALUES(6,4,79);
+
+INSERT INTO sc(sno,cno,score)VALUES(7,1,80) ;
+INSERT INTO sc(sno,cno,score)VALUES(7,2,76) ;
+INSERT INTO sc(sno,cno,score)VALUES(7,3,68) ;
+INSERT INTO sc(sno,cno,score)VALUES(7,4,59);
+INSERT INTO sc(sno,cno,score)VALUES(7,5,89);
+
+my:
+INSERT INTO sc(sno,cno,score)VALUES(1,1,80);
+INSERT INTO sc(sno,cno,score)VALUES(1,2,86); 
+INSERT INTO sc(sno,cno,score)VALUES(1,3,83) ;
+INSERT INTO sc(sno,cno,score)VALUES(1,4,89) ;
+
+INSERT INTO sc(sno,cno,score)VALUES(2,1,50) ;
+INSERT INTO sc(sno,cno,score)VALUES(2,2,36) ;
+INSERT INTO sc(sno,cno,score)VALUES(2,3,43); 
+INSERT INTO sc(sno,cno,score)VALUES(2,4,59);
+
+INSERT INTO sc(sno,cno,score)VALUES(3,1,50) ;
+INSERT INTO sc(sno,cno,score)VALUES(3,2,96) ;
+INSERT INTO sc(sno,cno,score)VALUES(3,3,73); 
+INSERT INTO sc(sno,cno,score)VALUES(3,4,69) ;
+
+INSERT INTO sc(sno,cno,score)VALUES(4,1,90) ;
+INSERT INTO sc(sno,cno,score)VALUES(4,2,36) ;
+INSERT INTO sc(sno,cno,score)VALUES(4,3,88) ;
+INSERT INTO sc(sno,cno,score)VALUES(4,4,99);
+
+INSERT INTO sc(sno,cno,score)VALUES(5,1,90) ;
+INSERT INTO sc(sno,cno,score)VALUES(5,2,96) ;
+INSERT INTO sc(sno,cno,score)VALUES(5,3,98) ;
+INSERT INTO sc(sno,cno,score)VALUES(5,4,99);
+
+INSERT INTO sc(sno,cno,score)VALUES(6,1,70) ;
+INSERT INTO sc(sno,cno,score)VALUES(6,2,66) ;
+INSERT INTO sc(sno,cno,score)VALUES(6,3,58) ;
+INSERT INTO sc(sno,cno,score)VALUES(6,4,79);
+
+INSERT INTO sc(sno,cno,score)VALUES(7,1,80) ;
+INSERT INTO sc(sno,cno,score)VALUES(7,2,76) ;
+INSERT INTO sc(sno,cno,score)VALUES(7,3,68) ;
+INSERT INTO sc(sno,cno,score)VALUES(7,4,59);
+INSERT INTO sc(sno,cno,score)VALUES(7,5,89);
+
+下面进入第二阶段、、、、、！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+--教学系统SQL案例
+
+
+注意：我觉得具有挑战性的也是检验你学的SQL语句学的好不好的几道题：9,13,14,16,19,24,25
+
+
+--1、查询课程1的成绩 比 课程2的成绩 高 的所有学生的学号.
+select a.sno from
+(select sno,score from sc where cno=1) a,
+(select sno,score from sc where cno=2) b
+where a.score>b.score and a.sno=b.sno
+
+my:
+SELECT * FROM 
+(SELECT * FROM sc WHERE cno = 1) a INNER JOIN (SELECT * FROM sc WHERE cno =2) b
+ON a.sno = b.sno
+WHERE a.score > b.score
+
+--2、查询平均成绩大于60分的同学的学号和平均成绩；
+select sno,avg(score) as sscore from sc group by sno having avg(score) >60
+
+
+--select a.sno as "学号", avg(a.score) as "平均成绩" 
+--from
+--(select sno,score from sc) a 
+--group by sno having avg(a.score)>60
+
+但是写成这样就会出错：语法没错
+
+
+--select a.sno as "学号", avg(a.score) as "平均成绩" 
+--from
+--(select sno,score from sc) a 
+--where avg(a.score)>60
+
+
+--3、查询所有同学的学号、姓名、选课数、总成绩
+select a.sno as 学号, b.sname as 姓名,
+count(a.cno) as 选课数, sum(a.score) as 总成绩
+from sc a, student b
+where a.sno = b.sno
+group by a.sno, b.sname
+go
+
+--3、查询所有同学的学号、姓名、选课数、总成绩
+select student.sno as 学号, student.sname as 姓名,
+ count(sc.cno) as 选课数, sum(score) as 总成绩
+from student left Outer join sc on student.sno = sc.sno
+group by student.sno, sname
+
+--4、查询姓“李”的老师的个数；
+select count(distinct(tname)) from teacher where tname like '李%‘
+
+
+select tname as "姓名", count(distinct(tname)) as "人数" 
+from teacher 
+where tname like'李%'
+group by tname
+go
+
+--5、查询没学过“叶平”老师课的同学的学号、姓名；(从这继续)
+myself
+
+SELECT student.sno,student.sname FROM student WHERE sno NOT IN (
+SELECT sc.sno FROM sc,course,teacher WHERE sc.cno=course.cno AND course.tno=teacher.tno AND teacher.tname='叶平');
+
+
+select student.sno,student.sname from student
+where sno not in (select distinct(sc.sno) from sc,course,teacher
+where sc.cno=course.cno and teacher.tno=course.tno and teacher.tname='叶平')
+
+
+--6、查询同时学过课程1和课程2的同学的学号、姓名
+my
+SELECT * FROM student WHERE sno IN (SELECT sno FROM sc WHERE sc.cno=1)
+AND sno IN (SELECT sno FROM sc WHERE sc.cno=2);
+
+select sno, sname from student
+where sno in (select sno from sc where sc.cno = 1)
+and sno in (select sno from sc where sc.cno = 2)
+go
+
+select c.sno, c.sname from
+(select sno from sc where sc.cno = 1) a,
+(select sno from sc where sc.cno = 2) b,
+student c
+where a.sno = b.sno and a.sno = c.sno
+go
+
+select student.sno,student.sname from student,sc where student.sno=sc.sno and sc.cno=1
+and exists( Select * from sc as sc_2 where sc_2.sno=sc.sno and sc_2.cno=2)
+go
+
+--7、查询学过“叶平”老师所教所有课程的所有同学的学号、姓名
+select a.sno, a.sname from student a, sc b
+where a.sno = b.sno and b.cno in
+(select c.cno from course c, teacher d where c.tno = d.tno and d.tname = '叶平')
+
+select a.sno, a.sname from student a, sc b,
+(select c.cno from course c, teacher d where c.tno = d.tno and d.tname = '叶平') e
+where a.sno = b.sno and b.cno = e.cno
+
+--8、查询 课程编号1的成绩 比 课程编号2的成绩 高的所有同学的学号、姓名
+myself
+
+SELECT  s.sno,s.sname FROM
+student s,
+(SELECT * FROM sc WHERE cno = 1) sc1,
+(SELECT * FROM sc WHERE cno = 2) sc2
+WHERE sc1.sno = sc2.sno
+AND sc1.score > sc2.score
+AND s.sno = sc1.sno
+
+select a.sno, a.sname from student a,
+(select sno, score from sc where cno = 1) b,
+(select sno, score from sc where cno = 2) c
+where b.score > c.score and b.sno = c.sno and a.sno = b.sno
+
+--9、查询所有课程成绩小于60分的同学的学号、姓名
+myself
+SELECT s.sname,s.sno FROM student s, (SELECT sno,MAX(score) ms FROM sc GROUP BY sno HAVING MAX(score) <60) s2 WHERE s.sno=s2.sno;
+
+
+select sno,sname from student
+where sno not in (select distinct sno from sc where score > 60)
+
+--10、查询所有课程成绩大于60分的同学的学号、姓名
+
+select sno,sname from student
+where sno not in (select distinct sno from sc where score < 60)
+
+--11、查询没有学全所有课的同学的学号、姓名
+myself
+SELECT * FROM student s,(SELECT sno,COUNT(sno) FROM sc GROUP BY sno HAVING COUNT(sno)<5 ) s1 WHERE s.sno=s1.sno
+
+select student.sno, student.sname
+from student, sc
+where student.sno = sc.sno
+group by student.sno, student.sname
+having count(sc.cno) < (select count(cno) from course)
+
+方法二：
+select r2.rsno
+from 
+(select COUNT(course.cno)as num1 from course) r1,
+(select COUNT(sc.sno)as num2, sc.sno as rsno from sc group by sc.sno ) r2
+where  r1.num1>r2.num2 
+
+--12、查询至少有一门课程 与 学号为1的同学所学课程 相同的同学的学号和姓名
+select distinct a.sno, a.sname
+from student a, sc b
+where a.sno <> 1 and a.sno=b.sno and
+b.cno in (select cno from sc where sno = 1)
+
+方法二：
+--select s.sno,s.sname 
+--from student s,
+--(select sc.sno 
+--from sc
+--where sc.cno in (select sc1.cno from sc sc1 where sc1.sno=1)and sc.sno<>1
+--group by sc.sno)r1
+--where r1.sno=s.sno
+
+--13、把“sc”表中“刘老师”所教课的成绩都更改为此课程的平均成绩
+update sc set score = (select avg(sc_2.score) from sc sc_2 where sc_2.cno=sc.cno)
+from course,teacher where course.cno=sc.cno and course.tno=teacher.tno and teacher.tname='叶平'
+
+--14、查询和2号同学学习的课程完全相同的其他同学学号和姓名
+/* --Do first :
+select sno
+from sc
+where sno <> 2
+group by sno
+having sum(cno) = (select sum(cno) from sc where sno = 2)
+*/
+select b.sno, b.sname
+from sc a, student b
+where b.sno <> 2 and a.sno = b.sno
+group by b.sno, b.sname
+having sum(cno) = (select sum(cno) from sc where sno = 2)
+
+--15、删除学习“叶平”老师课的sc表记录
+delete sc from course, teacher
+where course.cno = sc.cno and course.tno = teacher.tno and tname = '叶平'
+
+--16、向sc表中插入一些记录，这些记录要求符合以下条件：
+--将没有课程3成绩同学的该成绩补齐, 其成绩取所有学生的课程2的平均成绩
+INSERT sc select sno, 3, (select avg(score) from sc where cno = 2)
+from student
+where sno not in (select sno from sc where cno = 3)
+
+--17、按平平均分从高到低显示所有学生的如下统计报表：
+-- 学号,企业管理,马克思,UML,数据库,物理,课程数,平均分
+SELECT sno as 学号
+,max(case when cno = 1 then score end) AS 企业管理
+,max(case when cno = 2 then score end) AS 马克思
+,max(case when cno = 3 then score end) AS UML
+,max(case when cno = 4 then score end) AS 数据库
+,max(case when cno = 5 then score end) AS 物理
+,count(cno) AS 课程数
+,avg(score) AS 平均分
+FROM sc
+GROUP by sno
+ORDER by avg(score) DESC
+
+--18、查询各科成绩最高分和最低分：以如下形式显示：课程号，最高分，最低分
+select cno as 课程号, max(score) as 最高分, min(score) 最低分
+from sc group by cno
+
+select  course.cno as '课程号'
+,MAX(score) as '最高分'
+,MIN(score) as '最低分'
+from sc,course
+where sc.cno=course.cno
+group by course.cno
+
+--19、按各科平均成绩从低到高和及格率的百分数从高到低顺序
+SELECT t.cno AS 课程号,
+max(course.cname)AS 课程名,
+isnull(AVG(score),0) AS 平均成绩,
+100 * SUM(CASE WHEN isnull(score,0)>=60 THEN 1 ELSE 0 END)/count(1) AS 及格率
+FROM sc t, course
+where t.cno = course.cno
+GROUP BY t.cno
+ORDER BY 及格率 desc
+
+--20、查询如下课程平均成绩和及格率的百分数(用"1行"显示): 企业管理（001），马克思（002），UML （003），数据库（004） 
+select 
+avg(case when cno = 1 then score end) as 平均分1,
+avg(case when cno = 2 then score end) as 平均分2,
+avg(case when cno = 3 then score end) as 平均分3,
+avg(case when cno = 4 then score end) as 平均分4,
+100 * sum(case when cno = 1 and score > 60 then 1 else 0 end) / sum(case when cno = 1 then 1 else 0 end) as 及格率1,
+100 * sum(case when cno = 2 and score > 60 then 1 else 0 end) / sum(case when cno = 2 then 1 else 0 end) as 及格率2,
+100 * sum(case when cno = 3 and score > 60 then 1 else 0 end) / sum(case when cno = 3 then 1 else 0 end) as 及格率3,
+100 * sum(case when cno = 4 and score > 60 then 1 else 0 end) / sum(case when cno = 4 then 1 else 0 end) as 及格率4
+from sc
+
+--21、查询不同老师所教不同课程平均分, 从高到低显示
+-- 张老师 数据库 88
+select max(c.tname) as 教师, max(b.cname) 课程, avg(a.score) 平均分
+from sc a, course b, teacher c
+where a.cno = b.cno and b.tno = c.tno
+group by a.cno
+order by 平均分 desc
+
+方法二：
+select r.tname as '教师',r.rname as '课程' , AVG(score) as '平均分'
+from sc,
+(select 
+t.tname,c.cno as rcso,c.cname as rname
+from teacher t ,course c
+where t.tno=c.tno
+
+)r
+where sc.cno=r.rcso
+group by sc.cno,r.tname,r.rname 
+order by AVG(score) desc
+
+--22、查询如下课程成绩均在第3名到第6名之间的学生的成绩：
+-- [学生ID],[学生姓名],企业管理,马克思,UML,数据库,平均成绩
+select top 6 max(a.sno) 学号, max(b.sname) 姓名,
+max(case when cno = 1 then score end) as 企业管理,
+max(case when cno = 2 then score end) as 马克思,
+max(case when cno = 3 then score end) as UML,
+max(case when cno = 4 then score end) as 数据库,
+avg(score) as 平均分
+from sc a, student b
+where a.sno not in (select top 2 sno from sc where cno = 1 order by score desc)
+  and a.sno not in (select top 2 sno from sc where cno = 2 order by score desc)
+  and a.sno not in (select top 2 sno from sc where cno = 3 order by score desc)
+  and a.sno not in (select top 2 sno from sc where cno = 4 order by score desc)
+  and a.sno = b.sno
+group by a.sno
+
+--23、统计打印各科成绩,各分数段人数:课程ID,课程名称,[100-85],[85-70],[70-60],[ <60]
+select sc.cno as 课程ID, cname as 课程名称,
+sum(case when score >= 85 then 1 else 0 end) as [100-85],
+sum(case when score < 85 and score >= 70 then 1 else 0 end) as [85-70],
+sum(case when score < 70 and score >= 60 then 1 else 0 end) as [70-60],
+sum(case when score < 60 then 1 else 0 end) as [ <60]
+from sc, course
+where sc.cno = course.cno
+group by sc.cno, cname
+
+--24、查询学生平均分及其名次
+--drop table t1
+--select sno, avg(score) as pjf into t1 from sc group by sno
+--go
+--
+--drop table t2
+--select distinct avg(score) as pjf into t2 from sc group by sno
+--go
+--
+--select
+--    (select count(1) from t2 where pjf >= t1.pjf) as 名次,
+--    sno as 学号,
+--    pjf as 平均分
+--from t1
+--order by pjf desc
+--go
+select
+    (select count(1)
+    from (select distinct avg(score) as pjf from sc group by sno) as t2
+    where pjf >= t1.pjf) as 名次,
+    sno as 学号,
+    pjf as 平均分
+from (select sno, avg(score) as pjf from sc group by sno) as t1
+order by pjf desc
+go
+
+--25、查询各科成绩前三名的记录:(不考虑成绩并列情况) 
+--drop table aa
+--select sno, cno, score into aa from sc order by cno, score desc
+--
+--drop table bb
+--select distinct cno, score into bb from sc order by cno, score desc
+--
+--select aa.* from aa
+--where aa.score in (select top 3 score from bb where aa.cno = bb.cno)
+
+select * 
+from (select top 9999 sno, cno, score from sc order by cno, score desc) as aa
+where aa.score in 
+    (select top 3 score
+    from (select distinct top 9999 cno, score from sc order by cno, score desc) as bb
+    where aa.cno = bb.cno)
+
+--26、查询每门课程被选修的学生数 
+ select cno,count(sno) from sc group by cno
+
+select 
+sc.cno
+,COUNT(sc.sno)' 学生数 '
+from sc,course c
+where sc.cno=c.cno
+group by sc.cno
+
+--27、查询出只选修了一门课程的全部学生的学号和姓名 
+SELECT sc.sno, student.sname, count(cno) AS 选课数 
+FROM sc, student 
+WHERE sc.sno = student.sno
+GROUP BY sc.sno, student.sname
+HAVING count(cno) = 3
+
+--28、查询男生、女生人数 
+select 
+(select count(1) from student where ssex = '男') 男生人数,
+(select count(1) from student where ssex = '女') 女生人数
+
+
+select
+(select COUNT(sno) where ssex='男') as '男生人数'
+,(select COUNT(sno) where ssex='女') as '女生人数'
+from student
+group by student.ssex
+
+--29、查询姓“张”的学生名单 
+ SELECT sname FROM student WHERE sname like '张%'
+
+--30、查询同名同性学生名单，并统计同名人数
+select 
+s1.sname
+,COUNT(s1.sname) as '人数'
+from student s1,
+(select 
+s.sname ,s.ssex
+from student s
+)r
+
+where s1.sname=r.sname and s1.ssex=r.ssex
+group by s1.sname
+having COUNT(s1.sname)>1
+
+go
+select sname, count(1) from student group by sname having count(1) > 1
+
+--31、1981年出生的学生名单(注：student表中sage列的类型是datetime) 
+select sname, CONVERT(char(4), DATEPART(year,sage)) as age 
+from student 
+where DATEPART(year,sage)=1981
+
+--32、查询每门课程的平均成绩，结果按平均成绩升序排列，平均成绩相同时，按课程号降序排列 
+select cno 课程号, avg(score) 平均分
+from sc group by cno order by 平均分 asc, cno desc
+
+--33、查询平均成绩大于80的所有学生的学号、姓名和平均成绩
+select 
+s1.sno,
+s.sname,
+AVG(s1.score) as '平均成绩'
+from student s,sc s1
+where s.sno=s1.sno 
+group by s1.sno,s.sname
+having AVG(s1.score)>80
+
+go
+select sno, avg(score)
+from sc
+group by sno
+having avg(score) > 80 
+
+--34、查询 数据库 分数 低于60的学生姓名和分数
+select c.sname, a.score
+from sc a, course b, student c
+where a.cno = b.cno and a.sno = c.sno
+ and b.cname = '数据库' and score < 60
+
+--35、查询所有学生的选课情况
+SELECT sc.sno 学号,sname 姓名,cname 课程, sc.cno 课号
+FROM sc,student,course 
+WHERE sc.sno=student.sno and sc.cno=course.cno
+ORDER BY sc.sno
+
+--36、查询成绩在70分以上的学生姓名、课程名称和分数
+select 
+s.sname,
+c.cname,
+(s1.score) as '分数'
+from student s,sc s1,course c
+where s.sno=s1.sno  and c.cno=s1.cno and s1.score>=70
+--group by s1.sno,s.sname
+
+go
+SELECT student.sno,student.sname,sc.cno,sc.score 
+FROM student,Sc 
+WHERE sc.score>=70 AND sc.sno=student.sno; 
+
+--37、查询不及格的课程，并按课程号从大到小排列
+ select cno, score from sc where score < 60 order by cno
+
+ go
+select 
+sc.cno
+,c.cname
+,sc.score
+from sc ,course c
+where sc.score<60 and c.cno=sc.cno
+order by sc.cno desc
+
+--38、查询课程编号为3且课程成绩在80分以上的学生的学号和姓名
+select sc.sno,student.sname from sc,student where sc.sno=student.sno and score>80 and cno=3
+
+go
+select
+s.sno,s.sname,s1.score
+from student s,sc s1
+where s1.sno=s.sno and s1.cno=3 and s1.score>=80
+
+--39、求选了课程的学生人数 
+select count(distinct sno) from sc
+
+--40、查询选修“叶平”老师所授课程的学生中，成绩最高的学生姓名及其成绩 
+select student.sname,cname, score 
+from student,sc,course C,teacher 
+where student.sno=sc.sno and sc.cno=C.cno and C.tno=teacher.tno
+and teacher.tname ='叶平'
+and sc.score=(select max(score)from sc where cno = C.cno)
+
+--41、查询各个课程及相应的选修人数 
+select cno 课程号, count(1) 选修人数 from sc group by cno
+
+go
+select 
+c.cname
+,COUNT(sc.sno) '选修人数'
+from course c,sc
+where sc.cno=c.cno
+group by c.cname
+
+--42、查询不同课程成绩相同的学生的学号、课程号、学生成绩 
+select distinct A.sno, A.cno,B.score
+from sc A ,sc B
+where A.Score=B.Score and A.cno <>B.cno
+order by B.score
+
+go
+
+select
+sc.sno
+,sc.cno
+,sc.score
+from sc,
+(select
+sc.sno
+,sc.cno
+,sc.score
+from sc)r
+where r.score=sc.score and r.cno<>sc.cno
+
+--43、查询每门课程成绩最好的前两名的学生ID
+--先按照 课程, 成绩 高低 对 sc表 排序
+--select * from sc order by cno, score desc
+select * from sc a
+where score in (select top 2 score from sc where a.cno = sc.cno order by sc.score desc)
+order by a.cno, a.score desc
+
+--查询各单科状元
+select * from sc a
+where score = (select top 1 score from sc where a.cno = sc.cno order by sc.score desc)
+order by a.cno, a.score desc
+
+最终结果：
+select top 2--这是最后的一行编码目的是只取用课程成绩降序排名后的前2行
+r.sname  as '前两名'
+, MAX(r.grade) as '课程成绩'
+from 
+(
+select
+s.sname
+,s.sno
+,max(score) as grade
+from student s,sc
+where sc.sno=s.sno
+group by s.sname
+,s.sno
+)r
+group by r.sname
+order by 课程成绩 desc
+
+--44、统计每门课程的学生选修人数(至少有2人选修的课程才统计)。要求输出课程号和选修人数，
+--查询结果按人数降序排列，若人数相同，按课程号升序排列 
+select cno as 课程号,count(1) as 人数 
+from sc 
+group by cno having count(1) > 1
+order by count(1) desc,cno 
+
+go
+
+select
+r.cno  as 课程号
+,r.num as '选修人数' 
+from 
+(select
+sc.cno
+,COUNT(sc.cno)as num
+from sc
+group by sc.cno
+)r
+where r.num>=2
+
+--45、检索至少选修了5门课程的学生学号
+select sno from sc group by sno having count(1) >= 5
+
+go
+select 
+r.sno
+,r.sname
+,COUNT(r.sno) as 至少选修了5门
+from
+(select
+s.sno
+,s.sname
+,sc.cno
+from sc,student s
+where sc.sno=s.sno
+)r
+
+group by r.sno,r.sname
+having COUNT(r.sno)>=5
+
+--46、查询全部学生都选修的课程的课程号和课程名
+--(思路:查询最受欢迎的课程是啥)
+--select cno 课程ID, count(1) 选修人数 from sc group by cno
+select course.cno, cname
+from sc, course
+where sc.cno = course.cno
+group by course.cno, cname
+having count(sc.cno) = (select count(1) from student)
+
+
+go
+
+select 
+c1.cno
+,c1.cname
+from course c1,
+(
+select
+r.cno as cno 
+from
+(select 
+sc.cno
+,count(sc.cno) as num
+from sc,course c
+where sc.cno=c.cno 
+group by sc.cno
+)r
+where r.num=(select count(1) from student)
+)rr
+where rr.cno=c1.cno
+
+--查询最受欢迎的课程
+select cno 课程ID, count(cno) 选修人数
+from sc group by cno
+having count(cno) in (select top 1 count(cno) from sc group by cno order by count(cno) desc)
+order by 选修人数 desc
+
+--47、查询没学过“叶平”老师讲授的任一门课程的学生姓名
+--思路: 先得到学过“叶平”老师讲授的所有课程清单
+--select a.cno from course a, teacher b where a.tno = b.tno and b.tname = '叶平')
+--然后: 从 sc表中 得到 学过上述课程的 所有学生清单
+--select sno from sc where cno in
+--(select a.cno from course a, teacher b where a.tno = b.tno and b.tname = '叶平'))
+--最后: 从student表中 得到不在上数学生清单中的其他学生，即为最后的查询结果
+select sno, sname from student
+where sno not in(
+    select sno from sc where cno in
+    (select a.cno from course a, teacher b where a.tno = b.tno and b.tname = '叶平'))
+
+select sno, sname from student
+where sno not in
+    (select sno from course,teacher,sc
+    where course.tno=teacher.tno and sc.cno=course.cno and tname='叶平')
+
+--48、查询两门以上不及格课程的同学的学号及其平均成绩
+--思路: 先查询出所有不及格的sc中的记录
+--select sno, score from sc where score < 60
+select sno 学号, avg(score) 平均分, count(1) 不及格课程数
+from sc where score < 60 group by sno having count(1) > 2
+
+select 
+sno,avg(score) 平均分,COUNT(sno) as 不及格课程
+from sc 
+where sc.score<60
+group by sno
+having COUNT(sno)>2
+
+--49、检索4号课程分数大于60的同学学号，按分数降序排列
+select sno, score from sc where cno = 4 and score > 60 order by score desc
+
+--50、删除2号同学的课程1的成绩
+--delete sc where sno = 2 and cno = 1
+--select * from sc where sno = 2 and cno = 1
+delete from sc where sno = 2 and cno = 1
+
+作业：
+--43.查询各单科状元
+--46.查询最受欢迎的课程(选修学生最多的课程)
+--xx.查询成绩最好的课程
+--xx.查询最受欢迎的老师(选修学生最多的老师)
+--xx.查询教学质量最好的老师
+--xx.查询需要补考的各科学生清单
+
+
+顶
+1
+踩
+0
+ 
+ 
+上一篇SQL的好网站学习SQL语句的好网站
+下一篇C++中设计模式之我见解
+我的同类文章
+SQL（10）
+•MS Server 中的while循环2012-09-24阅读207
+•T-SQL和 PL/SQL之对比学习2012-09-21阅读527
+•MS SQL Server怎样在CMD命令行模式下工作：执行select，insert等等2012-09-21阅读20030
+•SQL的好网站学习SQL语句的好网站2012-09-07阅读459
+•用SQL语句操作数据(库)表:如增，删，改，查，彻底搞清SQL语句2012-09-07阅读3634
+•SQL中OBJECT_ID，OBJECT_NAME，OBJECT_DEFINITION的用法2012-09-24阅读659
+•MS SQLServer 2008 基础教程2012-09-21阅读525
+•解决OracleDBConsoleorcl服务无法启动问题2012-09-18阅读237
+•SQL中IN,NOT IN,EXISTS,NOT EXISTS的用法和差别2012-09-07阅读818
+•用SQL语句创建数据库和表，彻底搞清SQL语句2012-09-06阅读4506
+
+ 
+参考知识库
+img
+Go知识库
+1801关注|786收录
+img
+MySQL知识库
+18771关注|1443收录
+猜你在找
+精通memcached数据库管理深度讲解Oracle初级管理Oracle高级管理Oracle数据库CSDN“攒课”课题1：高并发网站中的数据库设计视频回顾
+走向面试之数据库基础一你必知必会的SQL语句练习-Part 2MySQl之最全且必会的sql语句走向面试之数据库基础一你必知必会的SQL语句练习-Part 1MYSQL必知必会第13章SQL语句4年前我也是高手想学黑客的不如先听我罗嗦下
+
+ 
+关闭
+
+ 
+查看评论
+3楼 RamMin 2015-10-21 22:49发表 [回复]
+
+没有注释，看不懂，找不到含有注释的版本
+2楼 Becker_Han 2015-10-06 19:11发表 [回复]
+
+提供的思路还可以，不过有些答案不对。
+1楼 guan_ye 2015-05-28 22:33发表 [回复]
+
+这个答案也不是很正确,给了一些解决问题的思路
+您还没有登录,请[登录]或[注册]
+* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场
+核心技术类目
+全部主题 Hadoop AWS 移动游戏 Java Android iOS Swift 智能硬件 Docker OpenStack VPN Spark ERP IE10 Eclipse CRM JavaScript 数据库 Ubuntu NFC WAP jQuery BI HTML5 Spring Apache .NET API HTML SDK IIS Fedora XML LBS Unity Splashtop UML components Windows Mobile Rails QEMU KDE Cassandra CloudStack FTC coremail OPhone CouchBase 云计算 iOS6 Rackspace Web App SpringSide Maemo Compuware 大数据 aptech Perl Tornado Ruby Hibernate ThinkPHP HBase Pure Solr Angular Cloud Foundry Redis Scala Django Bootstrap
+个人资料
+ 访问我的空间 
+zhangyulin54321
+ 
+访问：566666次
+积分：7932
+等级： 
+排名：第2019名
+原创：228篇转载：25篇译文：14篇评论：52条
+文章搜索
+
+搜索
+文章分类
+c/c++(89)
+java(52)
+技术资料(96)
+STL(9)
+SQL(11)
+.NET(5)
+C++设计模式(14)
+UML(1)
+ORACLE(9)
+MySQL(1)
+MFC(61)
+备份(0)
+ATL(1)
+Lua(9)
+Android(3)
+Unity3d(1)
+Python(9)
+网络(2)
+学习(1)
+文章存档
+2016年11月(6)
+2016年10月(2)
+2016年09月(1)
+2016年08月(3)
+2016年06月(1)
+展开
+阅读排行
+菜鸟怎样把U盘制作成系统启动盘，并且可以放两个系统，一个win7，另一个xp系统。(24433)
+MS SQL Server怎样在CMD命令行模式下工作：执行select，insert等等(20030)
+如何让tomcat输入http://localhost直接进入我指定项目的文件夹(16845)
+vc++MCF/C++/C中怎样让应用程序获得或以管理员权限运行 ，ShellExecuteEX编程 --- 获取管理员权限(16402)
+如何在VC++6.0或者VS如VS2010下使用外部类库（其他头文件）比如用pthread.h这个头文件(14476)
+用telnet测试给qq邮箱发邮件，中途可能腾讯要你开启smtp服务器(13613)
+UML中各图形或图标表示的意思(12507)
+oracle中与mysql中的命令 show databases, show tables, desc table类似的命令集(10971)
+彻底搞清C/C++中一维数组，二维数组，指针，数组指针和指针数组以及指向指针的指针，行地址和列地址之间的关系(9542)
+ORA-01861: 文字与格式字符串不匹配,在Oracle中insert 日期字段值:ORA-01861: 文字与格式字符串不匹配(9110)
+评论排行
+MFC/vc中当鼠标经过按钮等控件时出现文字提示功能(7)
+用telnet测试给qq邮箱发邮件，中途可能腾讯要你开启smtp服务器(6)
+彻底搞清C/C++中一维数组，二维数组，指针，数组指针和指针数组以及指向指针的指针，行地址和列地址之间的关系(5)
+VC/MFC中当使用了文件对话框后，就不能连接数据库了，为什么？(4)
+模拟的QQ可以在内网通信，为什么不能在外网通信，这需要NAT穿透内网与外网通信(3)
+要想学好SQL语句必会的50题，也是考试常考的点(3)
+如何在VC++6.0或者VS如VS2010下使用外部类库（其他头文件）比如用pthread.h这个头文件(3)
+解决当静态文本或编辑框等控件设置为透明后文字重叠问题(2)
+用telnet测试pop3接受邮件(1)
+内存分配方式(1)
+推荐文章
+* 而立之年——三线城市程序员的年终告白
+* Java集合框架中隐藏的设计套路
+* Python脚本下载今日头条视频(附加Android版本辅助下载器)
+* 人工智能的冷思考
+* React Native 实战系列教程之热更新原理分析与实现
+最新评论
+用telnet测试给qq邮箱发邮件，中途可能腾讯要你开启smtp服务器
+labuboco: @wys13544194267:现在好像不行了吧
+用telnet测试给qq邮箱发邮件，中途可能腾讯要你开启smtp服务器
+wys13544194267: 生成授权码后怎么用呢 还是提示ssl
+解决当静态文本或编辑框等控件设置为透明后文字重叠问题
+WangNeilZ: 这样会造成闪烁的
+MFC/vc中当鼠标经过按钮等控件时出现文字提示功能
+aaaadfdf: 方法可以！ 但也可以用MFC Button Control！
+解决unity5.3出现的： [VRDevice] Initialization of device oculus failed 问题
+a821113542: 期待文章更新
+如何在VC++6.0或者VS如VS2010下使用外部类库（其他头文件）比如用pthread.h这个头文件
+u014700017: 此外找到相应位数（32位或64位）的lib和dll后，直接放在编译器的库下即可，不需要再页面上作任何...
+CPalette调色板使用
+zaihuailu004: 很有帮助
+MFC/vc中当鼠标经过按钮等控件时出现文字提示功能
+b695886658: 确定可以，关键一句是设置延迟，m_Mytip.SetDelayTime(200); //设置延迟，如...
+要想学好SQL语句必会的50题，也是考试常考的点
+RamMin: 没有注释，看不懂，找不到含有注释的版本
+彻底搞清C/C++中一维数组，二维数组，指针，数组指针和指针数组以及指向指针的指针，行地址和列地址之间的关系
+老娘身高一米七: 我特别喜欢这行下面的分析：下面再看一个网友的一段分析相当给力的代码~~因为它指出了指针两个最为核心的...
+
+公司简介|招贤纳士|广告服务|联系方式|版权声明|法律顾问|问题报告|合作伙伴|论坛反馈
+网站客服杂志客服微博客服webmaster@csdn.net400-600-2320|北京创新乐知信息技术有限公司 版权所有|江苏知之为计算机有限公司|江苏乐知网络技术有限公司
+京 ICP 证 09002463 号|Copyright © 1999-2016, CSDN.NET, All Rights Reserved GongshangLogo
+

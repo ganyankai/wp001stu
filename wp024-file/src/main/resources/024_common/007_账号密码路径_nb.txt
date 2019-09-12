@@ -1,0 +1,283 @@
+2019年7月26日
+041 蓝湖
+	609021076@qq.com
+	------1234
+	
+040 物流短信平台:
+		
+	签名名称：爱拉油
+	模版CODE：SMS_173690392
+	内容：您的验证码：${code}，您正进行身份验证，打死不告诉别人！
+	accessKeyId：LTAIKHWPHQURffYs
+	accessKeySecret：scCqYknlfK8MJWCX60AmuRStKbmmfU				
+	
+039 加油站线上库
+	47.104.232.195:3306 
+	root
+	!@#QAZxsw
+	
+038 新零售后台
+	https://test.zrytech.com/admin/index.html#/crowd
+	
+037 所有git代码
+	http://120.25.212.63:10101/repositories
+		
+		git导入
+		http://ganyankai@120.25.212.63:10101/r/oilStation.git
+	
+036 16进制转汉字
+	http://www.msxindl.com/tools/unicode16.asp
+	
+035 oracle
+	784979813@qq.com
+	------1234Oracle
+	
+034
+	02 表达式 http://cron.qqe2.com/
+		//        每天上午10点执行的任务表达式
+		//        0 0 10 ? * ?
+
+	01 任务调度:	
+	https://blog.csdn.net/noaman_wgs/article/details/80984873
+	
+
+033 
+	https://element.eleme.cn/2.0/#/zh-CN/component/installation
+	
+2019年7月1日
+032 我的maven jar包路径:
+		C:\Users\lenovo\.m2\repository
+	01 基础包
+		C:\Users\lenovo\.m2\repository\com\zrytech
+031	vue.js 
+	https://cn.vuejs.org/v2/guide/
+	
+	
+030 广告项目
+	http://admin@120.25.212.63:10101/r/advert.git
+	
+	服务器
+	120.79.243.99 
+	root
+	Szboyi168
+	
+029 我的微信开发者账号
+	609021076@qq.com
+	------waws4321
+	
+028	广告微信开发者账号
+	dev@chinabofu.com
+	Szboyi168
+	
+027 我本地环境测试
+	192.168.0.122:8080/sysMessage/getRead
+	
+026	微信授权接口
+	https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317853&token=&lang=zh_CN
+	
+	https://www.cnblogs.com/tinyj/p/9836607.html
+	
+025 提现转账注意
+	https://note.youdao.com/ynoteshare1/index.html?id=4fb1fe2f50c60bbd67682335cfffd013&type=note
+
+024	 新零售数据库
+	【Mysql】
+	port:  3306
+	name:  root
+	pwd:  Ba@sk123.y-
+	版本：    5.7.26
+	配置文件位置：  /etc/mysql/mysql.conf.d/mysqld.cnf
+	屈飞
+	10:56
+	47.112.199.172
+	
+
+023  公司极光账号:
+	 账号：	791588228@qq.com
+	 密码：	Kds123456
+	 // AppKey ：	a0e86aa0aaf42dedcdfbabcb
+	 // Secret：	4d23f2612182a47e5c395084
+	 
+	 AppKey		f917ff0a382b306fc743e2cd				
+	 Secret：	7d9f4fc34755829e89d59858 
+
+	 安卓包名	com.yun.software.kaadas
+	 苹果bundle id	com.yun.software.kaadas
+	 
+022 新零售36地址
+	https://test.zrytech.com/customerExtend/getLabelRecord
+	后台
+	https://test.zrytech.com/admin/index.html#/login
+	后台正式
+	https://www.kaishuzhijia.com/admin/index.html#/login
+	
+021 新零售git
+	http://admin@120.25.212.63:10101/r/newshop.git
+	
+020 腾讯云文档对接
+	https://mta.qq.com/h5/visitor/ctr_user_realtime?app_id=500688196
+	
+	https://mta.qq.com/docs/h5_access.html
+			
+			<script>
+                var _mtac = {};
+                (function() {
+                    var mta = document.createElement("script");
+                    mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+                    mta.setAttribute("name", "MTAH5");
+                    mta.setAttribute("sid", "500688196");
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(mta, s);
+                })();
+            </script>
+			
+
+	H5 App id: 500688196
+	H5 App Secret key: 512ae468095f59b5aea6168d0cf83377
+
+019	极光
+	官网 https://www.jiguang.cn/
+
+	登录:
+	609020176@qq.com	(1ef149489ea2af2d)
+	Jpush1234
+	
+	极光账号	1ef149489ea2af2d
+	
+	AppKey		:	e036a343b918462d2aec1873
+	Master Secret : 57c37bb533af0fc1808d3c8c
+	
+	
+018 mvn仓库
+	https://mvnrepository.com/
+	
+017 框架类 spring boot-cloud
+	//no
+	https://blog.csdn.net/valada/article/details/80892573	
+	//yes
+	https://springcloud.cc/									
+	//yes
+	https://blog.csdn.net/forezp/article/details/69696915   
+	https://blog.csdn.net/forezp/article/details/69788938
+	
+016 在线作图工具
+	https://www.draw.io/
+
+015	货源状态流程图
+	![](https://lonelycatgames.cn/img/0f2f0904a1e20ce62a9ffa513c146a8f903882b78c3a-jj9Ndh.png)
+
+014		
+	运单状态流程图
+	![](https://lonelycatgames.cn/img/a0f7bbeccf80d37f22df3cba5c9df2c6d69463e59773-ZnRgJm.png)
+	
+013 项目base jar包路径
+	C:\Users\lenovo\.m2\repository\com\zrytech\framework		
+	
+012 线上环境:
+	47.94.173.245
+	22
+	root
+	bjw@2018
+	/home/app/logistics
+	
+011 拉货宝
+	http://www.lahuobao.net/home.html
+	https://cas.lahuobao.net/ssoserver/login?service=https%3A%2F%2Fwww.lahuobao.net%2Fuser%2Fcaslogin.html
+	pxy/123456
+	
+010 比价网 
+	http://www.51bijiawang.cn/pc/#/price
+	15207124170	企业买家	
+	123456
+	
+	
+009	本地下载路径
+	C:\Users\lenovo\Downloads
+	
+008 项目相关
+	
+	07 物流线上
+		http://www.51bijiawang.cn/logistics-front
+		http://www.51bijiawang.cn/logistics-back
+	06	禅道:
+		http://120.25.212.63:8888/zentao/project-bug-17.html
+		ganyankai
+		ganyankai123
+		
+	05 物流前台	 http://192.168.0.142:8081/logistics-front/#/login
+		
+	04 物流后台管理 http://192.168.0.142:8081/logistics-back/#/login
+		
+	03 日志文件 nohup.out ?
+		
+	02 项目地址：/home/app/logistics
+
+	01 服务器地址：192.168.0.142:22，	root，123456
+	
+	
+007 代码规范
+	https://note.youdao.com/ynoteshare1/index.html?id=5d98fa7acae681c9adc733922b4d3317&type=note
+
+006 货主登录
+	
+	
+005 json在线解析
+	http://www.bejson.com/
+	
+004 登录测试
+	http://localhost:8392/customer/login
+
+	{
+	  "params":{
+	      "userAccount": "abcd",
+		    "password": "A123456."
+	  }
+	}
+	
+
+003 接口举例
+ http://localhost:8392/shipper/page
+ 
+ {
+	  "params":{} ,
+	  "page":{
+		"pageNum": 1,   
+		"pageSize": 10
+	   },
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
+	}
+
+002 token
+eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU
+
+001 公司git
+	新闻资讯: 
+		浏览器	:	http://120.25.212.63:10101/repositories/
+		git		:	http://120.25.212.63:10101/r/priceCompare
+
+	ganyankai /yankai333
+	
+	git导入:
+	http://120.25.212.63:10101/r/HazardousLogistics.git
+	
+	浏览器访问:
+	http://120.25.212.63:10101/summary/HazardousLogistics.git
+	物流接口文档:
+	http://120.25.212.63:10101/tree/HazardousLogistics.git/master/zrytech-framework-app%2Fsrc%2Fmain%2Fresources%2F%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3
+
+	github
+	https://github.com/
+	
+	我的github
+	ganyankai 
+	784979813@qq.com	(自己代码库)	
+	or 609021076@qq.com
+	-----1234
+	https://github.com/ganyankai/wp001stu
+
+	
+	线上数据库
+	47.94.173.245
+	3306
+	root
+	123456

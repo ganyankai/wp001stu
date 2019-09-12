@@ -1,0 +1,83 @@
+函数测试：
+create table dual(id string);
+load data local inpath '/root/hivedata/dual.txt' into table dual;
+
+sql中substr函数下标从1开始
+小写函数
+select lower('ABC') from dual;
+
+增加jar包
+add jar /root/myudf.jar
+创建临时函数
+create temporary function myfunc as 'hiveudf.ToLowerCase';
+
+3.2 Hive参数配置方式
+Hive参数大全：
+https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties
+
+开发Hive应用时，不可避免地需要设定Hive的参数。设定Hive的参数可以调优HQL代码的执行效率，或帮助定位问题。然而实践中经常遇到的一个问题是，为什么设定的参数没有起作用？这通常是错误的设定方式导致的。
+
+对于一般参数，有以下三种设定方式：
+?配置文件   （全局有效）
+?命令行参数   （对hive启动实例有效）
+?参数声明   （对hive的连接session有效）
+
+配置文件：Hive的配置文件包括
+?用户自定义配置文件：$HIVE_CONF_DIR/hive-site.xml
+?默认配置文件：$HIVE_CONF_DIR/hive-default.xml 
+用户自定义配置会覆盖默认配置。
+另外，Hive也会读入Hadoop的配置，因为Hive是作为Hadoop的客户端启动的，Hive的配置会覆盖Hadoop的配置。
+配置文件的设定对本机启动的所有Hive进程都有效。
+
+命令行参数：启动Hive（客户端或Server方式）时，可以在命令行添加-hiveconf param=value来设定参数，例如：
+bin/hive -hiveconf hive.root.logger=INFO,console
+这一设定对本次启动的Session（对于Server方式启动，则是所有请求的Sessions）有效。
+
+参数声明：可以在HQL中使用SET关键字设定参数，例如：
+set  mapred.reduce.tasks=100;
+这一设定的作用域也是session级的。
+
+set hive.exec.reducers.bytes.per.reducer=<number>  每个reduce task的平均负载数据量
+hive会估算我们的总数据量，然后用总数据量除以上述参数值，就能得出需要运行的reduce task数
+
+set hive.exec.reducers.max=<number>   设置reduce task数量的上限
+
+set mapreduce.job.reduces=<number>    指定固定的reduce task数量
+但是，这个参数在必要时<业务逻辑决定只能用一个reduce task> hive会忽略
+
+设置本地运行参数
+set hive.exec.mode.local.auto=true
+上述三种设定方式的优先级依次递增。即参数声明覆盖命令行参数，命令行参数覆盖配置文件设定。注意某些系统级的参数，例如log4j相关的设定，必须用前两种方式设定，因为那些参数的读取在Session建立以前已经完成了。
+
+创建表：
+create table person(id int,name string,age int) row format delimited fields terminated by ",";
+
+加载文件数据
+    进入hive界面
+	load data local inpath "/root/person.txt" into table person;
+	
+	create table t_access_times (name string,month string,time int) row format delimited fields terminated by "\t";
+	CREATE TABLE t_access_times (NAME VARCHAR(100),MONTH VARCHAR(100),TIME INT(10));(mysql版)
+
+	load data local inpath "/root/mydir/t_access_times.txt" into table t_access_times;
+分组求和sql试写:
+	select name,month,sum(time) group by name,month from t_access_times; (false)
+	select name,month,sum(time) from t_access_times group by name,month; (true)
+	select name,sum(time) group by name from t_access_times;(false)
+	select sum(time) group by time from t_access_times;(false)
+
+
+SELECT a.*,b.* FROM 
+(SELECT NAME,MONTH,SUM(TIME) AS ts FROM t_access_times GROUP BY NAME,MONTH) a INNER JOIN
+(SELECT NAME,MONTH,SUM(TIME) AS ts FROM t_access_times GROUP BY NAME,MONTH ) b
+ON a.name=b.name
+WHERE b.month <= a.month;
+
+最终结果:
+SELECT a.name,a.month,MAX(a.ts) AS ts,SUM(b.ts) AS total FROM 
+(SELECT NAME,MONTH,SUM(TIME) AS ts FROM t_access_times GROUP BY NAME,MONTH) a INNER JOIN
+(SELECT NAME,MONTH,SUM(TIME) AS ts FROM t_access_times GROUP BY NAME,MONTH ) b
+ON a.name=b.name
+WHERE b.month <= a.month
+GROUP BY a.name,a.month
+ORDER BY a.name,a.month;

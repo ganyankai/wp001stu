@@ -1,0 +1,442 @@
+一、Spark集群安装
+1．安装
+1.1．机器部署
+准备两台以上Linux服务器，安装好JDK1.7
+1.2．下载Spark安装包
+
+
+http://www.apache.org/dyn/closer.lua/spark/spark-1.5.2/spark-1.5.2-bin-hadoop2.6.tgz
+上传解压安装包
+上传spark-1.5.2-bin-hadoop2.6.tgz安装包到Linux上
+解压安装包到指定位置
+tar -zxvf spark-1.5.2-bin-hadoop2.6.tgz -C /usr/local
+1.3．配置Spark
+进入到Spark安装目录
+cd /usr/local/spark-1.5.2-bin-hadoop2.6
+进入conf目录并重命名并修改spark-env.sh.template文件
+cd conf/
+mv spark-env.sh.template spark-env.sh
+vi spark-env.sh
+在该配置文件中添加如下配置
+export JAVA_HOME=/usr/java/jdk1.7.0_45
+export SPARK_MASTER_IP=node1.itcast.cn
+export SPARK_MASTER_PORT=7077
+保存退出
+重命名并修改slaves.template文件
+mv slaves.template slaves
+vi slaves
+在该文件中添加子节点所在的位置（Worker节点）
+node2.itcast.cn
+node3.itcast.cn
+node4.itcast.cn
+保存退出
+将配置好的Spark拷贝到其他节点上
+scp -r spark-1.5.2-bin-hadoop2.6/ node2.itcast.cn:/usr/local/
+scp -r spark-1.5.2-bin-hadoop2.6/ node3.itcast.cn:/usr/local/
+scp -r spark-1.5.2-bin-hadoop2.6/ node4.itcast.cn:/usr/local/
+
+Spark集群配置完毕，目前是1个Master，3个Work，在node1.itcast.cn上启动Spark集群
+/usr/local/spark-1.5.2-bin-hadoop2.6/sbin/start-all.sh
+
+启动后执行jps命令，主节点上有Master进程，其他子节点上有Work进行，登录Spark管理界面查看集群状态（主节点）：http://node1.itcast.cn:8080/
+
+到此为止，Spark集群安装完毕，但是有一个很大的问题，那就是Master节点存在单点故障，要解决此问题，就要借助zookeeper，并且启动至少两个Master节点来实现高可靠，配置方式比较简单：
+Spark集群规划：node1，node2是Master；node3，node4，node5是Worker
+安装配置zk集群，并启动zk集群
+停止spark所有服务，修改配置文件spark-env.sh，在该配置文件中删掉SPARK_MASTER_IP并添加如下配置
+export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=zk1,zk2,zk3 -Dspark.deploy.zookeeper.dir=/spark"
+1.在node1节点上修改slaves配置文件内容指定worker节点
+2.在node1上执行sbin/start-all.sh脚本，然后在node2上执行sbin/start-master.sh启动第二个Master
+
+
+
+第一个spark单机程序
+scala> sc.textFile("/root/mydir/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collect
+res1: Array[(String, Int)] = Array((tom,2), (hello,5), (jerry,1), (world,1), (kitty,1))
+
+scala> sc.textFile("/root/mydir/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).sortBy(_._2,false).collect
+res3: Array[(String, Int)] = Array((hello,5), (tom,2), (jerry,1), (world,1), (kitty,1))
+
+scala> sc.textFile("/root/mydir/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).sortBy(_._2,false).saveAsTextFile("/root/mydir/out")
+
+spark集群部署
+时间同步
+date -s "2017-02-02 17:29:00"
+
+(可选)配置两个Spark Master实现高可靠(首先要配置zookeeper集群，在spark-env.sh添加SPARK_DAEMON_JAVA_OPTS)
+export JAVA_HOME=/usr/java/jdk1.7
+export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=192.168.80.10:2181 -Dspark.deploy.zookeeper.dir=/spark"
+
+scp spark-env.sh slaves mymini2:$PWD
+
+
+任务提交到集群
+bin/spark-shell --master spark://mymini1:7077,mymini2:7077
+
+bin/spark-shell --master spark://mymini1:7077,mymini2:7077 --executor-memory 512m --total-executor-cores 5
+
+WordCount:
+bin/spark-submit  --master spark://mymini1:7077,mymini2:7077 --executor-memory 512m --total-executor-cores 7 --class cn.itcast.spark.WordCount /root/Spark-1.0-SNAPSHOT.jar
+
+bin/spark-submit  --master spark://mymini1:7077,mymini2:7077 --executor-memory 512m --total-executor-cores 7 --class cn.itcast.spark.WordCount /root/Spark-1.0-SNAPSHOT.jar hdfs://mymini2:9000/wc
+
+bin/spark-submit  --master spark://mymini1:7077,mymini2:7077 --executor-memory 512m --total-executor-cores 5 --class JavaWordCount /root/bigdata-1.0-SNAPSHOT.jar hdfs://mymini2:9000/wc hdfs://mymini2:9000/out_java
+
+
+#常用Transformation(即转换，延迟加载)
+#通过并行化scala集合创建RDD
+val rdd1 = sc.parallelize(Array(1,2,3,4,5,6,7,8))
+#查看该rdd的分区数量
+rdd1.partitions.length
+
+
+val rdd1 = sc.parallelize(List(5,6,4,7,3,8,2,9,1,10))
+val rdd2 = sc.parallelize(List(5,6,4,7,3,8,2,9,1,10)).map(_*2).sortBy(x=>x,true)
+val rdd3 = rdd2.filter(_>10)
+val rdd2 = sc.parallelize(List(5,6,4,7,3,8,2,9,1,10)).map(_*2).sortBy(x=>x+"",true)
+val rdd2 = sc.parallelize(List(5,6,4,7,3,8,2,9,1,10)).map(_*2).sortBy(x=>x.toString,true)
+
+
+val rdd4 = sc.parallelize(Array("a b c", "d e f", "h i j"))
+rdd4.flatMap(_.split(' ')).collect
+
+val rdd5 = sc.parallelize(List(List("a b c", "a b b"),List("e f g", "a f g"), List("h i j", "a a b")))
+
+
+List("a b c", "a b b") =List("a","b",))
+
+
+
+rdd5.flatMap(_.flatMap(_.split(" "))).collect
+
+#union求并集，注意类型要一致
+val rdd6 = sc.parallelize(List(5,6,4,7))
+val rdd7 = sc.parallelize(List(1,2,3,4))
+val rdd8 = rdd6.union(rdd7)
+rdd8.distinct.sortBy(x=>x).collect
+
+#intersection求交集
+val rdd9 = rdd6.intersection(rdd7)
+
+
+val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 2), ("kitty", 3)))
+val rdd2 = sc.parallelize(List(("jerry", 9), ("tom", 8), ("shuke", 7), ("tom", 2)))
+
+#join
+val rdd3 = rdd1.join(rdd2)
+val rdd3 = rdd1.leftOuterJoin(rdd2)
+val rdd3 = rdd1.rightOuterJoin(rdd2)
+
+
+#groupByKey
+val rdd3 = rdd1 union rdd2
+rdd3.groupByKey
+//(tom,CompactBuffer(1, 8, 2))
+rdd3.groupByKey.map(x=>(x._1,x._2.sum))
+groupByKey.mapValues(_.sum).collect
+Array((tom,CompactBuffer(1, 8, 2)), (jerry,CompactBuffer(9, 2)), (shuke,CompactBuffer(7)), (kitty,CompactBuffer(3)))
+
+
+#WordCount
+sc.textFile("/root/words.txt").flatMap(x=>x.split(" ")).map((_,1)).reduceByKey(_+_).sortBy(_._2,false).collect
+sc.textFile("/root/words.txt").flatMap(x=>x.split(" ")).map((_,1)).groupByKey.map(t=>(t._1, t._2.sum)).collect
+
+#cogroup
+val rdd1 = sc.parallelize(List(("tom", 1), ("tom", 2), ("jerry", 3), ("kitty", 2)))
+val rdd2 = sc.parallelize(List(("jerry", 2), ("tom", 1), ("shuke", 2)))
+val rdd3 = rdd1.cogroup(rdd2)
+val rdd4 = rdd3.map(t=>(t._1, t._2._1.sum + t._2._2.sum))
+
+#cartesian笛卡尔积
+val rdd1 = sc.parallelize(List("tom", "jerry"))
+val rdd2 = sc.parallelize(List("tom", "kitty", "shuke"))
+val rdd3 = rdd1.cartesian(rdd2)
+
+###################################################################################################
+
+#spark action
+val rdd1 = sc.parallelize(List(1,2,3,4,5), 2)
+
+#collect
+rdd1.collect
+
+#reduce
+val rdd2 = rdd1.reduce(_+_)
+
+#count
+rdd1.count
+
+#top
+rdd1.top(2)
+
+#take
+rdd1.take(2)
+
+#first(similer to take(1))
+rdd1.first
+
+#takeOrdered
+rdd1.takeOrdered(3)
+
+#
+
+map(func)	                           					Return a new distributed dataset formed by passing each element of the source through a function func.
+filter(func)	                       					Return a new dataset formed by selecting those elements of the source on which func returns true.
+flatMap(func)	                       					Similar to map, but each input item can be mapped to 0 or more output items (so func should return a Seq rather than a single item).
+mapPartitions(func)	                   					Similar to map, but runs separately on each partition (block) of the RDD, so func must be of type Iterator<T> => Iterator<U> when running on an RDD of type T.
+mapPartitionsWithIndex(func)	       					Similar to mapPartitions, but also provides func with an integer value representing the index of the partition, so func must be of type (Int, Iterator<T>) => Iterator<U> when running on an RDD of type T.
+sample(withReplacement, fraction, seed)					Sample a fraction fraction of the data, with or without replacement, using a given random number generator seed.
+union(otherDataset)										Return a new dataset that contains the union of the elements in the source dataset and the argument.
+intersection(otherDataset)								Return a new RDD that contains the intersection of elements in the source dataset and the argument.
+distinct([numTasks]))									Return a new dataset that contains the distinct elements of the source dataset.
+groupByKey([numTasks])									When called on a dataset of (K, V) pairs, returns a dataset of (K, Iterable<V>) pairs. 
+reduceByKey(func, [numTasks])							When called on a dataset of (K, V) pairs, returns a dataset of (K, V) pairs where the values for each key are aggregated using the given reduce function func, which must be of type (V,V) => V. Like in groupByKey, the number of reduce tasks is configurable through an optional second argument.
+aggregateByKey(zeroValue)(seqOp, combOp, [numTasks])	When called on a dataset of (K, V) pairs, returns a dataset of (K, U) pairs where the values for each key are aggregated using the given combine functions and a neutral "zero" value. Allows an aggregated value type that is different than the input value type, while avoiding unnecessary allocations. Like in groupByKey, the number of reduce tasks is configurable through an optional second argument.
+sortByKey([ascending], [numTasks])						When called on a dataset of (K, V) pairs where K implements Ordered, returns a dataset of (K, V) pairs sorted by keys in ascending or descending order, as specified in the boolean ascending argument.
+join(otherDataset, [numTasks])							When called on datasets of type (K, V) and (K, W), returns a dataset of (K, (V, W)) pairs with all pairs of elements for each key. Outer joins are supported through leftOuterJoin, rightOuterJoin, and fullOuterJoin.
+cogroup(otherDataset, [numTasks])						When called on datasets of type (K, V) and (K, W), returns a dataset of (K, (Iterable<V>, Iterable<W>)) tuples. This operation is also called groupWith.
+cartesian(otherDataset)									When called on datasets of types T and U, returns a dataset of (T, U) pairs (all pairs of elements).
+pipe(command, [envVars])								Pipe each partition of the RDD through a shell command, e.g. a Perl or bash script. RDD elements are written to the process's stdin and lines output to its stdout are returned as an RDD of strings.
+coalesce(numPartitions)									Decrease the number of partitions in the RDD to numPartitions. Useful for running operations more efficiently after filtering down a large dataset.
+repartition(numPartitions)								Reshuffle the data in the RDD randomly to create either more or fewer partitions and balance it across them. This always shuffles all data over the network.
+repartitionAndSortWithinPartitions(partitioner)			Repartition the RDD according to the given partitioner and, within each resulting partition, sort records by their keys. This is more efficient than calling repartition and then sorting within each partition because it can push the sorting down into the shuffle machinery.
+
+ (K,(Iterable<V>,Iterable<W>))
+
+
+RDD:
+scala> var rdd1 = sc.textFile("hdfs://mymini1:9000/mydir/data")
+rdd1: org.apache.spark.rdd.RDD[String] = hdfs://mymini1:9000/mydir/data MapPartitionsRDD[1] at textFile at <console>:27
+
+scala> rdd1.partitions.length
+res0: Int = 2
+
+scala> val rdd2 = rdd1.map((_,1))
+rdd2: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[2] at map at <console>:29
+
+scala> rdd2.saveAsTextFile("hdfs://mymini1:9000/mydir/out888")
+                                                                                
+scala> rdd2.toDebugString
+res2: String = 
+(2) MapPartitionsRDD[2] at map at <console>:29 []
+ |  hdfs://mymini1:9000/mydir/data MapPartitionsRDD[1] at textFile at <console>:27 []
+ |  hdfs://mymini1:9000/mydir/data HadoopRDD[0] at textFile at <console>:27 []
+
+scala> rdd2
+res3: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[2] at map at <console>:29
+
+scala> val rdd3 = rdd2.repartition(2)
+rdd3: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[7] at repartition at <console>:31
+
+scala> rdd3.saveAsTextFile("hdfs://mymini1:9000/mydir/out009")
+
+常用api:
+val rdd1 = sc.parallelize(List(1,2,3,4,5,6,7,8,9), 2)
+rdd1.partitions.length
+
+rdd1.partitions.length
+
+ val func = (index:Int,iter:Iterator[(Int)]) => {iter.toList.map(x => "[partID:" + index +",val: "+ x + "]").iterator}
+
+rdd1.mapPartitionsWithIndex(func).collect
+
+res9: Array[String] = Array([partID:0,val: 1], [partID:0,val: 2], [partID:0,val: 3], [partID:0,val: 4], [partID:1,val: 5], [partID:1,val: 6], [partID:1,val: 7], [partID:1,val: 8], [partID:1,val: 9])
+
+rdd1.aggregate(0)(_+_,_+_)
+
+rdd1.aggregate(10)(_+_,_+_)
+
+val rdd2 = sc.parallelize(List("a","b","c","d","e","f"), 2)
+def func2(index:Int,iter:Iterator[(String)]):Iterator[String] ={iter.toList.map(x => "[partID:" + index +",val: "+ x + "]").iterator}
+
+var rdd3 = sc.parallelize(List("12","23","345","4567"), 2)
+rdd3.aggregate("")((x,y) => math.max(x.length,y.length).toString,(x,y) => x+y)
+
+var rdd4 = sc.parallelize(List("12","23","345",""),2))
+rdd4.aggregate("")((x,y) => math.min(x.length,y.length).toString,(x,y) => x+y)
+
+val arr= Array(1,2,3,4,5)
+arr.max
+arr.reduce(math.max(_,_))
+
+aggregateByKey:
+val pairRDD = sc.parallelize(List(("cat",2),("cat",5),("mouse",4),("cat",12),("dog",12),("mouse",2)),2)
+def func2(index:Int,iter:Iterator[(String,Int)]):Iterator[String] ={iter.toList.map(x => "[partID:" + index +",val: "+ x + "]").iterator}
+
+pairRDD.mapPartitionsWithIndex(func2).collect
+
+pairRDD.aggregateByKey(0)(_+_,_+_)
+pairRDD.aggregateByKey(0)(math.max(_,_),_+_).collect
+
+val rdd1=sc.textFile("hdfs://mymini1:9000/wc").flatMap(_.split(" ")).map((_,1))
+rdd1.collect
+val rdd2=rdd1.combineByKey(x =>x,(a:Int,b:Int) => a+b,(m:Int,n:Int)=>m+n)
+
+val rdd4=sc.parallelize(List("dog","cat","gnu","salmon","rabbit","turkey","wolf","bear","bee"),3)
+val rdd5=sc.parallelize(List(1,1,2,2,2,1,2,2,2),3)
+val rdd6= rdd5.zip(rdd4)
+
+rdd6.combineByKey(x => List(x),(a:List[String],b:String) =>a:+b,(m:List[String],n:List[String]) => m++n)
+
+keyBy
+var rdd1=sc.parallelize(List("dog","salmon","salmon","salmon","rat","elephant"),3)
+val rdd2 = rdd1.keyBy(_.length)
+
+keys values
+val rdd1=sc.parallelize(List("dog","cat","gnu","salmon","rabbit","turkey","wolf","bear","bee"),3)
+val rdd2=rdd1.map(x=>(x.length,x))
+
+collectAsMap
+var rdd=sc.parallelize(List(("a",1),("b",2)))
+rdd.collectAsMap
+
+coalesce,repartition
+val rdd1=sc.parallelize(1 to 10,10)
+val rdd2=rdd1.coalesce(2,false)
+
+hdfs dfs cat /mydir/logs/itcast.log | more
+
+//读取hdfs数据
+val rdd1 = sc.textFile("hdfs://mymini2:9000/mydir/logs/itcast.log")
+//释放内存资源
+ rdd2.unpersist()
+
+rdd1.count
+
+checkpoint
+
+sc.setCheckpointDir("hdfs://mymini1:9000/ck20160823")
+
+val rdd=sc.textFile("hdfs://mymini1:9000/wc")
+val rdd2= rdd.flatMap(_.split(" "))
+ rdd2.checkpoint
+ rdd2.count
+
+
+sc.setCheckpointDir("hdfs://mymini2:9000/ck201608231")
+val rdd=sc.textFile("hdfs://mymini2:9000/wc")
+val rdd2= rdd.flatMap(_.split(" ")).map((_,1))
+rdd2.cache
+ rdd2.checkpoint
+ rdd2.count
+
+#调试Master，在master节点的spark-env.sh中添加SPARK_MASTER_OPTS变量
+export SPARK_MASTER_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=10000"
+#启动Master
+sbin/start-master.sh
+
+DataFrame:
+bin/spark-shell --master spark://mymini1:7077,mymini2:7077 --executor-memory 512m --total-executor-cores 5
+
+val rdd1 = sc.textFile("hdfs://mymini2:9000/person.txt")
+
+case class Person(id:Int,name:String,age:Int)
+rdd1.map(_.split(" ")).map(arr => Person(arr(0).toInt,arr(1),arr(2).toInt))
+val rdd2 =rdd1.map(_.split(" ")).map(arr => Person(arr(0).toInt,arr(1),arr(2).toInt))
+val df = rdd2.toDF
+df.show
++---+-----+---+
+| id| name|age|
++---+-----+---+
+|  1|  tom| 10|
+|  2|jerry| 12|
+|  3|kitty|  6|
+|  4|  jim| 20|
++---+-----+---+
+
+df.registerTempTable("t_person")
+sqlContext.sql("select * from t_person order by age desc limit 2").show
+df.select("name").show
+df.printSchema
+
+df.select(col("id"), col("name"), col("age") + 1).show
+df.filter(col("age") >= 18).show
+
+1.1．从MySQL中加载数据（Spark Shell方式）
+1.启动Spark Shell，必须指定mysql连接驱动jar包
+bin/spark-shell \
+--master spark://mymini1:7077 \
+--jars /root/mysql-connector-java-5.1.35-bin.jar \
+--driver-class-path /root/mysql-connector-java-5.1.35-bin.jar 
+
+2.从mysql中加载数据
+val jdbcDF = sqlContext.read.format("jdbc").options(Map("url" -> "jdbc:mysql://192.168.0.181:3306/bigdata", "driver" -> "com.mysql.jdbc.Driver", "dbtable" -> "person", "user" -> "root", "password" -> "123456")).load()
+
+整合hive
+
+cp /root/apps/hive/conf/hive-site.xml /root/apps/spark/conf/
+
+/root/apps/hadoop-2.6.4/etc/hadoop目录下
+cp hdfs-site.xml core-site.xml /root/apps/spark/conf
+
+bin/spark-shell \
+--master spark://mymini1:7077 \
+--executor-memory 512m --total-executor-cores 2  \
+--driver-class-path /root/mysql-connector-java-5.1.35-bin.jar 
+
+scala
+sqlContext.sql("select * from default.person limit 2")
+ sqlContext.sql("select * from default.person limit 2").show
+
+ +---+----+---+
+| id|name|age|
++---+----+---+
++---+----+---+
+
+bin/spark-sql \
+ --master spark://mymini1:7077 mymini2:7077 \
+ --executor-memory 1g \
+ --total-executor-cores 2 \
+ --driver-class-path /root/mysql-connector-java-5.1.35-bin.jar
+
+sparkStreaming
+nc -lk 8888
+
+整合flume
+mkdir -p /var/log/flume
+bin/flume-ng agent -c conf -f agentconf/flume-poll.conf -n a1  -Dflume.root.logger=WARN,console
+
+整合kafka
+bin/kafka-server-start.sh  config/server.properties
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 3 --topic lines
+kafka-topics.sh --topic lines --describe --zookeeper mymini3:2181
+
+idea配置参数
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 3 --topic mydata
+192.168.0.181:2181,192.168.0.182:2181,192.168.0.183:2181 g1 mydata 1
+
+Spark-on-YARN
+export JAVA_HOME=/usr/local/jdk1.7.0_80
+export HADOOP_CONF_DIR=/root/apps/hadoop-2.6.4/etc/hadoop
+
+./bin/spark-submit --class org.apache.spark.examples.SparkPi \
+--master yarn \
+--deploy-mode cluster \
+--driver-memory 512m \
+--executor-memory 512m \
+--executor-cores 2 \
+--queue default \
+lib/spark-examples*.jar \
+10
+
+要的内存太大可能无法执行
+./bin/spark-submit --class org.apache.spark.examples.SparkPi \
+--master yarn \
+--deploy-mode cluster \
+--driver-memory 1g \
+--executor-memory 1g \
+--executor-cores 2 \
+--queue default \
+lib/spark-examples*.jar \
+10
+
+client 模式：
+./bin/spark-submit --class org.apache.spark.examples.SparkPi \
+--master yarn \
+--deploy-mode client \
+--driver-memory 1g \
+--executor-memory 1g \
+--executor-cores 2 \
+--queue default \
+lib/spark-examples*.jar \
+10

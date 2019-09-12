@@ -1,0 +1,79 @@
+5、Kafka集群部署
+5.1集群部署的基本流程
+下载安装包、解压安装包、修改配置文件、分发安装包、启动集群
+5.2集群部署的基础环境准备
+安装前的准备工作（zk集群已经部署完毕）
+关闭防火墙 
+chkconfig iptables off  && setenforce 0
+创建用户
+groupadd realtime &&　useradd realtime　&& usermod -a -G realtime realtime
+创建工作目录并赋权
+mkdir /export
+mkdir /export/servers
+chmod 755 -R /export
+切换到realtime用户下
+su realtime
+5.3 Kafka集群部署 
+5.3.1、下载安装包
+http://kafka.apache.org/downloads.html
+在linux中使用wget命令下载安装包
+ 	wget http://mirrors.hust.edu.cn/apache/kafka/0.8.2.2/kafka_2.11-0.8.2.2.tgz
+5.3.2、解压安装包
+tar -zxvf /export/software/kafka_2.11-0.9.0.1.tar.gz -C /export/servers/
+
+cd /export/servers/
+ln -s kafka_2.11-0.9.0.1 kafka
+5.3.3、修改配置文件
+cp   /export/servers/kafka/config/server.properties /export/servers/kafka/config/server.properties.bak
+vi  /export/servers/kafka/config/server.properties
+输入以下内容：
+
+5.3.4、分发安装包
+scp -r /export/servers/kafka_2.11-0.8.2.2 kafka02:/export/servers
+然后分别在各机器上创建软连
+cd /export/servers/
+ln -s kafka_2.11-0.9.0.1 kafka
+
+简历要点
+通过给板块实体类增加position属性配合sql查询语句实现各版块在页面上下移动的效果
+1.采集不同系统上的日志
+2.读取存取日志
+3.读取规则，计算规则
+4.告警模块的实现
+5.保存触发信息
+6.数据库表结构的设计
+7.后台管理系统的开发
+
+
+5.3.5、再次修改配置文件（重要）
+依次修改各服务器上配置文件的的broker.id，分别是0,1,2不得重复。
+5.3.6、启动集群
+cd /export/servers/kafka
+依次在各节点上启动kafka
+bin/kafka-server-start.sh  config/server.properties
+
+以后台形式启动
+bin/kafka-server-start.sh  config/server.properties > /dev/null 2>&1 &
+
+一、Kafka常用操作命令
+	查看当前服务器中的所有topic
+	bin/kafka-topics.sh --list --zookeeper  mymini1:2181
+	创建topic
+	bin/kafka-topics.sh --create --zookeeper mymini1:2181 --replication-factor 3 --partitions 3 --topic window2
+	删除topic
+	sh bin/kafka-topics.sh --delete --zookeeper zk01:2181 --topic test
+	需要server.properties中设置delete.topic.enable=true否则只是标记删除或者直接重启。
+	通过shell命令发送消息
+	kafka-console-producer.sh --broker-list mymini1:9092 --topic window2
+	通过shell消费消息
+	sh bin/kafka-console-consumer.sh --zookeeper mymini1:2181 --from-beginning --topic window
+	查看消费位置
+	sh kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zookeeper zk01:2181 --group testGroup
+	查看某个Topic的详情
+	sh kafka-topics.sh --topic test --describe --zookeeper zk01:2181
+	对分区数进行修改
+	kafka-topics.sh --zookeeper  zk01 --alter --partitions 15 --topic   utopic
+	
+	日志报警项目：
+	kafka-topics.sh --create --zookeeper mymini1:2181 --replication-factor 3 --partitions 10 --topic all_app_log
+	

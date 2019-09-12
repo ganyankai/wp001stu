@@ -1,0 +1,151 @@
+测试集群工作状态的一些指令 ：
+bin/hdfs dfsadmin -report	 查看hdfs的各节点状态信息
+
+
+bin/hdfs haadmin -getServiceState nn1		 获取一个namenode节点的HA状态
+
+sbin/hadoop-daemon.sh start namenode  单独启动一个namenode进程
+
+./hadoop-daemon.sh start zkfc   单独启动一个zkfc进程
+			
+
+7.        此时如果通过网页访问两个namenode的http-address，可以看到两个namenode都是standby状态，也可以通过hadoop自带的命令行工具来查看状态：
+$HADOOP_HOME/bin/hdfs  haadmin -getServiceState  nn1
+注意：此处的nn1为在hdfs-site.xml中配置的namenode服务的名称。
+
+
+8.        确定要转为active的namenode的id，这里将namenode1设为active，使用命令行工具进行状态切换：
+$HADOOP_HOME/bin/hdfs  haadmin -failover --forcefence --forceactive  nn2  nn1
+注意：此处“nn2  nn1”的顺序表示active状态由nn2转换到nn1上（虽然nn2在转化前也是standby状态）。
+
+
+9.        上一步中把namenode1的状态切换为active后，系统自动把namenode2上的namenode进程关闭，再把错误原因排除后重启该namenode进程，启动后该namenode状态为standby，等待下一次namenode1出现故障时即可将namenode2状态切换为active，使用命令行工具：
+$HADOOP_HOME/bin/hdfs  haadmin -failover --forcefence --forceactive  nn1  nn2
+         相应的，转换完以后namenode1上的namenode进程被关闭，需要排除故障后重新启动。(操作未能成功)
+
+查看本地库：
+hadoop checknative -a
+	Native library checking:
+	hadoop:  true /root/apps/hadoop-2.6.4/lib/native/libhadoop.so.1.0.0
+	zlib:    true /lib64/libz.so.1
+	snappy:  false 
+	lz4:     true revision:99
+	bzip2:   false 
+	openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+
+HA配置：
+2.2.7配置免密码登陆
+				#首先要配置hadoop00到hadoop01、hadoop02、hadoop03、hadoop04、hadoop05、hadoop06、hadoop07的免密码登陆
+				#在hadoop01上生产一对钥匙
+				ssh-keygen -t rsa
+				#将公钥拷贝到其他节点，包括自己
+				ssh-coyp-id hadoop00
+				ssh-coyp-id hadoop01
+				ssh-coyp-id hadoop02
+				ssh-coyp-id hadoop03
+				ssh-coyp-id hadoop04
+				ssh-coyp-id hadoop05
+				ssh-coyp-id hadoop06
+				ssh-coyp-id hadoop07
+				#配置hadoop02到hadoop04、hadoop05、hadoop06、hadoop07的免密码登陆
+				#在hadoop02上生产一对钥匙
+				ssh-keygen -t rsa
+				#将公钥拷贝到其他节点
+				ssh-coyp-id hadoop03				
+				ssh-coyp-id hadoop04
+				ssh-coyp-id hadoop05
+				ssh-coyp-id hadoop06
+				ssh-coyp-id hadoop07
+				#注意：两个namenode之间要配置ssh免密码登陆，别忘了配置hadoop01到hadoop00的免登陆
+				在hadoop01上生产一对钥匙
+				ssh-keygen -t rsa
+				ssh-coyp-id -i hadoop00				
+		
+		2.4将配置好的hadoop拷贝到其他节点
+			scp -r /hadoop/ hadoop02:/
+			scp -r /hadoop/ hadoop03:/
+			scp -r /hadoop/hadoop-2.6.4/ hadoop@hadoop04:/hadoop/
+			scp -r /hadoop/hadoop-2.6.4/ hadoop@hadoop05:/hadoop/
+			scp -r /hadoop/hadoop-2.6.4/ hadoop@hadoop06:/hadoop/
+			scp -r /hadoop/hadoop-2.6.4/ hadoop@hadoop07:/hadoop/
+			
+			
+			
+		###注意：严格按照下面的步骤!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		2.5启动zookeeper集群（分别在hadoop05、hadoop06、tcast07上启动zk）
+			cd /hadoop/zookeeper-3.4.5/bin/
+			./zkServer.sh start
+			#查看状态：一个leader，两个follower
+			./zkServer.sh status
+			
+		2.6手动启动journalnode（分别在在hadoop05、hadoop06、hadoop07上执行）
+			cd /hadoop/hadoop-2.6.4
+			sbin/hadoop-daemon.sh start journalnode
+			#运行jps命令检验，hadoop05、hadoop06、hadoop07上多了JournalNode进程
+		
+		2.7格式化namenode
+			#在hadoop00上执行命令:
+			hdfs namenode -format
+			#格式化后会在根据core-site.xml中的hadoop.tmp.dir配置生成个文件，这里我配置的是/hadoop/hadoop-2.6.4/tmp，然后将/hadoop/hadoop-2.6.4/tmp拷贝到hadoop02的/hadoop/hadoop-2.6.4/下。
+			scp -r tmp/ hadoop02:/home/hadoop/app/hadoop-2.6.4/
+			##也可以这样，建议hdfs namenode -bootstrapStandby
+		
+		2.8格式化ZKFC(在hadoop00上执行即可)
+			hdfs zkfc -formatZK
+		
+		2.9启动HDFS(在hadoop00上执行)
+			sbin/start-dfs.sh
+
+		2.10启动YARN(#####注意#####：是在hadoop02上执行start-yarn.sh，把namenode和resourcemanager分开是因为性能问题，因为他们都要占用大量资源，所以把他们分开了，他们分开了就要分别在不同的机器上启动)
+			sbin/start-yarn.sh
+
+		
+	到此，hadoop-2.6.4配置完毕，可以统计浏览器访问:
+		http://hadoop00:50070
+		NameNode 'hadoop01:9000' (active)
+		http://hadoop01:50070
+		NameNode 'hadoop02:9000' (standby)
+	
+	验证HDFS HA
+		首先向hdfs上传一个文件
+		hadoop fs -put /etc/profile /profile
+		hadoop fs -ls /
+		然后再kill掉active的NameNode
+		kill -9 <pid of NN>
+		通过浏览器访问：http://192.168.1.202:50070
+		NameNode 'hadoop02:9000' (active)
+		这个时候hadoop02上的NameNode变成了active
+		在执行命令：
+		hadoop fs -ls /
+		-rw-r--r--   3 root supergroup       1926 2014-02-06 15:36 /profile
+		刚才上传的文件依然存在！！！
+		手动启动那个挂掉的NameNode
+		sbin/hadoop-daemon.sh start namenode
+		通过浏览器访问：http://192.168.1.201:50070
+		NameNode 'hadoop01:9000' (standby)
+	
+	验证YARN：
+		运行一下hadoop提供的demo中的WordCount程序：
+		hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.1.jar wordcount /profile /out
+	
+	OK，大功告成！！！
+
+	
+			
+		
+测试集群工作状态的一些指令 ：
+bin/hdfs dfsadmin -report	 查看hdfs的各节点状态信息
+
+
+bin/hdfs haadmin -getServiceState nn1		 获取一个namenode节点的HA状态
+
+sbin/hadoop-daemon.sh start namenode  单独启动一个namenode进程
+hadoop-daemon.sh start datanode
+yarn-daemon.sh start resourcemanager
+
+./hadoop-daemon.sh start zkfc   单独启动一个zkfc进程
+			
+stop-dfs.sh 
+
+格式化失败报某些源码目录仍然存在可考虑重启
+

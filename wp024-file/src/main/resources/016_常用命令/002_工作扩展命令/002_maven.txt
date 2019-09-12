@@ -1,0 +1,10 @@
+
+2019年8月1日
+02 maven环境变量配置
+	"-Dmaven.home=D:\IDEA\IntelliJ IDEA 2017.3.5\plugins\maven\lib\maven3"
+
+
+01 安装jar包
+	mvn install:install-file -Dfile=C:\Users\lenovo\.m2\repository\com\catt\common-module-webUI\0.0.2\common-module-webUI-0.0.2-SNAPSHOT.war -DgroupId=com.catt -DartifactId=common-module-webUI -Dversion=0.0.2 -Dpackaging=war
+	
+	C:\Users\lenovo\.m2\repository\com\catt\common-module-webUI\0.0.2\common-module-webUI-0.0.2-SNAPSHOT.war

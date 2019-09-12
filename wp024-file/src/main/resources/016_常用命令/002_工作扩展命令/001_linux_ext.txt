@@ -1,0 +1,141 @@
+
+
+004 tomcat
+	
+	05 tomcat启动时读取的变量是	CATALINA_HOME
+		
+	04 查看是否启动成功	
+		执行： jps
+		登陆tomcat欢迎界面： http://192.168.13.123:8080/
+		
+	03 启动tomcat：
+		到tomcat的bin目录下执行： ./startup.sh 
+		
+	02 解压：
+		执行命令：tar -zxvf apache-tomcat-7.0.47.tar.gz -C /usr/local/
+		
+	01 上传tomcat：
+		
+003 es
+	11 
+		#向store索引中添加一些书籍
+	curl -XPUT 'http://192.168.164.128:9200/store/books/1' -d 
+   '{
+		"title": "Elasticsearch: The Definitive Guide",
+		"name" : {
+			"first" : "Zachary",
+			"last" : "Tong"
+			},
+		"publish_date":"2015-02-06",
+		"price":"49.99"
+	}'
+		
+		#通过浏览器查询	
+		http://192.168.164.128:9200/store/books/1
+
+	10	
+		#本地方式安装head插件
+		./elasticsearch-plugin install file:///root/elasticsearch-head-master.zip 
+
+	09
+		#es安装插件下载es插件
+		/usr/local/elasticsearch-6.4.2/bin/elasticsearch-plugin install mobz/elasticsearch-head
+		
+		/usr/local/elasticsearch-6.4.2/bin/elasticsearch-plugin install elasticsearch-head-master
+
+	08 
+		es的配置文件可能改完后需要重新登录
+		
+	07	
+		sudo sysctl -p
+		
+	06	curl 192.168.164.128:9200
+		{
+		  "name" : "dante-node-1",
+		  "cluster_name" : "dante",
+		  "cluster_uuid" : "-DKarb84RaeTdutybjLgJA",
+		  "version" : {
+			"number" : "6.4.2",
+			"build_flavor" : "default",
+			"build_type" : "zip",
+			"build_hash" : "04711c2",
+			"build_date" : "2018-09-26T13:34:09.098244Z",
+			"build_snapshot" : false,
+			"lucene_version" : "7.4.0",
+			"minimum_wire_compatibility_version" : "5.6.0",
+			"minimum_index_compatibility_version" : "5.0.0"
+		  },
+		  "tagline" : "You Know, for Search"
+		}
+
+
+	05 访问这个成功说明防火墙关闭
+		http://192.168.164.128:8080/
+		
+	04	
+		一、service方式
+
+		查看防火墙状态： 
+
+		[root@cluster1 ~]# service iptables status
+		
+		iptables：未运行防火墙。
+		
+		开启防火墙：
+
+		[root@cluster1 ~]# service iptables start
+
+		关闭防火墙：
+
+		[root@cluster1 ~]# service iptables stop
+		
+		永久关闭:
+		chkconfig iptables off  
+		
+		二、iptables方式
+
+		先进入init.d目录，命令如下：
+
+		[root@cluster1 ~]# cd /etc/init.d/
+
+		[root@cluster1 init.d]# 
+
+		然后
+		
+		查看防火墙状态：
+
+		[root@cluster1 init.d]# /etc/init.d/iptables status
+
+		暂时关闭防火墙：
+
+		[root@cluster1 init.d]# /etc/init.d/iptables stop
+
+		重启iptables：
+
+		[root@cluster1 init.d]# /etc/init.d/iptables restart
+
+
+	03 
+		chmod -R 777 /usr/local/elasticsearch-6.4.2
+		
+	02 启动es
+		find / -name elasticsearch.yml
+		vi /usr/local/elasticsearch-6.4.2/config/elasticsearch.yml
+		/usr/local/elasticsearch-6.4.2/bin/elasticsearch -d 
+		
+		chown -R bigdata:bigdata /{bigdata,/usr/local/elasticsearch-6.4.2}
+		
+002 jdk安装
+	03
+		jdk1.8.0_221
+		
+	02 
+		tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local
+
+	01 环境变量配置
+		JAVA_HOME=/usr/local/jdk1.8
+		exprot PATH=$JAVA_HOME/bin:$PATH
+
+001 查看centos版本
+	cat /etc/redhat-release
+	

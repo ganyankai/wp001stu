@@ -1,0 +1,109 @@
+2019年7月31日
+
+
+2018年10月29日
+ifup eth0
+ifdown eth0
+service network restart
+
+
+linux错误---UNEXPECTED INCONSISTENCY; RUN FSCK MANUALLY 
+1、输入密码进入shell
+2、通过cat  /etc/redhat-release 可以看到这是rhel6.5版本。
+3、df  -h 查看到 /dev/sda5挂载正常。
+4、执行fsck  –y /dev/sda5  检测并修复磁盘.修复之后reboot重启。
+
+三、jobs
+
+查看当前有多少在后台运行的命令
+jobs -l选项可显示所有任务的PID，jobs的状态可以是running, stopped, Terminated。但是如果任务被终止了（kill），shell 从当前的shell环境已知的列表中删除任务的进程标识。
+
+需要我们掌握的：
+添加一个用户：
+1、   useradd spark
+2、   passwd spark     根据提示设置密码；
+即可
+
+删除一个用户：
+userdel -r spark     加一个-r就表示把用户及用户的主目录都删除
+
+为用户配置sudo权限
+用root编辑 vi /etc/sudoers
+在文件的如下位置，为hadoop添加一行即可
+root    ALL=(ALL)       ALL     
+hadoop  ALL=(ALL)       ALL
+
+然后，hadoop用户就可以用sudo来执行系统级别的指令
+[hadoop@shizhan ~]$ sudo useradd huangxiaoming
+
+从root 切换到 tom
+su tom
+
+###【在多台机器上执行下面的命令】###
+#es启动时需要使用非root用户，所有创建一个bigdata用户：
+useradd bigdata
+#为hadoop用户添加密码：
+echo 123456 | passwd --stdin bigdata
+#将bigdata添加到sudoers
+echo "bigdata ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/bigdata
+chmod 0440 /etc/sudoers.d/bigdata
+#解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoer注释掉 Default requiretty 一行
+sudo sed -i 's/Defaults    requiretty/Defaults:bigdata !requiretty/' /etc/sudoers
+
+#给相应的目录添加权限
+chown -R bigdata:bigdata /data
+chown -R bigdata:bigdata /usr/local
+
+远程获取内容
+curl www.baidu.com
+
+直接开启一个socket端口
+nc -lk 8888 (需要安装nc)
+
+时间同步
+一、查看和修改Linux的时区
+
+1. 查看当前时区
+命令 ： "date -R"
+
+2. 修改设置Linux服务器时区
+方法 A
+命令 ： "tzselect"
+
+方法 B 仅限于RedHat Linux 和 CentOS
+命令 ： "timeconfig"
+
+方法 C 适用于Debian
+命令 ： "dpkg-reconfigure tzdata"
+
+3. 复制相应的时区文件，替换系统时区文件；或者创建链接文件
+cp /usr/share/zoneinfo/$主时区/$次时区 /etc/localtime
+
+例如：在设置中国时区使用亚洲/上海（+8）
+
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+二、查看和修改Linux的时间
+
+1. 查看时间和日期
+命令 ： "date"
+
+2.设置时间和日期
+例如：将系统日期设定成2009年11月3日的命令
+
+命令 ： "date -s 11/03/2009"
+
+将系统时间设定成下午5点55分55秒的命令
+
+命令 ： "date -s 17:55:55"
+
+3. 将当前时间和日期写入BIOS，避免重启后失效
+命令 ： "hwclock -w"
+
+注：
+
+date
+不加参数可以直接看到当前日期时间
+
+cal
+不加参数可以直接看到本月月历

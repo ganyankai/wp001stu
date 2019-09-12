@@ -1,0 +1,349 @@
+<div id="024" class="">
+	024 时间格式化
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String now = dateFormat.format(new Date());
+	
+</div>
+
+<div id="023" class="">
+	023 集合非空处理
+	if(carList!=null && carList.size()>0){
+		car = carList.get(0);
+	}
+</div>
+
+<div id="022" class="">
+	022 修改状态
+	/**
+     * 一键已读
+     * @param id 用户id
+     * @param idsStr (1,2,3)
+     * @return
+     */
+    @Update("update sys_message set mark_read = 1,read_date = now() where reveicer_id = #{id} and id IN ${idsStr}")
+    public Integer markRead(@Param("id") Integer id , @Param("idsStr") String idsStr);
+	
+
+	@Update("update car set status =#{status} where id = #{id}")
+    Integer updateStatus(@Param("id")Integer id,@Param("status")String status);
+</div>
+
+<div id="021" class="">
+	021 从容器中获取对象
+		//加载Spring配置文件
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("org.pc");
+        //获取Bean对象
+        applicationContext.getBean(User.class);
+		
+		
+		//或者
+		String[] paths = new String[2];
+        paths[0] = "applicationContext.xml";
+        paths[1] = "applicationContext-project.xml";
+
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(paths);
+
+</div>
+
+<div id="020" class="">
+	020
+	分页请求参数
+	{
+		"params": {
+			"name":"",					//(选填) (str) 收款名称
+	  		"cardNo":""					//(选填) (str) 收款账号
+		},
+		"page": {
+			"pageNum": "1",
+			"pageSize": "2"
+		},
+		"token": ""
+	}
+</div>
+
+<div id="019" class="">
+	019 
+	@Valid放在方法体上即可 改动后可能无法重新编译 需要重启项目
+	@PostMapping("/save")
+    public ServerResponse save(@RequestBody @Valid RequestParams<TbFeedBackAddDto> params, BindingResult result) {
+        System.out.println("flag:"+0);
+        return tbFeedBackAppService.save(params.getParams());
+    }
+</div>
+
+<div id="018" class="">
+	018 flag 标志
+	System.out.println("flag:"+2);
+	
+</div>
+
+<div id="017" class="">	
+	017 获取子类具体泛型类型
+	public SuperBaseDaoImpl() {
+        Type type = getClass().getGenericSuperclass();
+        Type[] parameterizedType = ((ParameterizedType) type).getActualTypeArguments();
+        this.entityClass = (Class<T>) parameterizedType[0];
+    }
+</div>
+
+<div id="016" class="">
+	016 验证码校验
+	@Autowired
+    private ICache cache;
+	
+
+	String code = cache.get(Constant.VERFI_CODE_PREFIX + dto.getTel());
+	if (!dto.getSmsCode().equalsIgnoreCase(code)) {
+		throw new BusinessException(112,"验证码校验错误");
+	}
+
+</div>
+
+<div id="015" class="">
+	015 数据校验
+		@NotNull(message = "用户id不能为空")
+		private Integer id;
+		
+		@NotBlank(message = "车辆长度不能为空")
+		@Pattern(regexp = CarConstants.REG_CAR_LENGTH, message = CarConstants.REG_CAR_LENGTH_ERR_MSG)
+		private String carLength;
+
+</div>
+
+<div id="014" class="">
+	014 日期格式处理
+		if (StringUtils.isEmpty(requestParams.getParams().getStartDate())){
+            requestParams.getParams().setStartDate("2019-01-01");
+        }
+        if (StringUtils.isEmpty(requestParams.getParams().getEndDate())){
+            requestParams.getParams().setEndDate("2119-01-01");
+        }
+		
+</div>
+
+<div id="013" class="">
+	013 mapper用法示例
+	
+	 <select id="getCustomerExtendList"
+            resultMap="customerExtend">
+        select ce.*,ta.name as agentName from customer_extend ce,tb_agent ta
+        <trim prefix="where " prefixOverrides="and ">
+            ce.agent_id = ta.id
+            <if test="customerExtend.name != null and customerExtend.name !=''">
+                and name like concat('%',#{customerExtend.userName},'%')
+            </if>
+            <if test="customerExtend.tel != null and customerExtend.tel !=''">
+                and tel like concat('%',#{customerExtend.tel},'%')
+            </if>
+        </trim>
+    </select>
+</div>
+	
+<div id="012" class="">
+	012	新零售后台代码带渠道门店id
+	
+	Integer id = 0;
+        String type = "";
+        User user = RequestUtil.getCurrentUser(User.class);
+        if (user.getUserType().equalsIgnoreCase(DictConstant.USER_ADMIN)){
+            //平台
+            return sysMessageService.markReadByType(user.getId(), MessageConstant.REVEICER_USER_ADMIN);
+        }else if (user.getUserType().equalsIgnoreCase(DictConstant.USER_AGENT)){
+            //渠道
+            //获取当前用户对应的渠道id
+            TbAgent agent = sysMessageService.getAgentByTel(user.getTel());
+            if(agent!=null){
+                return sysMessageService.markReadByType(agent.getId(), MessageConstant.REVEICER_USER_AGENT);
+            }else{
+                throw new BusinessException(112, "无访问权限");
+            }
+        }else if (user.getUserType().equalsIgnoreCase(DictConstant.USER_SHOP)){
+            TbShop shop = sysMessageService.getShopByTel(user.getTel());
+            if(shop!=null){
+                return sysMessageService.markReadByType(shop.getId(), MessageConstant.REVEICER_USER_SHOP);
+            }else{
+                throw new BusinessException(112, "无访问权限");
+            }
+        }
+
+        throw new BusinessException(112, "无访问权限");
+</div>
+
+<div id="011" class="">
+	011 新零售后台代码
+		if (user.getUserType().equalsIgnoreCase(DictConstant.USER_ADMIN)){
+            //平台
+            return indentTimeService.getIndentTime(startDate,endDate,timeDimension,pageNum,pageSize);
+        }else if (user.getUserType().equalsIgnoreCase(DictConstant.USER_AGENT)){
+            //渠道
+            return indentTimeService.getIndentTimeAgent(startDate,endDate,timeDimension,pageNum,pageSize,id);
+        }else if (user.getUserType().equalsIgnoreCase(DictConstant.USER_SHOP)){
+            //门店
+            return indentTimeService.getIndentTimeShop(startDate,endDate,timeDimension,pageNum,pageSize,id);
+        }
+		throw new BusinessException(112, "无访问权限");
+</div>
+
+<div id="010" class="">
+	010 消息推送代码
+	if(!tbIndent.getShopId().equals(Constant.DEFAULE_VALUE_SHOP_ID)){
+            //分配门店推给门店
+            //取得消息接收人手机号与id
+            SysCustomer sysCustomer = RequestUtil.getCurrentUser(SysCustomer.class);
+            String tel = sysCustomer.getTel();
+            Integer id = sysCustomer.getId();
+            
+            String orderNo = tbIndent.getOrderNo();
+            String installationDate = tbIndent.getInstallationDate();
+            String contactTel = tbShop.getContactTel();
+            String contentKey = String.format(MessageConstant.MESSAGE_APPOINTMENT_INSTALL, orderNo, installationDate, contactTel);
+            String titleKey = DictConstant.MESSAGE_TYPE_INDENT;
+
+            SysMessageUtils.saveAndSend(tel,id,titleKey,contentKey,true);
+            
+        }
+
+</div>
+
+<div id="009" class="">
+	009
+	//输出密码
+    @Test
+    public void test(){
+        String password = PasswordUtils.encryptShiroPassword("dante", "123456");
+        System.out.println(password);
+    }
+</div>
+
+<div id="008" class="">
+	008 抛异常
+	throw new BusinessException(112, "无访问权限");
+</div>
+
+<div id="007" class="">
+	007 集合转成,分隔字符串
+	private String listToStr(List<Integer> list) {
+        String idsStr = "(";
+        for (int i = 0; i < list.size() ; i++) {
+            if (i==list.size()-1){
+                idsStr = idsStr + list.get(i);
+            }else{
+                idsStr = idsStr + list.get(i) + ",";
+            }
+        }
+        idsStr = idsStr +")";
+        return idsStr;
+    }
+
+</div>
+
+<div id="006" class="">
+	006 消息模块代码
+	标志  --sys_message
+	
+	//报价成功存入消息表
+		String content = "您发布的货源"+cargo.getName()+"收到"+carOwner.getName()
+				+"（"+carOwner.getTel() +"）报价,金额为"+cargoMatter.getMatterPrice()+",请前往查看";
+		Object[] propArr = new Object[]{SysMessageConstants.MSG_TYPE_APPROVING,1, SysMessageConstants.SEND_TYPE_SYSTEM,new Date(),
+				content,carOwner.getId(), CustomerConstants.TYPE_CARGO_OWNER,0,null};
+		messageService.createMessage(propArr);
+	
+	//审核失败推送消息
+			String content = "您的认证资料审核不通过，原因如下：车主暂未填写认证信息";
+			Object[] propArr = new Object[]{SysMessageConstants.MSG_TYPE_APPROVING,1,SysMessageConstants.SEND_TYPE_SYSTEM,new Date(),
+					content,carOwner.getId(),CustomerConstants.TYPE_CAR_OWNER,0,null};
+			
+			createMes(propArr);
+	
+	
+	public void createMessage(Object[] propArr) {
+        try{
+				SysMessage sysMessage = new SysMessage(propArr);
+				sysMessageRepository.saveAndFlush(sysMessage);
+			}catch (Exception e){
+				log.warn(e.getMessage());
+			}
+		 }
+</div>
+
+<div id="005" class="">
+	005 货主车主司机代码获取
+		Customer customer = RequestUtil.getCurrentUser(Customer.class);
+        Integer reveicerId = 0;
+        if(customer.getCustomerType().equalsIgnoreCase(CustomerConstants.TYPE_CAR_OWNER)){
+            Integer carId = customer.getCarOwner().getId();
+            //车主
+            reveicerId =  carId;
+        }else if(customer.getCustomerType().equalsIgnoreCase(CustomerConstants.TYPE_CARGO_OWNER)){
+            //货主
+            Integer cargoId = customer.getCargoOwner().getId();
+            reveicerId =  cargoId;
+        }else if(customer.getCustomerType().equalsIgnoreCase(CustomerConstants.TYPE_DRIVER)){
+            //司机
+            reveicerId = customer.getDirver().getId();
+        }
+		
+</div>
+
+<div id="004" class="divcss5">
+	004 货主车主代码获取
+		 public ServerResponse count(Integer id) {
+			Customer customer = RequestUtil.getCurrentUser(Customer.class);
+			ServerResponse response = null;
+			if(customer.getCustomerType().equalsIgnoreCase(CustomerConstants.TYPE_CAR_OWNER)){
+				Integer carId = customer.getCarOwner().getId();
+				//车主
+				response =  getStatisticsCar(carId);
+
+			}else if(customer.getCustomerType().equalsIgnoreCase(CustomerConstants.TYPE_CARGO_OWNER)){
+				//货主
+				Integer cargoId = customer.getCargoOwner().getId();
+				response =  getStatisticsCargo(cargoId);
+			}
+			return response;
+		}
+
+</div>
+
+<div id="003" class="divcss6">
+	003 分页代码
+		controller:
+		Page page = requestParams.getPage();	
+		if (page == null) {						
+			page = new Page(1, 10);
+		}
+		Integer pageNum = page.getPageNum();
+		Integer pageSize = page.getPageSize();
+		if (pageNum == null) {
+			pageNum = 1;
+		}				
+		if (pageSize == null) {
+			pageSize = 10;
+		}
+		return service.openPage(pageNum, pageSize, requestParams.getParams());
+		
+		service:
+		com.github.pagehelper.Page<Object> page = PageHelper.startPage(pageNum, pageSize);
+		List<Cargo> list = cargoMapper.cargoSearch(dto);
+		PageData<Cargo> pageData = new PageData<>(page.getPageSize(), page.getPageNum(), page.getTotal(), list);
+		return ServerResponse.successWithData(pageData);
+		
+</div>
+
+<div id="002" class="divcss5">
+	002 取得当前用户
+	Customer customer = RequestUtil.getCurrentUser(Customer.class);
+</div>
+
+<div id="001" class="divcss6">
+	001 属性复制
+	BeanUtils.copyProperties(dto, car);
+</div>
+
+<style>
+	.divcss5{border:1px solid yellow}
+</style>
+
+<style>
+	.divcss6{border:1px solid red}
+</style>

@@ -1,0 +1,215 @@
+
+101.分页测试
+	CREATE TABLE `fenyeceshi` (
+	  `id` int(10) NOT NULL AUTO_INCREMENT,
+	  `name` varchar(10) DEFAULT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8
+
+	INSERT INTO fenyeceshi VALUES (1,"xm1");
+	INSERT INTO fenyeceshi VALUES (2,"xm2");
+	INSERT INTO fenyeceshi VALUES (3,"xm3");
+	INSERT INTO fenyeceshi VALUES (4,"xm4");
+	INSERT INTO fenyeceshi VALUES (5,"xm5");
+	INSERT INTO fenyeceshi VALUES (6,"xm6");
+	INSERT INTO fenyeceshi VALUES (7,"xm7");
+	INSERT INTO fenyeceshi VALUES (8,"xm8");
+	INSERT INTO fenyeceshi VALUES (9,"xm9");
+	INSERT INTO fenyeceshi VALUES (10,"xm10");
+	INSERT INTO fenyeceshi VALUES (11,"xm11");
+
+	SELECT * FROM fenyeceshi LIMIT 0,10;
+	
+	select * from Customer LIMIT 1,10;--检索从第2行开始，累加10条id记录，共显示id为2....11
+
+1.创建表：
+DROP TABLE IF EXISTS `emp`;
+CREATE TABLE `emp` (
+  `id` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `deg` varchar(100) DEFAULT NULL,
+  `salary` int(11) DEFAULT NULL,
+  `dept` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+create table `person` (`id` int(11),`name` varchar(100),`age` int(11));
+插入数据：
+-- Records of emp
+-- ----------------------------
+INSERT INTO `emp` VALUES ('1201', 'gopal', 'manager', '50000', 'TP');
+INSERT INTO `emp` VALUES ('1202', 'manisha', 'Proof reader', '50000', 'TP');
+INSERT INTO `emp` VALUES ('1203', 'khalil', 'php dev', '30000', 'AC');
+INSERT INTO `emp` VALUES ('1204', 'prasanth', 'php dev', '30000', 'AC');
+INSERT INTO `emp` VALUES ('1205', 'kranthi', 'admin', '20000', 'TP');
+
+INSERT INTO `person` VALUES ('1', 'tom', '5');
+INSERT INTO `person` VALUES ('3', 'kitty', '6');
+
+
+思考如何清空数据库
+delete from person;(还有别的吗)
+
+2.创建用户
+CREATE USER 'hive'@'%' IDENTIFIED BY '123456';
+GRANT all privileges ON hive.* TO 'hive'@'%';
+flush privileges;
+
+3.创建用户表
+CREATE TABLE `user` (`id` INT(11),`name` VARCHAR(100),`age` INT(11));
+insert into user values(1,'xiaobai',12),(2,'xiaofeng');
+
+SELECT * FROM USER;
+
+CREATE TABLE `user2` (`id` INT(11) not null,`name` VARCHAR(100) not null,`age` INT(11) not null);
+insert into user2 values(1,'xiaobai',12),(2,'xiaofeng',23);
+
+SELECT * FROM USER;
+
+
+创建视图
+create view user_v1 as select id,name from user;
+
+4.创建存储过程(配合if语句)
+	//重新定义结束符
+	DELIMITER $
+
+	CREATE PROCEDURE p1 (n INT)
+	BEGIN 
+		IF n = 1 THEN
+		SELECT '春天' AS '季节';
+		ELSEIF n = 2 THEN
+		SELECT '夏天' AS '季节';
+		ELSEIF n = 3 THEN
+		SELECT '秋天' AS '季节';
+		ELSEIF n = 4 THEN
+		SELECT '冬天' AS '季节';
+		ELSE
+		SELECT '无法无天' AS '季节';
+		END IF;	
+	END
+	
+  调用:
+  call p1 (3)$
+	
+
+	CREATE PROCEDURE p2 (n INT)
+	BEGIN 
+		case n
+		when 1 then SELECT '春天' AS '季节';
+		when 2 then SELECT '夏天' AS '季节';
+		when 3 then SELECT '秋天' AS '季节';
+		when 4 then SELECT '冬天' AS '季节';
+		else SELECT '无法无天2' AS '季节';
+		end case;
+	END$
+
+使用loop循环，完成计算1到n的和
+	drop procedure if exists p3$ 
+	create procedure p3(n int)
+	begin
+		declare i int default 1;
+		declare s int default 0;
+	aa:loop
+		set s = s+i;
+		set i = i+1;
+		if i>n then 
+			leave aa;
+		end if;
+	end loop;
+	select s;
+	end$
+
+使用while循环
+	create procedure p4(n int)
+	begin
+		declare i int default 1;
+		declare s int default 0;
+	while i<=n do
+		set s = s+i;
+		set i = i+1;
+	end while;
+	select s;
+	end$
+
+create procedure p10()
+	begin
+		select id,name from user;
+	end$
+
+
+删除mysql
+由于安装MySQL的时候，疏忽没有选择底层编码方式，采用默认的ASCII的编码格式，于是接二连三的中文转换问题随之而来，就想卸载了重新安装MYSQL，这一卸载倒是出了问题，导致安装的时候安装不上，在网上找了一个多小时也没解决。 
+
+　　重装系统永远是个好办法，但有谁喜欢这么做呀:( 
+
+　　后来无意发现是卸载的时候没有卸载完全导致，下面给出完整的卸载MySQL 5.1的卸载方法： 
+
+　　1、控制面板里的增加删除程序内进行删除 
+
+　　2、删除MySQL文件夹下的my.ini文件，如果备份好，可以直接将文件夹全部删除 
+
+　　3、开始->运行-> regedit 看看注册表里这几个地方删除没有 
+
+　　HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Eventlog\Application\MySQL 目录删除 
+
+　　HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Eventlog\Application\MySQL 目录删除 
+
+　　HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\MySQL 目录删除（我卸载的时候没有找到，略过后仍达到完全卸载的目的。） 
+
+　　4、这一条是很关键的 
+
+　　C:\Documents and Settings\All Users\Application Data\MySQL 
+
+　　这里还有MySQL的文件，必须要删除 
+
+　　注意：Application Data这个文件夹是隐藏的，需要打开个文件夹选择菜单栏 工具→文件夹选项→查看→隐藏文件和文件夹 一项选上 显示所有文件和文件夹 确定 
+
+　　以上4步完成，重启 OK！再次安装吧 
+
+1. 停止服务MySQL
+
+2. 卸载mysql相关的程序
+
+3. 删除注册表（运行->regedit），machine->system->controlset001/controlset002/currentcontrolset->services->eventlog->applications->MySQL相关的文件
+
+4. 删除MySQL安装目录和保存数据库数据的目录（C:\Documents and Settings\All Users.WINDOWS\Application Data或C:/Documentsand Settings/All Users/Application Data），注意，这些目录可能是隐藏的，需要设置文件夹选项显示隐藏目录
+
+5. 重启计算机，卸载完成
+
+
+其它补充：
+
+有时候MySQL不能完全卸载，这时候必须通过一些途径删除掉注册表和一些残余的文件，然后才能重新安装才可以成功！
+
+首先(1) 开始-MySQL-MySQL Server 5.1-MySQL Server Instance Config Wizard--->Remove Instance。
+(2）点击[开始]--[运行]，输入services.msc回车，进入服务管理窗口。
+(3）服务里面找到MySQL服务，将MySQL的服务给停止。
+(4）点击[开始]--[运行]，输入 rundll32.exe shell32.dll,Control_RunDLL 回车进入控制面板，找到添加删除程序，找到MySQL选择卸载。
+
+1、控制面板——》所有控制面板项——》程序和功能，卸载mysql server!
+
+完全卸载mysql数据库图文教程
+
+2、然后删除mysql文件夹下的my.ini文件及所有文件
+
+完全卸载mysql数据库图文教程
+
+3、运行“regedit”文件，如图，打开注册表
+
+删除注册表数据，通过regedit，删除以下几个文件【也可以在注册表里搜索mysql】：HKEY_LOCAL_MACHINE/SYSTEM/ControlSet001/Services/Eventlog/Applications/MySQL 
+ HKEY_LOCAL_MACHINE/SYSTEM/ControlSet002/Services/Eventlog/Applications/MySQL 
+ HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/Eventlog/Applications/MySQL
+ HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services一般服务会以相同的名字(名字通常是MySQL)在这里显
+
+完全卸载mysql数据库图文教程
+
+4、删除HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Eventlog\Application\MySQL文件夹
+
+完全卸载mysql数据库图文教程
+
+5、删除HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Eventlog\Application\MySQL文件夹。HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\MySQL的文件夹。如图低端的地址。如果没有可以不用删除了。
+
+完全卸载mysql数据库图文教程
+
+6、删除C盘下的“C:\ProgramData\MySQL ”所以文件，如果删除不了则用360粉碎掉即可，该programData文件是隐藏的默认，设置显示后即可见，或者直接复制上边的地址到地址栏回车即可进入！删除后重启电脑，重装MYsql数据库应该就成功了。
+

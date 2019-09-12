@@ -1,0 +1,292 @@
+2019年9月3日
+20 页面跳转时的请求如何捕获
+	捕捉html请求然后刷新 ?
+	
+19 注册代码查找
+	
+
+18 top4company
+	SELECT cusinfo0_.I_ID AS I_ID1_51_0_, cusinfo0_.D_CREATE_DATE AS D_CREATE2_51_0_, cusinfo0_.D_MODIFY_DATE AS D_MODIFY3_51_0_, cusinfo0_.S_ACCOUNT AS S_ACCOUN4_51_0_, cusinfo0_.S_NAME AS S_NAME5_51_0_
+	, cusinfo0_.I_BUSINESS_ID AS I_BUSINE6_51_0_, cusinfo0_.I_BUSINESS_NAME AS I_BUSINE7_51_0_, cusinfo0_.S_CITY_ID AS S_CITY_I8_51_0_, cusinfo0_.S_CITY_NAME AS S_CITY_N9_51_0_, cusinfo0_.S_CONTACT_PERSON AS S_CONTA10_51_0_
+	, cusinfo0_.S_CONTACT_TEL AS S_CONTA11_51_0_, cusinfo0_.I_DEL_FLAG AS I_DEL_F12_51_0_, cusinfo0_.S_EMAIL AS S_EMAIL13_51_0_, cusinfo0_.I_LEVEL AS I_LEVEL14_51_0_, cusinfo0_.I_NATURE AS I_NATUR15_51_0_
+	, cusinfo0_.S_PAY_PWD AS S_PAY_P16_51_0_, cusinfo0_.S_PHOTO AS S_PHOTO17_51_0_, cusinfo0_.S_PROVINCE_ID AS S_PROVI18_51_0_, cusinfo0_.S_PROVINCE_NAME AS S_PROVI19_51_0_, cusinfo0_.S_PWD AS S_PWD20_51_0_
+	, cusinfo0_.S_REGION_ID AS S_REGIO21_51_0_, cusinfo0_.S_REGION_NAME AS S_REGIO22_51_0_, cusinfo0_.I_STATUS AS I_STATU23_51_0_, cusinfo0_.I_SYS_ID AS I_SYS_I24_51_0_, cusinfo0_.S_SYS_NAME AS S_SYS_N25_51_0_
+	, cusinfo0_.S_VERIFY_MOBILE AS S_VERIF26_51_0_
+	FROM T_DS_CUS_INFO cusinfo0_
+	WHERE cusinfo0_.I_ID = 42329
+
+18 登录代码查找
+	
+	02 http://localhost:8080/dmshShop/login
+	
+	01 LoginController
+	
+17 技巧
+	返回[]一般是正常的,异常会报错
+	
+16 登录sql
+	SELECT cusinfo0_.I_ID AS I_ID1_25_, cusinfo0_.D_CREATE_DATE AS D_CREATE2_25_, cusinfo0_.D_MODIFY_DATE AS D_MODIFY3_25_, cusinfo0_.S_ACCOUNT AS S_ACCOUN4_25_, cusinfo0_.S_NAME AS S_NAME5_25_
+			, cusinfo0_.S_CUS_INVIATION_CODE AS S_CUS_IN6_25_, cusinfo0_.I_DEL_FLAG AS I_DEL_FL7_25_, cusinfo0_.S_DES AS S_DES8_25_, cusinfo0_.S_EMAIL AS S_EMAIL9_25_, cusinfo0_.S_HEADPIC_PATH AS S_HEADP10_25_
+			, cusinfo0_.S_INVIATION_CODE AS S_INVIA11_25_, cusinfo0_.I_IS_SINGLE_GIFT AS I_IS_SI12_25_, cusinfo0_.I_LEVEL AS I_LEVEL13_25_, cusinfo0_.S_NICK_NAME AS S_NICK_14_25_, cusinfo0_.S_PINYIN AS S_PINYI15_25_
+			, cusinfo0_.S_PWD AS S_PWD16_25_, cusinfo0_.S_REMARK AS S_REMAR17_25_, cusinfo0_.I_SEQ_NO AS I_SEQ_N18_25_, cusinfo0_.I_SEX AS I_SEX19_25_, cusinfo0_.I_SINA_ACCOUNT_ID AS I_SINA_20_25_
+			, cusinfo0_.I_STATUS AS I_STATU21_25_, cusinfo0_.S_SYS_PWD AS S_SYS_P22_25_
+		FROM T_CUS_INFO cusinfo0_
+		WHERE cusinfo0_.S_ACCOUNT = '13477907639'
+			AND cusinfo0_.S_PWD = 'e10adc3949ba59abbe56e057f20f883e'
+			AND cusinfo0_.I_DEL_FLAG = 2
+	ORDER BY cusinfo0_.D_CREATE_DATE DESC
+
+
+15 参考:客户管理 
+	http://localhost:8080/dmshMgr/admin/customerMgr/getMgrList
+
+16 不要反复的去犯相同的错误,做了检测是否成功相当关键
+	
+15 爬取网址
+	http://www.silver.org.cn/quotation/
+	
+14 销控总量
+	http://localhost:8080/dmshMgr/admin/marketSale/findList
+
+
+13 引入以下页面为什么会报错
+	<%@include file="/common/jstlLib.jsp" %> 
+	
+	
+12 报错
+	13 t_product_cate 不存在
+
+	12 t_cus_info 不存在
+
+	11 常用司机
+		could not resolve property: cusId of: com.catt.oil.repository.entity.consumerMgr.companyInfo.LogisticsDriver [select count(cattGeneratedAlias8)
+		from com.catt.oil.repository.entity.consumerMgr.companyInfo.LogisticsDriver
+		as cattGeneratedAlias8 where cattGeneratedAlias8.cusId=471480209435000832L]
+		
+
+	10  区域管理
+		http://localhost:8080/dmshMgr/admin/areaMgr/getAreas
+
+		select cusarea0_.I_ID as I_ID1_47_, cusarea0_.D_CREATE_DATE as D_CREATE2_47_,
+		cusarea0_.D_MODIFY_DATE as D_MODIFY3_47_, cusarea0_.S_AREA_NAME as S_AREA_N4_47_, 
+		cusarea0_.I_CREATE_STAFFID as I_CREATE5_47_, cusarea0_.I_STATUS as I_STATUS6_47_,
+		cusarea0_.I_SYS_ID as I_SYS_ID7_47_, cusarea0_.S_SYS_NAME as S_SYS_NA8_47_ from T_DS_CUS_AREA
+		cusarea0_ order by cusarea0_.D_CREATE_DATE desc
+	09	
+		could not resolve property: isPlan of: com.catt.oil.repository.entity.goodsMgr.ProductInfo 
+		[select generatedAlias0 from com.catt.oil.repository.entity.goodsMgr.ProductInfo
+		as generatedAlias0 where ( ( generatedAlias0.status=1 ) and ( generatedAlias0.isDel=2 ) ) and ( generatedAlias0.isPlan=1 ) order by generatedAlias0.createDate desc]
+		这应该也是重复映射的问题
+		
+	08  销售总量 
+		Table 'dmsh_prod.t_product_cate' doesn't exist	// o
+		重复映射问题 o 
+		
+	07	给的部署包缓存是这个目录
+		<diskStore path="C:\\Users\\Admin\\AppData\\Local\\Temp\\/${system.project_name}/cache" />
+		
+	06 系统临时目录
+		<diskStore path="C:/Users/lenovo/.IntelliJIdea2017.3/system/
+		compile-server/dmshshop_614b15c2/_temp_/${system.project_name}/cache" />
+		
+	05 	n 
+		2019-09-05 15:27:04.379 [http-apr-8080-exec-5]
+		WARN  INFO - [loginUserName:1,老陈,admin logId:add6ffe2b6334651b9b31449115ce1c7]
+		Handler execution resulted in exception: org.springframework.web.util.NestedServletException:
+		Handler dispatch failed; nested exception is java.lang.NoSuchMethodError:
+		com.fasterxml.jackson.databind.ObjectWriter.forType(Lcom/fasterxml/jackson/databind/JavaType;)
+		Lcom/fasterxml/jackson/databind/ObjectWriter;
+		
+	04 could not resolve property: cusId of:	n
+		com.catt.oil.repository.entity.consumerMgr.companyInfo.LogisticsDriver
+		
+	03 
+		nested exception is java.lang.NoSuchMethodError: 
+		com.fasterxml.jackson.databind.ObjectWriter.forType
+		(Lcom/fasterxml/jackson/databind/JavaType;)
+		Lcom/fasterxml/jackson/databind/ObjectWriter;
+		
+		难道是引包
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>2.6.2</version>
+            <!-- <version>${jackson.version}</version> -->
+        </dependency>
+		
+	02 
+		Error creating bean with name 'shiroFilter' defined in URL
+		[file:/D:/001_work/020_gitcode/dmshshop/project-dmsh-shop/project-dmsh-web-cusApp/target/dmshCusApp/WEB-INF/classes/security/applicationContext-shiro.xml]:
+		Cannot resolve reference to bean 'securityManager' while setting bean property 'securityManager';
+		nested exception is org.springframework.beans.factory.BeanCreationException:
+		Error creating bean with name 'securityManager' defined in URL
+		[file:/D:/001_work/020_gitcode/dmshshop/project-dmsh-shop/
+		project-dmsh-web-cusApp/target/dmshCusApp/WEB-INF/classes/security/applicationContext-shiro.xml]:
+		Cannot resolve reference to bean 'shiroCacheManager' while setting bean property 'cacheManager';
+		nested exception is org.springframework.beans.factory.BeanCreationException:
+		Error creating bean with name 'shiroCacheManager' defined in URL
+		[file:/D:/001_work/020_gitcode/dmshshop/project-dmsh-shop/project-dmsh-web-cusApp/
+		target/dmshCusApp/WEB-INF/classes/security/applicationContext-shiro.xml]:
+		Cannot resolve reference to bean 'ehCacheManager' while setting bean property 'cacheManager';
+		nested exception is org.springframework.beans.factory.BeanCreationException:
+		Error creating bean with name 'ehCacheManager' defined in URL
+		[file:/D:/001_work/020_gitcode/dmshshop/project-dmsh-shop/project-dmsh-web-cusApp/
+		target/dmshCusApp/WEB-INF/classes/applicationContext.xml]:
+		Invocation of init method failed; nested exception is net.sf.ehcache.CacheException:
+		Disk store path can't be created: C:\Users\Admin\AppData\Local\Temp\dmshShop\cache
+		
+		这个报错在clean之后的
+
+	01 
+		org.hibernate.MappingException: Repeated column in mapping for entity: com.catt.oil.repository.entity.customerMgr.PubSetup column: S_CODE (should be mapped with insert="false" update="false")
+		at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:764)
+		at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:782)
+		at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:804)
+		at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:539)
+		at org.hibernate.mapping.SingleTableSubclass.validate(SingleTableSubclass.java:54)
+		at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:329)
+		at org.hibernate.boot.internal.SessionFactoryBuilderImpl.__build(SessionFactoryBuilderImpl.java:443)
+		at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:40008)
+		at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:879)
+
+		可能是继承的实体类之间有重复映射
+
+11 viewResolver
+	跳转功能没问题
+	初步认为应该是页面渲染异常
+	
+10 强转问题
+	子到父自动类型提升。。不需要强转。。
+	父到子才需要强制类型转换
+
+09 账号
+	02 now
+		dante	e10adc3949ba59abbe56e057f20f883e (123456)
+		admin   21232f297a57a5a743894a0e4a801fc3
+	01 原来		  
+				  
+		02  dmsh  c4ca4238a0b923820dcc509a6f75849b	  
+		01	admin c4ca4238a0b923820dcc509a6f75849b
+	
+
+08 <packaging>pom</packaging>
+	
+07 部署配置
+	03 project-dmsh-web-cusApp	/dmshCusApp o
+		->	04 project-dmsh-service o 
+				-> 05 project-dmsh-data o
+				-> 06 project-dmsh-common o
+				-> 07 project-dmsh-service-order o
+						-> 08 project-dmsh-order o
+		->	09 project-dmsh-service-shop o
+		->	10 project-dmsh-shop o		
+				
+	02 project-dmsh-web-admin	/dmshMgr
+	01 project-dmsh-web-shop	/dmshShop
+	
+	11 project-dmsh-web-admin o
+		->	12 project-dmsh-admin o
+	13 project-dmsh-web-shop o
+	14 project-dmsh-service-impl o
+	15 project-dmsh-service-impl-order o
+
+	16 project-dmsh-service-impl-shop o
+
+06 pom文件报错可考虑去除前面的xml格式
+	
+
+05 两个依赖问题
+	1 父工程依赖的jar包子工程还需要依赖吗
+		好像还是要依赖 ,又好像有时候不需要
+	
+	2 依赖了父工程会自动依赖子工程吗
+		
+
+	ZsBankServiceImpl
+
+	 <!--<dependency>-->
+            <!--<groupId>com.catt</groupId>-->
+            <!--<artifactId>common-module-pay-repository-entity</artifactId>-->
+            <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.catt</groupId>-->
+            <!--<artifactId>common-module-pay-service</artifactId>-->
+            <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.catt</groupId>-->
+            <!--<artifactId>common-module-pay-service-impl</artifactId>-->
+            <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
+
+04 项目启动顺序
+	03 project-dmsh-service-impl
+	
+	02 project-dmsh-service-impl-order
+
+	01 project-dmsh-service-impl-shop
+	
+
+03 方法
+	01 项目整体复制法
+
+02 依赖关系整理
+	03 
+		
+	02 
+
+	01 
+		1 project-dmsh-data
+			
+				1	->	2 project-dmsh-common
+								> 7
+								> 8
+								
+						 2 -> 3 common-module
+										
+		4 project-dmsh-admin > 5 
+		
+		5 project-dmsh-service								
+																												
+		6 project-dmsh-service-impl 
+
+				6 -> 7 project-dmsh-common-service-impl	
+						
+				6 -> 8 project-dmsh-order	<	9 project-dmsh-order
+						
+		9 project-dmsh-order o
+						
+	   10 project-dmsh-service-impl-order o
+
+	   11 project-dmsh-service-shop o
+	   
+	   12 project-dmsh-service-impl-order o
+
+	   13 project-dmsh-web-cusApp
+
+	   14 project-dmsh-web-shop
+
+
+
+01 项目次序
+	03 war
+
+	02 jar包
+
+	01 基础包
+		
+	

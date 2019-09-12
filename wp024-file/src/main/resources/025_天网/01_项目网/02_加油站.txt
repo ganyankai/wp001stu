@@ -1,0 +1,1051 @@
+33 过滤代码参考
+	List<Filter> filters = new ArrayList<>();
+        filters.add(Filter.eq("relId", relId));
+        filters.add(Filter.eq("mdeTable", mdeTable));
+        filters.add(Filter.eq("mdeField", mdeField));
+        List<Attachment> list = this.findList(null, filters, null);
+        if (list != null && list.size() > 0) {
+            for (Attachment attachment : list) {
+                attachment.setRelId(null);
+                attachment.setMdeTable(null);
+                attachment.setMdeField(null);
+            }
+            this.saveOrUpdate(list);
+        }
+
+32  
+	LockOilstation
+	
+	LockOilstationService
+	
+31 外键约束
+	FK_TLO_LOCKPRICEID	LOCK_PRICE_ID	mroil	t_lock_price	S_ID	CASCADE	RESTRICT
+	FK_TLO_STATIONID	STATION_ID	mroil	t_oilstation_info	S_ID	CASCADE	RESTRICT
+
+	
+30 好像可以返回主键
+	LockPrice price = lockPriceDao.merge(lockPrice); 
+
+29 jquery获取复选框的值并合并
+	 var a =$("input:checkbox:checked").map(function(index,element){
+		return $(element).val()
+	});
+	//不知道为啥a这个数组不能直接用 join() 方法 解决这个问题之后再来更改
+	var arr = [];
+	for (var i = 0; i < a.length; i++) {
+		arr.push(a[i])
+	}
+	var str =arr.join(",");
+	
+28 遍历复选框代码参考 
+	
+	<c:forEach items="${provincesList}" var="provinces">
+      <input type="checkbox" name="pids" value="${provinces.pid}"
+             <c:forEach items="${zsProvinces}" var="province">
+                 <c:if test="${province.pid == provinces.pid}">
+                     checked="checked"
+                 </c:if>
+             </c:forEach>
+         />${provinces.name}
+	</c:forEach>
+
+
+27 
+    t_oilstation_info
+	t_oilstation_rel_group
+	
+	查询集团下所有的额油站sql
+	select t.s_id as id,t.s_name as name
+	from t_oilstation_info t,t_oilstation_rel_group torg
+	where t.s_id = torg.S_OILSTATION_ID and torg.S_GROUP_ID = '1'
+	
+
+26 字符串取代list法
+	
+	
+25 测试代码
+	each:
+	<script type="text/html" id="template_dataList">
+		{{each}}
+			<td>ineach: {{$value.productKindName}}</td>
+			<td>ineach2: {{$value.stationList}}</td>
+		{{/each}}
+	</script>
+	
+
+24 锁价功能
+
+	
+	02 新增
+		01 新增时需选择集团
+		油品				productKind
+		油站				groupId下的油站
+		锁价价格(锁死)			deathRange
+		锁价价格(跟跌不跟涨)	floatRange
+		
+		
+	01 返回数据
+		{
+		  "content" : [ {
+				"productKind" : 3,
+				"modifyDate" : "2019-09-08 14:29:13",
+				"floatRange" : 5.00,
+				"stationList" : [ {
+				  "id" : "3",
+				  "createDate" : "",
+				  "modifyDate" : "",
+				  "name" : "油站3",
+				  "code" : "",
+				  "shortName" : "",
+				  "enName" : "",
+				  "isPartners" : "",
+				  "type" : "",
+				  "contractPeriod" : "",
+				  "level" : "",
+				  "tel" : "",
+				  "desc" : "",
+				  "address" : "",
+				  "longitude" : "",
+				  "latitude" : "",
+				  "coverPic" : "",
+				  "delFlag" : "",
+				  "isDisplay" : "",
+				  "isTop" : "",
+				  "seq" : "",
+				  "accountActive" : "",
+				  "provinceId" : "",
+				  "provinceName" : "",
+				  "cityId" : "",
+				  "cityName" : "",
+				  "regionId" : "",
+				  "regionName" : "",
+				  "postcode" : "",
+				  "payCycle" : "",
+				  "responsiblePerson" : "",
+				  "responsiblePersonTel" : "",
+				  "createStaffId" : "",
+				  "validaityPeriod" : ""
+				}, {
+				  "id" : "4",
+				  "createDate" : "",
+				  "modifyDate" : "",
+				  "name" : "油站4",
+				  "code" : "",
+				  "shortName" : "",
+				  "enName" : "",
+				  "isPartners" : "",
+				  "type" : "",
+				  "contractPeriod" : "",
+				  "level" : "",
+				  "tel" : "",
+				  "desc" : "",
+				  "address" : "",
+				  "longitude" : "",
+				  "latitude" : "",
+				  "coverPic" : "",
+				  "delFlag" : "",
+				  "isDisplay" : "",
+				  "isTop" : "",
+				  "seq" : "",
+				  "accountActive" : "",
+				  "provinceId" : "",
+				  "provinceName" : "",
+				  "cityId" : "",
+				  "cityName" : "",
+				  "regionId" : "",
+				  "regionName" : "",
+				  "postcode" : "",
+				  "payCycle" : "",
+				  "responsiblePerson" : "",
+				  "responsiblePersonTel" : "",
+				  "createStaffId" : "",
+				  "validaityPeriod" : ""
+				} ],
+				"groupId" : "2",
+				"deathRange" : 4.00,
+				"statusName" : "启用",
+				"productKindName" : "92#汽油",
+				"id" : "1",
+				"status" : 1,
+				"createDate" : "2019-09-08 14:29:10"
+			  } ],
+			  "total" : 1,
+			  "pageNo" : 1,
+			  "pageSize" : 15,
+			  "totalPages" : 1
+			}
+	
+	23 根据锁价id查询所有的油站 
+		
+		select s_id as id,s_name as name from t_oilstation_info where s_id in
+		(
+			select STATION_ID from t_lock_oilstation where LOCK_PRICE_ID = 1
+		 )
+		
+
+	22 单表数据返回格式
+		{
+		  "content" : [ {
+			"productKind" : 3,
+			"modifyDate" : "2019-09-08 14:29:13",
+			"floatRange" : 5.00,
+			"groupId" : "2",
+			"deathRange" : 4.00,
+			"statusName" : "启用",
+			"productKindName" : "92#汽油",
+			"id" : "1",
+			"status" : 1,
+			"createDate" : "2019-09-08 14:29:10"
+		  } ],
+		  "total" : 1,
+		  "pageNo" : 1,
+		  "pageSize" : 15,
+		  "totalPages" : 1
+		}
+	
+			list:  
+
+	21 油站对应的表
+		t_oilstation_info
+
+	20 枚举关键字
+		状态
+			T_LOCK_PRICE
+			STATUS
+		油品
+			表
+			T_OILSTATION_PRODUCT		
+			列
+			I_KIND
+		
+	19 
+		{
+		  "content" : [ {
+			"productKind" : 3,
+			"modifyDate" : "2019-09-08 14:29:13",
+			"floatRange" : 5.00,
+			"groupId" : "2",
+			"deathRange" : 4.00,
+			"productKindName" : "92#汽油",
+			"id" : "1",
+			"status" : 6,
+			"createDate" : "2019-09-08 14:29:10"
+		  } ],
+		  "total" : 1,
+		  "pageSize" : 15,
+		  "pageNo" : 1,
+		  "totalPages" : 1
+		}
+	
+	18 枚举值参考
+		 // 初始化枚举值
+                    adminSystem.getEnumList([{//  合作油站  1-未合作  2-合作油站
+                        tabName: "TB_COUPON",
+                        colName: "coupon_Type"
+                    }], 2, function (result) {
+                        var tempCouponType = result['TB_COUPON-coupon_Type'].sEnumMapping;
+                        $('div.searchBar #couponType').combobox({
+                            panelHeight: 80,
+                            textField: 'name',
+                            valueField: 'value',
+                            editable: false,
+                            onSelect: function (record) {
+                                EventHandler.search();
+                            }
+                        });
+                        
+                        tempCouponType.unshift({valueField : "", name : "全部"});
+                        $('div.searchBar #couponType').combobox("loadData", tempCouponType);
+
+                    });
+
+	17 加油记录
+		/admin/oilStationMgr/fuelRecord/toIndex
+		
+		
+
+		02 页面
+		//消费排序
+			var aSettlementStatus = [{name: "全部", value: ""}, {
+				name: "已结算",
+				value: "4"
+			},{name: "结算中", value: "5"}, {name: "未结算", value: "6"}];
+			$('#settlementStatus').combobox({
+				panelHeight: 94,
+				textField: 'name',
+				valueField: 'value',
+				editable: false
+			});
+			$('#settlementStatus').combobox("loadData", aSettlementStatus);
+
+		
+		 <div class="searchWrapper">
+                    <span class="searchName">结算状态：</span>
+
+                    <div class="searchBox xw_searchBox">
+                        <input class="searchInputSelect xw_input" value="${settlementStatus}" id="settlementStatus" name="settlementStatus"
+                               type="text"/>
+                        <%--<ul class="ulhide xw_choice">--%>
+                        <%--<li>全部</li>--%>
+                        <%--<li>已结算</li>--%>
+                        <%--<li>未结算</li>--%>
+                        <%--</ul>--%>
+                    </div>
+                </div>
+		
+
+		 <div class="searchWrapper" style="margin-right: 5px">
+                    <span class="searchName">区域/集团：</span>
+					<select style="border: 1px solid #cae5bc;vertical-align: middle;height: 28px;line-height: 28px;" name="groupId" id="groupId">
+						<option value=""></option>
+						<c:forEach items="${oilstationGroupList}" var="og">
+							<option value="${og.id}" 
+								<c:if test="${groupId==og.id}">selected="selected"</c:if>
+							>${og.name}</option>
+						</c:forEach>
+					</select>
+                </div>
+			
+
+		01 后台
+		@Resource(name = "oilstationGroupServiceImpl")
+		private OilstationGroupService oilstationGroupService;
+		
+		/**
+		 * 跳转加油记录查询首页
+		 */
+		@RequestMapping(value = {"/toIndex"}, method = RequestMethod.GET)
+		public String toIndex(String groupId, Integer settlementStatus, Model model) {
+			model.addAttribute("groupId", groupId);
+			model.addAttribute("settlementStatus", settlementStatus);
+			
+			//获取集团列表信息
+			List<OilstationGroup> list = oilstationGroupService.getOilStationGroupList();
+			model.addAttribute("oilstationGroupList", list);
+			return "/admin/oilStationMgr/fuelRecordQuery/index";
+		}
+		
+
+	16	这里这个方法名称竟然不能写错
+		@Resource
+		public void setBaseDao(LockPriceDao lockPriceDao) {
+			super.setBaseDao(lockPriceDao);
+		}
+		
+	15 找不到符号错误可能竟是由于父工程包没安装
+
+	14 先骨架后细节法
+		
+
+		02 编辑页面
+			
+
+		01 列表页面细节
+			03 油品查询
+				
+
+			02 搜索条件
+				油品		productKind		字典表
+				集团		groupId			
+				状态		status
+				
+			01 字段 
+				
+				id			id 
+				油品		productKind		字典表
+				加油站		groupId下的油站
+				状态		status
+
+				操作		
+				
+
+	13 	代码
+		05 页面 
+			
+		04 d
+			
+		03 s
+			
+		02 c
+			
+		01 form o
+
+	12 菜单好像是根据 i_seq排序的
+			
+	11 实体名称
+		
+		03  油站列表
+			t_oilstation_info
+			
+		02 
+			lockOilstation	t_lock_oilstation	
+		01 
+			lockPrice t_lock_price lockPrice LockPrice
+		
+	10 service 统一放 project-oil-common-service-impl
+		
+	09 操作步骤
+		
+		02 实体 
+				
+		01 增加菜单
+			02 t_hr_role_rel_right
+			
+			01 t_hr_right
+				/admin/lockPrice/lockPriceIndex
+				
+							
+	08 环境配置
+		 <profile>
+            <id>demo</id>
+            <properties>
+                <env>demo</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+		
+	07 参考
+		
+		02 EnumTransformData
+			@Override
+			public Page<Map> getCusPointRecordList(Long cusId, Pageable pageable) {
+				Page<Map> mapPage = cusPointRecordDao.getCusPointRecordList(cusId, pageable);
+				List<Map> mapList = mapPage.getContent();
+				
+				enumMgrService.transformEnum(mapList,
+						new ArrayList<EnumTransformData>() {
+							{
+								add(new EnumTransformData("T_CUS_POINT_RECORD",
+										"TYPE", "type",
+										"typeName"));
+							}
+						});
+				
+				return mapPage;
+			}
+			
+		01 油站编辑
+			
+
+	06 t_whs_enum_tbl 字典表 
+		T_OILSTATION_PRODUCT	I_KIND
+
+	05 删除配置了集团删除 
+
+	04 原型页面增加集团选择选项 
+		
+	03 字典表维护
+		
+	02 t_lock_price
+		
+    01 t_lock_oilstation
+		
+
+17 页面遍历默认选中
+	 <div class="resultBar xw_beanSetting">
+			<span class="resultText">注册赠送</span>
+			<select style="border: 1px solid #cae5bc;vertical-align: middle;height: 28px;line-height: 28px;margin-bottom: 6px;" name="register" id="register" >
+				<c:forEach items="${couponList}" var="coupon">
+					<option value="${coupon.id}" 
+					  <c:if test="${coupon.id==map.value}">selected="selected" </c:if>
+					  >${coupon.name}</option>
+				</c:forEach>
+			</select>
+		</div>
+		
+16 过滤查询
+	List<TbCoupon> couponList = tbCouponBaseService.findList(null, Arrays.asList(Filter.eq("state", "coupon_status_used")), Arrays.asList(Order.desc("createDate")));
+        model.addAttribute("couponList", couponList);
+	
+15 todolist
+	05 com.catt.dmsh
+		
+	04 页面样式修改
+		
+	03 当前用户id获取
+		
+	02 优惠券过期处理
+		
+	01 自写接口实现
+		
+14 数据迁移
+	01  tb_coupon				o
+	    user_coupon				o
+	02  t_hr_right				o
+		t_hr_role_rel_right		o
+	03  t_pub_setup				o
+		
+13 优惠券配置
+	04 回显
+		 <script type="text/javascript">
+			$(function () {
+				var value = "${map.register }";
+				$("#register option[value='"+value+"']").attr("selected","selected");
+			})
+		</script>
+		
+		$("#select1 option[value='"+svalue+"']").attr("selected","selected");
+		
+	03 数据结构设计
+		
+		register
+		value: {"register":"cut_200_20"}
+		value: {"register":"dis_0.95"}
+		
+		value: {"register":"0.95","type":"dis"}
+		
+	02 跳转菜单时看不到请求吗
+		
+
+	01 菜单路径
+		/admin/tbcoupon/ruleConfig
+
+12 领取记录
+	03 sql
+		sql: select  a.id as "id", a.publish_qty as "publishQty",  a.use_qty as "useQty",  a.remain_qty as "remainQty", 
+		a.coupon_value as "couponValue",  a.coupon_condition as "couponCondition",  a.remark as "remark",
+		a.activation_code as "activationCode",  a.coupon_type as "couponType",  a.coupon_source as "couponSource",
+		a.state as "state",  a.create_by as "createBy",  a.start_date as "startDate", 
+		a.expiration_date as "expirationDate",  a.create_date as "createDate",  tci.S_NICK_NAME as "nickName",
+		uc.get_time as "getTime",  uc.used_time as "usedTime"  from tb_coupon a,user_coupon uc, t_cus_info tci
+		where a.id = uc.coupon_id and uc.customer_id = tci.i_id  and uc.get_time >= 'Fri Aug 02 00:00:00 CST 2019'
+		and uc.get_time <= 'Thu Aug 27 00:00:00 CST 2020'
+
+		sql: select  a.id as "id", a.publish_qty as "publishQty",  a.use_qty as "useQty",  a.remain_qty as "remainQty",  a.coupon_value as "couponValue",  a.coupon_condition as "couponCondition",  a.remark as "remark",  a.activation_code as "activationCode",  a.coupon_type as "couponType",
+		a.coupon_source as "couponSource",  a.state as "state",  a.create_by as "createBy", 
+		a.start_date as "startDate",  a.expiration_date as "expirationDate",  a.create_date
+		as "createDate",  tci.S_NICK_NAME as "nickName",  uc.get_time as "getTime",
+		uc.used_time as "usedTime"  from tb_coupon a,user_coupon uc, t_cus_info tci  where a.id = uc.coupon_id and uc.customer_id = tci.i_id  and uc.get_time <= 'Thu Aug 27 00:00:00 CST 2020'
+
+	02 页面
+		优惠券类型：		couponType
+		领取人				nickName
+		生效时间			startDate
+		领取时间			getTime
+		使用时间			usedTime
+		
+	01 菜单路径
+		/admin/tbcoupon/receiveRecordIndex
+
+11 启用
+	这次的缓存怎么清不掉
+
+10 菜单
+	t_hr_right
+	t_hr_role_rel_right
+	
+09	页面
+	07 新增
+		02 参考
+				<div class="contentDiv">
+				<div class="productTitle">基本信息</div>
+				<div class="content">
+					<form id="form" method="post">
+						<input type="hidden" name="id" id="id" value="${entity.id}"/>
+						<input type="hidden" name="type" id="type" value="${entity.type}"/>
+						<table class="contentTable">
+						
+						<tr>
+							<td>广告名称：</td>
+							<td colspan="3">
+								<input id="title" name="title" class="" value="${entity.title}"/>
+								<font color="#FF0000">*</font>
+							</td>
+						</tr>
+						<tr>
+							<td>链接地址：</td>
+							<td colspan="3">
+								<input id="linkPath" name="linkPath" class="add_searchInputText"
+									   value="${entity.linkPath}"/>
+							</td>
+						</tr>
+					
+				
+		01 需要
+			优惠券类型：		couponType
+			发行数量：			publishQty
+			面值：				couponValue
+			使用条件：			couponCondition
+			03 / 10 / 2014		
+			生效时间：			startDate
+			03 / 10 / 2014
+			过期时间：			expirationDate
+		
+	06 {{each}}
+		
+	05 请求
+		01 列表	/admin/tbcoupon/tbCouponList
+		
+	04 字段 
+		$('#groupId').change(function(){
+                        EventHandler.search()
+                    });
+
+
+		 <div class="searchBox" style="margin-left: 50px;margin-right: 5px;">
+                    <span class="searchName" style="height:30px;line-height:30px;">区域/集团：</span>
+                    <select style="border: 1px solid #cae5bc;vertical-align: middle;height: 28px;line-height: 28px;margin-bottom: 6px;" name="groupId" id="groupId" >
+                        <option value=""></option>
+                        <c:forEach items="${oilstationGroupList}" var="og">
+                            <option value="${og.id}">${og.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+		<td>
+            <span class="textBlue">{{$value.startDate.substr(0,10)}}到{{$value.endDate.substr(0,10)}}</span>
+        </td>
+
+		<td>
+            {{if $value.isEnable==1}}
+            <span class="shengxiao">是</span>
+            {{else if $value.isEnable==2}}
+            <span class="shixiao">否</span>
+            {{/if}}
+        </td>
+		
+		01 多重if
+		<td>
+                {{if $value.state=='coupon_status_no_use'}}
+                <span class="shixiao">未启用</span>
+                {{else if $value.state=='coupon_status_used'}}
+                <span class="shengxiao">已启用</span>
+                <%--{{/if}}--%>
+                {{else if $value.state=='coupon_status_invalid'}}
+                <span class="shengxiao">已失效</span>
+                {{/if}}
+            </td>
+
+		优惠券类型		couponType
+								满减	coupon_type_full_subtraction
+								折扣	coupon_type_discount
+									
+		优惠金额		couponValue
+								
+		使用条件		couponCondition
+
+		发放数量		publishQty
+
+		领取数量		useQty
+		
+
+		生效时间		startDate
+
+		过期时间		expirationDate
+
+		状态			state
+								coupon_status_no_use
+								coupon_status_used
+								coupon_status_invalid
+
+	03
+		/admin/tbcoupon/tbCoupouIndex
+		
+	02 参考
+		return "/admin/groupOilCard/rechargeRule/index";
+
+		"content" : [ {
+			"deleteFlag" : "2",
+			"createStaffId" : "1",
+			"modifyDate" : "2019-08-08 15:54:32",
+			"endDate" : "2019-08-10 00:00:00",
+			"groupId" : "e632bd1307a64fc1a8d66bbd52f4500c",
+			"cardType" : "2",
+			"company" : "234、合众汽运、深圳腾讯科技、山东油司令信息科技有限公司",
+			"id" : "a844f3e190914d7e9b519572f355a11b",
+			"class" : "class com.catt.oil.repository.entity.cloudMgr.CloudCardRechargeRule",
+			"startDate" : "2019-08-08 00:00:00",
+			"createDate" : "2019-08-08 15:54:32",
+			"isEnable" : "2"
+		  },.......
+
+	01 列表
+		return "/admin/coupon/tbCoupouIndex";
+		
+08 油金豆规则配置
+	06 获得操作系统临时目录
+		// C:\Users\lenovo\AppData\Local\Temp\
+		String folder=System.getProperty("java.io.tmpdir");
+
+	05 页面
+		‪D:\001_work\020_gitcode\oilStation\project-oil-business\project-oil-web-admin\
+		src\main\webapp\WEB-INF\jsp\admin\oilGoldMgr\oilGoldSet\index.jsp
+
+	04 
+		return "/admin/oilGoldMgr/oilGoldSet/index";
+
+	03 value: {"register":"0.95","type":"dis"}
+	
+	02 @CacheEvict 是什么意思	@Cacheable
+		
+	01 请求
+	http://localhost:8080/MrOilMgr/admin/oilGoldMgr/oilGoldRecord/saveOrUpdate
+	id: 1
+	code: 1001
+	name: 金豆设置
+	value: {"shareJindou":"1019","registerJindou":"1000",
+			"consumeJindou":"100","rewardTimes":"20","invitatJindou":"1000"}
+			
+07 难道dao层的nullpoint是要重启tomcat
+	
+06 优惠券查询过滤条件
+	类型 状态
+	
+
+05 优惠券新增
+	INSERT INTO `mroil`.`tb_coupon`(`id`, `publish_qty`, `use_qty`, `remain_qty`, `coupon_value`, `coupon_condition`, `remark`, `activation_code`, `coupon_type`, `coupon_source`, `state`, `create_by`, `start_date`, `expiration_date`, `create_date`) VALUES (10, 1, NULL, NULL, 20.00, 100.00, '满减劵', 'code', 'coupon_type_full_subtraction', 'coupon_sources_shop', 'coupon_status_no_use', 62, '2019-06-03 12:00:00', '2019-06-14 12:00:00', '2019-06-03 09:37:11');
+	
+04 优惠券编辑
+	08 日期类型用string接收好像也是可以的
+		
+	07 请求参数获取 
+		public Page<Map> pageList(@CurrentUser("deptShortName") String groupId, @RequestParam Map<String, Object> paramMap) {
+		}
+		
+		 @RequestMapping(value = "/detail/{id}")
+		 public String detail(Model model, @PathVariable String id) {
+			return "/admin/cloudMgr/cusInfo/detail";
+		 }
+		
+	06 注意工具类
+		org.springframework.util.Assert
+		
+		MapUtils 
+		 Integer pageSise = MapUtils.getInteger(paramMap, "pageSize");
+		 String cateId = MapUtils.getString(paramMap, "cateId");
+	
+	05 自己做功能才感觉通用的增删改查有多重要,因为自己做的时候感觉自己没时间处理通用增删改查
+		
+	04 日志处理
+		
+				
+	03 修改代码参考
+		02 
+			  //02 修改生日,积分接口
+				String sql = "UPDATE t_cus_info a set a.s_remark = a.s_remark ";
+				Map<String, Object> params = new HashMap<>();
+				params.put("birth", "20900820");
+		//        params.put("score","+200");
+				params.put("score","-200");
+				params.put("id", "42329");
+
+				if(StringUtils.isNotBlank((String)params.get("birth"))){
+					sql += " ,a.birth  = :birth ";
+				}
+
+				if(StringUtils.isNotBlank((String)params.get("score"))){
+					sql += " ,a.score  = a.score+ :score ";
+		//            sql += " ,a.score  = :score ";
+				}
+
+				if(StringUtils.isNotBlank((String)params.get("id"))){
+					sql += " where a.I_ID = :id";
+				}
+				System.out.println(sql);
+				cusInfoDao.executeUpdateBySql(sql,params);
+				
+		01 
+		/**
+		 * 修改账户状态
+		 *
+		 * @param ids           用户id集合
+		 * @param accountStatus 1或2  1为冻结 2为解除冻结
+		 * @return
+		 */
+		@RequestMapping(value = "/updateAccountStatus", method = RequestMethod.POST)
+		@ResponseBody
+		public Message updateAccountStatus(@RequestParam("id") List<Long> ids, Integer accountStatus) {
+			Assert.state(CollectionUtil.isNotEmpty(ids), "请选择油站");
+			cusInfoService.updateByIdInAndStatus(ids, accountStatus);
+			return SUCCESS_MSG;
+		}
+	
+03 通用代码
+	05  配置参考油金豆后台配置
+		
+	04	参考充值规则设置完整的增删改查
+		http://localhost:8080/MrOilMgr/admin/groupOilCard/rechargeRule/findPage
+		
+	03 参数
+		/**
+		 * 设置默认收货地址
+		 *
+		 * @param cusId 用户标识
+		 * @param id    收货地址标识
+		 * @return
+		 */
+		@RequestMapping(value = {"/setIsDefault"}, method = RequestMethod.POST)
+		@ResponseBody
+		public Message setIsDefault(@CurrentUser Long cusId, String id) {
+			Assert.notNull(id, "收货地址标识不能为空");
+			cusContactService.setIsDefault(cusId, id);
+			return SUCCESS_MSG;
+		}
+
+	02 修改
+		 String sql = "UPDATE tb_coupon a set a.id = a.id ";
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", tbCouponForm.getId());
+        params.put("couponType",tbCouponForm.getCouponType());
+        params.put("publishQty", tbCouponForm.getPublishQty());
+        params.put("couponValue", tbCouponForm.getCouponValue());
+        params.put("couponCondition", tbCouponForm.getCouponCondition());
+
+        params.put("startDate", tbCouponForm.getStartDate());
+        params.put("expirationDate", tbCouponForm.getExpirationDate());
+
+        if(params.get("couponType")!=null && StringUtils.isNotBlank((String)params.get("couponType").toString())){
+            sql += " ,a.coupon_type  = :couponType ";
+        }
+        if(params.get("publishQty")!=null && StringUtils.isNotBlank((String)params.get("publishQty").toString())){
+            sql += " ,a.publish_qty  = :publishQty ";
+        }
+        if(params.get("couponValue")!=null && StringUtils.isNotBlank((String)params.get("couponValue").toString())){
+            sql += " ,a.coupon_value  = :couponValue ";
+        }
+        if(params.get("couponCondition")!=null && StringUtils.isNotBlank((String)params.get("couponCondition").toString())){
+            sql += " ,a.coupon_condition  = :couponCondition ";
+        }
+        if(params.get("startDate")!=null && StringUtils.isNotBlank((String)params.get("startDate").toString())){
+            sql += " ,a.start_date  = :startDate ";
+        }
+
+        if(params.get("expirationDate")!=null && StringUtils.isNotBlank((String)params.get("expirationDate").toString())){
+            sql += " ,a.expiration_date  = :expirationDate ";
+        }
+        if(params.get("id")!=null && StringUtils.isNotBlank(params.get("id").toString())){
+            sql += " where a.id = :id";
+        }
+
+        System.out.println("sql:"+sql);
+//        cusInfoDao.executeUpdateBySql(sql,params);
+        tbCouponDao.executeUpdateBySql(sql,params);
+		
+		
+	01 测试
+	public static void main(String[] args) {
+        String[] paths = new String[2];
+        paths[0] = "applicationContext.xml";
+        paths[1] = "applicationContext-project.xml";
+
+        //ok
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(paths);
+//        CusInfoDao cusInfoDao =(CusInfoDao) applicationContext.getBean("cusInfoDaoImpl");
+        TbCouponDaoImpl tbCouponDaoImpl = SpringUtils.getBean("tbCouponDaoImpl");
+        Page<Map> mapPage = tbCouponDaoImpl.getTbCouponList(null, new Pageable());
+        System.out.println("flag:1a");
+        System.out.println(mapPage.getContent().size());
+		
+    }
+
+02 配置
+	02 rmi
+		#----web.rmi---
+		#filter.service.rmi.url=rmi://localhost:9888
+		filter.service.rmi.url=rmi://127.0.0.1:9888
+		#filter.service.rmi.url=rmi://192.168.0.109:8888
+		filter.service.stat.rmi.url=rmi://localhost:8898
+		filter.service.consumer.rmi.url=rmi://localhost:8878
+
+		#---service.rmi---
+		filter.rmi.registryPort=9888
+		filter.rmi.servicePort=8889
+		filter.rmi.server.hostname=localhost
+	
+	01 
+		<!--发送短息sms相关jar包-->
+        <dependency>
+            <groupId>com.catt</groupId>
+            <artifactId>common-module-sms-service-impl</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+
+
+01 优惠券 TbCoupon tbcoupon tbCoupon
+	13 菜单查询
+		03 改菜单好像是要重启server 而不是tomcat
+			
+		02 在数据库增加了记录以后为什么要重启server,点击菜单跳转路径是如何配置的
+			
+		01 http://localhost:8080/MrOilMgr/admin/getUserMenus
+			t_Hr_Right
+
+	12 菜单页面
+		‪D:\001_work\020_gitcode\oilStation\project-oil-business\
+			project-oil-web-admin\src\main\webapp\WEB-INF\jsp\admin\index.jsp
+
+	11 需要在controller端的配置文件rmi-client调用
+		在service端的rmi定义服务
+	10 
+		为什么controller调用service还需要定义服务和调用方呢
+		2019-08-28 16:46:37.459 [http-apr-8080-exec-1] WARN  INFO - [1,系统管理员,admin] Handler execution
+		resulted in exception: org.springframework.remoting.RemoteLookupFailureException:
+		Could not find RMI service [rmi://127.0.0.1:9888/tbCouponServiceImpl] in RMI registry; nested exception is java.rmi.NotBoundException: tbCouponServiceImpl
+
+	09 目前server对应关系
+		Server  -  project-oil-service-impl	 8888
+		
+	08 项目之间可能有很多重载的方法,注意依赖关系,
+		代码最好统一放在project-oil-service-impl
+		
+	07 原型
+		https://run.mockplus.cn/anbo1zz2SwaCtAl5/index.html
+		
+	06 请求 响应 流程
+		01 车主查询
+			07 响应代码位置
+				D:\001_work\020_gitcode\oilStation\project-oil-business\
+				project-oil-service-impl\src\main\java\com\catt\oil\
+				service\impl\customerMgr\CusInfoServiceImpl.java
+			06 响应数据
+				{
+				  "content" : [ {
+					"cusInviationCode" : "CZWVODPX",
+					"bankCard" : "",
+					"nickName" : "NC1203",
+					"birth" : "",
+					"headpicPath" : "",
+					"bankName" : "",
+					"sysPwd" : "",
+					"dCreateDate" : "2019-07-16 15:14:18",
+					"inviationCode" : "",
+					"creditLine" : 0.0,
+					"bankTel" : "",
+					"id" : "845183781001232384",
+					"consumptionMoney" : 0.0,
+					"jindouNum" : 1000,
+					"account" : "15915830297",
+					"email" : "",
+					"accountMoney" : 0.0
+				  }, {
+					"cusInviationCode" : "CZW9OCU6",
+					"bankCard" : "",
+					"nickName" : "NC2574",
+					"birth" : "",
+					"headpicPath" : "",
+					"bankName" : "",
+					"sysPwd" : "",
+					"dCreateDate" : "2019-03-19 12:02:59",
+					"inviationCode" : "",
+					"creditLine" : 0.0,
+					"bankTel" : "",
+					"id" : "802011477484503040",
+					"consumptionMoney" : 0.0,
+					"jindouNum" : 20,
+					"account" : "15727282574",
+					"email" : "",
+					"accountMoney" : 0.0
+				  } ],
+				  "total" : 79,
+				  "totalPages" : 6,
+				  "pageNo" : 1,
+				  "pageSize" : 15
+				}
+			
+			05 响应代码
+				@RequestMapping(value = {"/getCusInfoByList"}, method = RequestMethod.POST)
+				@ResponseBody
+				public Page<Map> getCusInfoByList(CusInfoForm cusInfoForm, Integer pageNo, Integer pageSize) {
+					Pageable pageable = new Pageable(pageNo, pageSize);
+					Page<Map> page = cusInfoService.getCusInfoByList(cusInfoForm, pageable);
+					return page;
+				}
+				
+			04 请求代码
+			  03 
+				 ‪D:\001_work\020_gitcode\oilStation\project-oil-business\project-oil-web-admin\
+				 src\main\java\com\catt\oil\web\controller\admin\customerMgr\CusInfoController.java
+
+			  02  
+				 /**
+                 * 查询列表
+                 */
+                initCusInfoList: function (params) {
+                    DataHandler.getCusInfoByList(params, function (backData) {
+                        $('#datagrid_customerQuery_total').html(backData.total);
+                        var html = template('template_customerQuery', backData.content);
+                        $('#customerQuery').html(html);
+
+                        var page = params.pageNo;
+                        var pageSize = params.pageSize;
+
+                        //=========start============
+                        $('#pageBar').pageBar({
+                            total: backData.total,
+                            pageNumber: page,
+                            pageSize: pageSize
+                        });
+                        //============end=========
+                    });
+                },
+			  
+			  01 
+				var DataHandler = function () {
+					return {
+						/**
+						 * 获取所有注册用户信息
+						 */
+						getCusInfoByList: function (param, callback) {
+							$.post(path + '/admin/customerMgr/cusInfo/getCusInfoByList', param, function (backData) {
+								callback(backData);
+							});
+						},
+						/**
+						 *修改账户状态
+						 * @param param
+						 * @param callback
+						 */
+						updateAccountStatus: function (param, callback) {
+							$.post(path + '/admin/customerMgr/cusInfo/updateAccountStatus', param, function (backData) {
+								callback(backData);
+							});
+						}
+					}
+				}();
+
+
+			03 页面
+				oilStation\project-oil-business\project-oil-web-admin\src\main\webapp\WEB-INF
+				\jsp\admin\customerMgr\customerQuery\index.jsp
+				
+			02 请求参数
+				pageNo=1&pageSize=15&account=&startTime=&endTime=
+				POST
+				
+			01 请求url 
+				http://localhost:8080/MrOilMgr/admin/customerMgr/cusInfo/getCusInfoByList
+			
+
+
+	05 service顺序
+		
+		01	applicationContext-bis-rmi.xml
+	
+	04 例子
+		CusInfoService
+		
+
+	03 代码
+		04 dao
+			02 mapper
+				xml
+			01 repository
+		03 service
+			impl
+		02 dto
+		01 controller
+		
+	02 实体 o
+		 
+	01 表 o 
+		tb_coupon
+	    user_coupon	
+		t_pub_setup

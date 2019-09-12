@@ -1,0 +1,2491 @@
+0999 current
+
+
+101 优惠券编辑
+	
+	08 数据库日期类型用string接收好像也是可以的
+
+	07 请求参数获取 
+		public Page<Map> pageList(@CurrentUser("deptShortName") String groupId, @RequestParam Map<String, Object> paramMap) {
+		}
+		
+		 @RequestMapping(value = "/detail/{id}")
+		 public String detail(Model model, @PathVariable String id) {
+			return "/admin/cloudMgr/cusInfo/detail";
+		 }
+		
+	06 注意工具类
+		MapUtils 
+		 Integer pageSise = MapUtils.getInteger(paramMap, "pageSize");
+		 String cateId = MapUtils.getString(paramMap, "cateId");
+	
+	05 自己做功能才感觉通用的增删改查有多重要,因为自己做的时候感觉自己没时间处理通用增删改查
+		
+	04 日志处理
+		
+				
+	03 修改代码参考
+		02 
+			  //02 修改生日,积分接口
+				String sql = "UPDATE t_cus_info a set a.s_remark = a.s_remark ";
+				Map<String, Object> params = new HashMap<>();
+				params.put("birth", "20900820");
+		//        params.put("score","+200");
+				params.put("score","-200");
+				params.put("id", "42329");
+
+				if(StringUtils.isNotBlank((String)params.get("birth"))){
+					sql += " ,a.birth  = :birth ";
+				}
+
+				if(StringUtils.isNotBlank((String)params.get("score"))){
+					sql += " ,a.score  = a.score+ :score ";
+		//            sql += " ,a.score  = :score ";
+				}
+
+				if(StringUtils.isNotBlank((String)params.get("id"))){
+					sql += " where a.I_ID = :id";
+				}
+				System.out.println(sql);
+				cusInfoDao.executeUpdateBySql(sql,params);
+				
+		01 
+		/**
+		 * 修改账户状态
+		 *
+		 * @param ids           用户id集合
+		 * @param accountStatus 1或2  1为冻结 2为解除冻结
+		 * @return
+		 */
+		@RequestMapping(value = "/updateAccountStatus", method = RequestMethod.POST)
+		@ResponseBody
+		public Message updateAccountStatus(@RequestParam("id") List<Long> ids, Integer accountStatus) {
+			Assert.state(CollectionUtil.isNotEmpty(ids), "请选择油站");
+			cusInfoService.updateByIdInAndStatus(ids, accountStatus);
+			return SUCCESS_MSG;
+		}
+		
+	02 禁用
+		状态 status
+		
+	01 字段
+		id				id
+		优惠券类型		coupon_type
+		发行数量		publish_qty
+		面值			coupon_value
+		使用条件		coupon_condition
+
+		生效时间		start_date
+		过期时间		expiration_date
+	
+		
+		
+100 实体类
+	project-oil-data
+	
+
+099 优惠券原型
+	https://run.mockplus.cn/anbo1zz2SwaCtAl5/index.html
+
+	06 
+
+	05 service顺序
+		
+		01	applicationContext-bis-rmi.xml
+	
+	04 例子
+		CusInfoService
+		
+
+	03 代码
+		04 dao
+			02 mapper
+				xml
+			01 repository
+		03 service
+			impl
+		02 dto
+		01 controller
+		
+	02 实体 o
+		 
+	01 表 o 
+		tb_coupon
+	    user_coupon	
+		t_pub_setup
+	
+
+098 前端需要修改内容
+	1.客服
+	2.车辆位置
+	3.车辆状态
+	
+097 createMes o 
+	
+096 极光jar包配置
+	    <dependency>
+            <groupId>cn.jpush.api</groupId>
+            <artifactId>jpush-client</artifactId>
+            <version>3.3.10</version>
+        </dependency>
+	
+095 车辆测试网
+	01 车辆	car		id 1	鄂A12345
+		01 车主	 id 	12  cusid 15  
+			01 路线 id 3 出发省  湖北省 武汉市
+		02 运单项 id 4 
+			01 运单 1 
+				01 货源 id 1
+					01 到达省 湖北省 武汉市
+					02 状态 发布中
+		03 推送
+			
+094 
+	select * from cargo where end_province =#{province} and end_city = #{city} and c.status = 'cargo_source_status_release' and 'end_date' >= now()  ORDER BY 'create_date' limit 5 
+	
+	select * from cargo where end_province ='湖北' and end_city = '武汉' and c.status = 'cargo_source_status_release' and 'end_date' >= now()  ORDER BY 'create_date' limit 5 
+	//ok
+	select * from cargo where end_province ='湖北' and end_city = '武汉' and status = 'cargo_source_status_release' and end_date >= now()  ORDER BY create_date limit 5 
+	
+	select * from cargo where start_province ='湖北省' and start_city = '武汉市' and status = 'cargo_source_status_release' and end_date >= now() limit 5
+
+	end_province,end_city 
+	and c.status = 'cargo_source_status_release'
+          and 'end_date' >= now()
+093 
+	01 目的地需要匹配车主常用路线的出发省
+		
+092
+	1.已完成
+	客服,车辆位置统计,车辆状态控制
+	2.待完成
+	车辆到达目的地后推荐货源,消息推送
+	3.待确认
+	平台计价规则
+	
+	
+091
+	//修改运单中的运单项的车辆状态
+			List<WaybillDetail> waybillDetailList = waybillDetailMapper.getWaybillDetailList(waybillId);
+			if (waybillDetailList!=null && waybillDetailList.size()>0){
+				for (WaybillDetail waybillDetail:
+						waybillDetailList) {
+					carService.updateStatus(waybillDetail.getCarId(),CarConstants.CAR_STATUS_FREE);
+				}
+			}
+	
+090 
+	type:car_owner
+
+089	
+	province 
+	city
+	county
+	
+088
+	package  com.dapail.util;
+
+	import java.net.URL;
+
+	import net.sf.json.*;
+	
+
+	public class GetLocation {
+		public static void main(String[] args) {  
+			// lat 39.97646       
+			//log 116.3039   
+			String add = getAdd("116.3039", "39.97646");  
+		   
+		}  
+		  
+		public static String getAdd(String log, String lat ){  
+			//lat 小  log  大  
+			//参数解释: 纬度,经度 type 001 (100代表道路，010代表POI，001代表门址，111可以同时显示前三项)  
+			String urlString = "http://gc.ditu.aliyun.com/regeocoding?l="+lat+","+log+"&type=010";  
+			String res = "";     
+			try {     
+				URL url = new URL(urlString);    
+				java.net.HttpURLConnection conn = (java.net.HttpURLConnection)url.openConnection();    
+				conn.setDoOutput(true);    
+				conn.setRequestMethod("POST");    
+				java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(conn.getInputStream(),"UTF-8"));    
+				String line;    
+			   while ((line = in.readLine()) != null) {    
+				   res += line+"\n";    
+			 }    
+				in.close();    
+			} catch (Exception e) {    
+				System.out.println("error in wapaction,and e is " + e.getMessage());    
+			}   
+			System.out.println(res);  
+			
+			JSONObject jsonObject = JSONObject.fromObject(res);  
+			JSONArray jsonArray = JSONArray.fromObject(jsonObject.getString("addrList"));  
+			JSONObject j_2 = JSONObject.fromObject(jsonArray.get(0));  
+			String allAdd = j_2.getString("admName");  
+			//String arr[] = allAdd.split(",");  
+		   // System.out.println("省："+arr[0]+"\n市："+arr[1]+"\n区："+arr[2]);  
+			
+			return allAdd;    
+		}  
+	}
+
+087 redis配置
+	
+	host: 127.0.0.1
+    password: 
+    database: 15
+    port: 6379
+	
+086 
+	customer_service
+	
+	CustomerService
+
+	CustomerServiceService
+
+085 更加灵活的正则匹配 匹配的时候要勾选正则选项
+	@.*/api/usedAddress
+	
+2019年8月15日
+084 quartz 的xml配置
+	05 自定义配置成功
+
+	04  
+		quartz.xml:
+		<bean id="stationPriceJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			<property name="targetObject">
+				<ref bean="stationPriceServiceImpl"/>
+			</property>
+			<property name="targetMethod">
+				<value>execute</value>
+			</property>
+		</bean>
+		
+	03 
+		quartz.xml:
+		<!-- ***************** 定义统计触发器开始 ***************** -->
+		<!-- 结算统计触发器 -->
+		<bean id="autoStationPrice" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+			<property name="jobDetail">
+				<ref bean="stationPriceJobDetail"/>
+			</property>
+			<property name="cronExpression">
+				<value>0 0 * * * ?</value><!-- 整点执行一次 -->
+			</property>
+		</bean>
+	
+	02  
+		<!--
+			调度作业
+			如果lazy-init='false',则容器启动时就会执行调度程序;否则需要实例化该bean才能执行调度程序
+		-->
+		<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+			<property name="triggers">
+				<list>
+					<!-- 统计任务 -->
+					<ref local="autoSettlementStat"/>
+					<ref local="autoStationPrice"/>
+					<!--<ref local="sinaOperRecord"/>-->
+				</list>
+			</property>
+		</bean>
+
+	01 
+		applicationContext-project.xml
+			<import resource="quartz_task.xml" />
+			
+		
+	project-oil-settlement-service-impl
+	这个项目竟然是根据main方法启动配置文件的
+	
+2019年8月15日
+083 
+	@PersistenceContext
+    protected EntityManager entityManager;
+
+	做软件遇到不理解的地方不得不做大量的无用功
+	
+	该对象目前没想到在本地测试的玩法
+	说明你这框架玩的不够6
+	其实用new关键字代码还好维护一点
+	用注解以后你很难判断出该对象具体是啥时候创建的
+	
+082
+	project-oil-common-service-impl
+
+
+2019年8月14日
+082 业务功能
+		生日关怀
+		frame deactivation 好像是切换到后台触发
+		deactivation	使无效，使失去效果
+		
+		积分模块
+		优惠券打折
+		短信模块
+		
+	任务调度模块
+	01 会员对应数据库表
+		
+
+081
+	jsp\safeMgr\index.jsp 确定bug在这个页面
+
+	 1. 区域管理后台（旧集团版管理）：
+    账号密码：33333/888888
+    http://group.youyilian.net.cn 
+    http://39.108.86.28:8080/MrOilGroup
+	http://localhost:8080/MrOilGroup
+
+	project-oil-web-merchantGroup?
+
+080
+	T_CUS_ORDER_PAY
+		I_RECHARGE_TYPE
+	
+079	
+	那个诡异的错误就这样过去了 再也找不到了
+
+	 说明整个服务没启
+	 Connection refused to host: 127.0.0.1
+	 
+
+	  <find>service.rmi.url</find>
+      <find>project-oil-service-impl</find>
+      <find>8889</find>
+      <find>8898</find>
+      <find>java.rmi.server.hostname</find>
+      <find>9888</find>
+      <find>8888</find>
+      <find>staffServiceImpl</find>
+      <find>cusOrderService</find>
+      <find>cusOrderServiceImpl</find>
+
+078
+	<find>project-oil-service-impl</find>
+      <find>8889</find>
+      <find>8898</find>
+      <find>9888</find>
+      <find>java.rmi.server.hostname</find>
+      <find>9888</find>
+      <find>8888</find>
+077	
+	<find>D:\oil-workspace\project-oil-common</find>
+
+076 原来.idea下面的文件保存了idea所有的层级结构和插件配置
+
+075
+	http://localhost:8080/MrOilMerchant
+	
+	http://localhost:8080/MrOilMerchant/admin/order/getOrders
+	pageNo=1&pageSize=15&keyWord=&startTime=&endTime=&settlementStatus=4&paymentStatus=2&rechargeType=&prodName=&staffId=
+	
+	待支付			paymentStatus=1
+	失败			paymentStatus=2
+	支付成功		paymentStatus: 3
+	
+	package com.catt.oil.web.controller.merchant.admin.order;
+	OrderController
+	
+	project-oil-service-impl
+		CusOrderServiceImpl
+		
+	表 T_CUS_ORDER
+		
+
+	这个项目后台停止后前端页面也会报错
+	查询明显有缓存,难道是用的页面缓存技术
+		
+074 
+	02  收银系统：
+		账号密码：	55555/888888
+		http://merchant.youyilian.net.cn 
+		http://39.108.86.28:8080/MrOilMerchant
+		
+		油站管理平台web(收银系统)      
+		11、MrOilMerchant    
+			project-oil-service-impl			 y
+            project-oil-stat-service-impl
+            project-oilSettlement-service-impl
+			
+073
+	三、思路：排除法
+	
+　　1、排除大写字母、小写字母、数字、特殊符号中1种组合、2种组合、3种组合，那么就只剩下4种都包含的组合了
+
+　　2、表达式为：^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$
+
+　　3、拆分解释：其中（2）-（6）运用了零宽断言、环视等正则功能
+
+　　　　（1）^匹配开头
+
+　　　　（2）(?![A-Za-z0-9]+$)匹配后面不全是（大写字母或小写字母或数字）的位置，排除了（大写字母、小写字母、数字）的1种2种3种组合
+
+　　　　（3）(?![a-z0-9\\W]+$)同理，排除了（小写字母、数字、特殊符号）的1种2种3种组合
+
+　　　　（4）(?![A-Za-z\\W]+$)同理，排除了（大写字母、小写字母、特殊符号）的1种2种3种组合
+
+　　　　（5）(?![A-Z0-9\\W]+$)同理，排除了（大写字母、数组、特殊符号）的1种2种3种组合
+
+　　　　（6）[a-zA-Z0-9\\W]匹配（小写字母或大写字母或数字或特殊符号）因为排除了上面的组合，所以就只剩下了4种都包含的组合了
+
+　　　　（7）{8,}8位以上
+
+　　　　（8）$匹配字符串结尾
+	
+072 
+	http://120.25.212.63:10101/r/HazardousLogistics.git
+	
+	Push to wuliu-my/master was rejected
+	
+071
+	打款页面文件导出
+
+	提现流水页面文件导出	
+
+	
+
+070
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+ 
+import javax.servlet.http.HttpServletRequest;
+ 
+/**
+ * 页面数据对象
+ * 
+ */
+public class PageData extends HashMap implements Map{
+	
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 数据map
+	 */
+	Map map = null;
+	/**
+	 * 请求对象
+	 */
+	HttpServletRequest request;
+	
+	/**
+	 * 有参构造器
+	 * @param request 请求对象
+	 */
+	public PageData(HttpServletRequest request){
+		this.request = request;
+		/**
+		 * 获取参数Map
+		 */
+		String pageSize = request.getParameter("pageSize");
+		Map properties = request.getParameterMap();
+		Map returnMap = new HashMap(); 
+		Iterator entries = properties.entrySet().iterator(); 
+		Map.Entry entry; 
+		String name = "";  
+		String value = "";  
+		while (entries.hasNext()) {
+			entry = (Map.Entry) entries.next(); 
+			name = (String) entry.getKey(); 
+			Object valueObj = entry.getValue(); 
+			if(null == valueObj){ 
+				value = ""; 
+			}else if(valueObj instanceof String[]){ 
+				String[] values = (String[])valueObj;
+				for(int i=0;i<values.length;i++){ 
+					 value = values[i] + ",";
+				}
+				value = value.substring(0, value.length()-1); 
+			}else{
+				value = valueObj.toString(); 
+			}
+			returnMap.put(name, value); 
+		}
+		map = returnMap;
+	}
+	
+	/**
+	 * 无参构造
+	 */
+	public PageData() {
+		map = new HashMap();
+	}
+	
+	/**
+	 * 获取参数值
+	 */
+	@Override
+	public Object get(Object key) {
+		Object obj = null;
+		if(map.get(key) instanceof Object[]) {
+			Object[] arr = (Object[])map.get(key);
+			obj = request == null ? arr:(request.getParameter((String)key) == null ? arr:arr[0]);
+		} else {
+			obj = map.get(key);
+		}
+		return obj;
+	}
+	
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public String getString(Object key) {
+		return (String)get(key);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object put(Object key, Object value) {
+		return map.put(key, value);
+	}
+	
+	@Override
+	public Object remove(Object key) {
+		return map.remove(key);
+	}
+	
+	/**
+	 * 清空请求数据
+	 */
+	public void clear() {
+		map.clear();
+	}
+ 
+	/**
+	 * 判断是否存在请求参数
+	 */
+	public boolean containsKey(Object key) {
+		return map.containsKey(key);
+	}
+ 
+	/**
+	 * 判断是否存在请求值
+	 */
+	public boolean containsValue(Object value) {
+		return map.containsValue(value);
+	}
+ 
+	/**
+	 * 获取entry集合
+	 */
+	public Set entrySet() {
+		return map.entrySet();
+	}
+ 
+	/**
+	 * 判断参数集合是否为空
+	 */
+	public boolean isEmpty() {
+		return map.isEmpty();
+	}
+ 
+	public Set keySet() {
+		return map.keySet();
+	}
+ 
+	/**
+	 * 添加集合
+	 */
+	@SuppressWarnings("unchecked")
+	public void putAll(Map t) {
+		map.putAll(t);
+	}
+ 
+	/**
+	 * 获取请求集合的大小
+	 */
+	public int size() {
+		return map.size();
+	}
+ 
+	/**
+	 * 获取请求参数集合
+	 */
+	public Collection values() {
+		return map.values();
+	}
+}
+
+
+
+--------------------- 
+作者：一见你就笑i 
+来源：CSDN 
+原文：https://blog.csdn.net/zxwu_1993/article/details/84979291 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+069
+	import java.io.*;
+
+import java.util.*;
+
+import org.apache.poi.hssf.usermodel.*;
+
+/**
+
+ * 导出并发送到邮箱内
+
+ * /
+
+public class toExcel {
+
+    public toExcel() {
+
+        
+
+    }
+
+    public static HSSFCell getCell(HSSFSheet sheet, int row, int col) {
+
+        HSSFRow sheetRow = sheet.getRow(row);
+
+        if (sheetRow == null) {
+
+            sheetRow = sheet.createRow(row);
+
+        }
+
+        HSSFCell cell = sheetRow.getCell(col);
+
+        if (cell == null) {
+
+            cell = sheetRow.createCell(col);
+
+        }
+
+        return cell;
+
+    }
+
+    public static void setText(HSSFCell cell, String text) {
+
+        cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+
+        cell.setCellValue(text);
+
+    }
+
+    public static void toExcel(List<String> titles,List<PageData> list)throws Exception{
+
+        HSSFWorkbook wb=new HSSFWorkbook(); // 定义一个新的工作簿
+
+        HSSFSheet sheet=wb.createSheet("第一个Sheet页");  // 创建第一个Sheet页
+
+        // 第四步，创建单元格，并设置值表头 设置表头居中  
+
+        HSSFCellStyle style = wb.createCellStyle();
+
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+
+        HSSFRow row=sheet.createRow(0); // 创建一个行
+
+        HSSFCell cell=row.createCell(0); // 创建一个单元格  第1列
+
+        //cell.setCellValue(new Date());  // 给单元格设置值
+
+        for (int i = 0; i < titles.size(); i++) { //设置标题
+
+            String title = titles.get(i);
+
+            cell = getCell(sheet, 0, i);
+
+            setText(cell, title);
+
+            cell.setCellStyle(style);
+
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+
+            PageData vpd = list.get(i);
+
+            for (int j = 0; j < titles.size(); j++) {
+
+                String varstr = vpd.getString("var" + (j + 1)) != null ? vpd.getString("var" + (j + 1)) : "";
+
+                cell = getCell(sheet, i + 1, j);
+
+                setText(cell, varstr);
+
+                cell.setCellStyle(style);
+
+            }
+
+        }
+
+        
+
+        FileOutputStream fileOut=new FileOutputStream("D://成员信息表.xls");
+
+        wb.write(fileOut);
+
+        fileOut.close();
+
+        wb.close();
+
+    }
+
+
+	//创建HSSFWorkbook对象
+	HSSFWorkbook wb = new HSSFWorkbook();
+	//创建HSSFSheet对象
+	HSSFSheet sheet = wb.createSheet("sheet0");
+	//创建HSSFRow对象
+	HSSFRow row = sheet.createRow(0);
+	//创建HSSFCell对象
+	HSSFCell cell=row.createCell(0);
+	//设置单元格的值
+	cell.setCellValue("单元格中的中文");
+	//输出Excel文件
+	FileOutputStream output=new FileOutputStream("d:\\workbook.xls");
+	wkb.write(output);
+	output.flush();
+	
+
+	这两行
+	genExcel(dto);
+    workbook.write(out);
+	
+
+068
+	https://yybackend.b-ymedia.com:8181/front/mealManage/getResourceListByMealId
+	
+	1.resource加logo,最长300	
+		data o, code
+		
+	2.套餐资源整合接口返回logo  
+		
+	3.套餐meal + seqno
+		
+	4.套餐排序 先序号,再价格
+		
+
+067	
+	/backend/orderManage
+	
+	        //5.添加交易记录
+	//        TradeLog trade = new TradeLog();
+	//        trade.setCustomerId(user.getId());
+	//        trade.setTradeMoney(countPrice);
+	//        trade.setTradeType(ResourceStatus.ORDER_TRADE_RECHARGE);
+	//        trade.setTradeNo(order.getOrderNo());
+	//        trade.setTradeTime(new Date());
+	//        tradeLogMapper.insert(trade);
+	
+066 微信授权
+	
+	绑定手机号
+	
+065	
+	/tx/verifcode
+	
+
+064
+	http://ganyankai@120.25.212.63:10101/r/oilStation.git
+
+063	
+	存储过程研究
+	
+	--ok
+	DELIMITER $
+	
+	create procedure p10()
+		begin
+			select id,name from stu;
+		end$
+		
+	call p10();
+
+	--ok
+
+	DELIMITER $
+	
+	DROP PROCEDURE IF EXISTS mypro;
+	CREATE PROCEDURE mypro(IN myid INT)
+	
+	BEGIN
+    
+    DROP table if exists tmpstu;
+    create table tmpstu(
+            id int,
+            myname varchar(50)
+    );
+    
+    insert into tmpstu select id, `name` from stu ;
+	select id,myname from tmpstu where id = myid;
+    END$
+
+	CALL mypro(1);
+	
+
+062  
+	用户等级处理  o 
+
+	时间默认值格式处理	
+	
+	其他状态字段处理	
+	divisionStatus 目前存中文
+
+	division_status_code
+	
+	
+
+061
+	提现状态trade_status 现存字符串
+	
+	/**
+     * vip_type:VIP类别;
+     * */
+    public static final String CUSTOMER_LEVEL = "customer_level";
+
+    public static final String LEVEL_PARTNERNER = "partnerner";    //合伙人
+    public static final String LEVEL_CEO = "ceo";                  //总经理
+    public static final String LEVEL_CTO = "cto";                  //总监
+    public static final String LEVEL_MANAGER = "manager";          //经理
+    public static final String LEVEL_LEADER = "leader";            //主管
+    public static final String LEVEL_VIP = "vip";                  //会员
+	
+	
+	parterner("partnerner", "合伙人", 1),
+    ceo("ceo", "总经理", 2),
+    cto("cto", "总监", 3),
+    manager("manager", "经理", 4),
+    leader("leader", "主管", 5),
+    vip_a("leader", "分销A", 6),
+    vip_b("leader", "分销B", 7),
+    vip("vip", "会员", 8);
+	
+060 
+	dis_commission_log 字段来源
+	id 
+	order_no	ys_withdraw.out_trade_no 
+	money		ys_withdraw.total_amount
+	balance		ce.balance
+	create_id	ce.customer_id
+	
+
+059
+	
+	(select ywl.id as id,ywl.total_amount as money,null as balance,ywl.fee as fee,ywl.create_time as createTime,
+		yu.cust_name as name,yu.user_type as type,yu.bank_account_no as cardNo,yu.bank_type as bankType,yu.bank_name as bankName ,yu.usercode  as usercode
+		from ys_withdraw_log ywl,ys_user yu
+		where ywl.merchant_usercode=yu.usercode
+		and yu.user_type in('user_agent' ,'user_shop') 
+		and yu.user_id = 25 
+		and date_format(ywl.create_time,'%Y-%m-%d') between '2019-05-30' and '2019-07-31')
+		
+	UNION all
+	
+	(select dcl.id as id,dcl.money as money,dcl.balance as balance,null as fee,dcl.create_time as createTime,
+			ce.name as name,ce.level_name as type,
+			vb.bank_card_no as cardNo,vb.bank_type as bankType,vb.bank_branch as bankName ,null as usercode
+			from dis_commission_log dcl,customer_extend ce,vip_bankcard vb
+			where dcl.create_id = ce.customer_id and ce.customer_id=vb.user_id
+			and ce.customer_id = 25 
+		and date_format(dcl.create_time,'%Y-%m-%d') between '2019-05-30' and '2019-07-31')
+	
+058
+	后台提现流水
+		ys_withdraw_log
+		
+		select ywl.id as id,ywl.total_amount as money,ywl.fee as fee,ywl.create_time as createTime,
+		yu.cust_name as name,yu.user_type as type,yu.bank_account_no as cardNo,yu.bank_type as bankType,yu.bank_name as bankName ,yu.usercode  as usercode
+		from ys_withdraw_log ywl,ys_user yu
+		where ywl.merchant_usercode=yu.usercode
+		and yu.user_type in('user_agent' ,'user_shop') 
+		and yu.user_id = 25 
+		and date_format(ywl.create_time,'%Y-%m-%d') between '2019-05-30' and '2019-07-31'
+		
+	前台提现流水(暂时没有手续费) 根据用户id查询指定提现流水
+		
+		--ok
+		select dcl.id as id,dcl.money as money,dcl.balance as balance,dcl.create_time as createTime,
+		ce.name as name,ce.level_name as type,
+		vb.bank_card_no as cardNo,vb.bank_type as bankType,vb.bank_branch as bankName 
+		from dis_commission_log dcl,customer_extend ce,vip_bankcard vb
+		where dcl.create_id = ce.customer_id and ce.customer_id=vb.user_id
+		and ce.customer_id = 25 
+		and date_format(dcl.create_time,'%Y-%m-%d') between '2019-05-30' and '2019-07-31'
+		
+		
+		
+		dis_commission_log
+			提现金额
+					前台:
+						dis_commission_log.money
+						
+			当前余额
+					前台
+						dis_commission_log.balance
+					
+			提现人
+					前台:
+						customer_extend.name 
+						customer_extend.level_name
+					后台
+						ys_user.cust_name
+						ys_user.user_type
+			
+			收款账号	
+					前台:
+						vip_bankcard.bank_card_no
+					后台
+						ys_user.bank_account_no
+					
+			开户行	
+						前台:
+							vip_bankcard.bank_type
+						后台
+							ys_user.bank_type
+			开户行支行
+						前台:
+							vip_bankcard.bank_branch
+						后台
+							ys_user.bank_name
+			银盛商户号	
+						前台:
+							无
+						后台:
+							ys_user.usercode
+			
+
+
+	
+		
+			
+
+
+057
+	select yw.*,
+	ce.name as name,ce.level_name as type,ce.today_money as todayMoney,ce.balance as balance,
+	vb.bank_card_no as cardNo,vb.bank_type as bankType,vb.bank_branch as bankName 
+	from ys_withdraw yw,customer_extend ce,vip_bankcard vb
+	where yw.user_id = ce.customer_id and ce.customer_id=vb.user_id
+	
+	提现打款前台页面
+		提现人
+					前台:
+						customer_extend.name 
+						customer_extend.level_name
+					后台
+						ys_user.cust_name
+						ys_user.user_type
+		可提现金额
+					前台
+						customer_extend.today_money
+		提现金额
+					前台:
+						ys_withdraw.total_amount
+		当前余额
+					前台
+						customer_extend.balance
+						
+		收款账号	
+					前台:
+						vip_bankcard.bank_card_no
+					后台
+						ys_user.bank_account_no
+					
+		开户行	
+					前台:
+						vip_bankcard.bank_type
+					后台
+						ys_user.bank_type
+		开户行支行
+					前台:
+						vip_bankcard.bank_branch
+					后台
+						ys_user.bank_name
+		银盛商户号	
+					前台:
+						无
+					后台:
+						ys_user.usercode
+		
+		
+
+	提现打款页面(门店与渠道无确认打款操作)
+		
+
+	提现订单号随机生成,跟订单没有关系
+		
+
+	ys_withdraw 目前根据提现订单号一一对应
+		
+
+	后台
+		暂时不做
+		
+	前台增加提现金额字段 ys_withdraw.total_amount
+		
+		
+	提现流水页面(查询单个用户的提现流水)
+		
+		
+	
+
+056 
+	03 当前前台使用 --ok
+		select ydd.div_amount as divAmount,ydd.div_fee as divFee,
+		ce.name as name,ce.level_name as type,
+		vb.bank_card_no as cardNo,vb.bank_type as bankType,
+		vb.bank_branch as bankName 
+		from ys_divition_detail ydd,ys_divition yd,dis_commission_log dcl,customer_extend ce,vip_bankcard vb
+		where ydd.divition_id = yd.id and yd.out_trade_no = dcl.order_no and dcl.create_id = ce.customer_id 
+		and ce.customer_id=vb.user_id
+		and ydd.divition_id = 2
+		
+		
+	02 当前后台使用
+	select ydd.div_amount,ydd.div_fee,
+	yu.cust_name,yu.user_type,yu.bank_account_no,yu.bank_type,yu.bank_name,yu.usercode
+	from ys_divition_detail ydd,ys_user yu where  
+	ydd.division_mer_usercode=yu.usercode and yu.user_type in('user_agent' ,'user_shop')
+	and ydd.divition_id = 1
+	
+	
+	 <if test="dto.bankId!=null and dto.bankId>0">
+          AND a.bank_id=#{dto.bankId}
+     </if>
+
+	01 前台sql -- ok
+	select * from ys_divition_detail ydd,ys_divition yd,dis_commission_log dcl,customer_extend ce
+	where ydd.divition_id = yd.id and yd.out_trade_no = dcl.order_no and dcl.create_id = ce.customer_id
+	
+	
+	后台sql -- yes
+	select ydd.*,yu.* from ys_divition_detail ydd,ys_user yu where ydd.divition_id = 1 and 
+	ydd.division_mer_usercode=yu.usercode and yu.user_type in('user_agent' ,'user_shop')	
+	
+		
+	https://note.youdao.com/ynoteshare1/index.html?id=4fb1fe2f50c60bbd67682335cfffd013&type=note
+	目前只对平台开发
+
+	分账与分账明细
+	ys_divition	,		ys_divition_detail
+			
+			订单号		ys_divition.out_trade_no 
+			金额		ys_divition.total_amount
+			分账状态	ys_divition.division_status
+			分账时间    ys_divition.div_time
+			
+			分账金额	ys_divition_detail.div_amount
+			手续费		ys_divition_detail.div_fee
+						
+			收款名称+类型	
+						前台:
+							customer_extend.name 
+							customer_extend.level_name
+
+						后台
+							ys_user.cust_name
+							ys_user.user_type
+								
+			收款账号	
+						前台:
+							vip_bankcard.bank_card_no
+						后台
+							ys_user.bank_account_no
+						
+			开户行	
+						前台:
+							vip_bankcard.bank_type
+						后台
+							ys_user.bank_type
+			开户行支行
+						前台:
+							vip_bankcard.bank_branch
+						后台
+							ys_user.bank_name
+			银盛商户号	
+						前台:
+							无
+						后台:
+							ys_user.usercode
+			
+			
+		暂时认为一个订单有几条详情,展示几条记录
+
+	select * from ys_divition
+	
+	
+
+	
+
+055
+	keytool -export -alias mykey -keystore D:\home\mykey.p12 -storetype PKCS12 -storepass 123456 -rfc -file D:\home\mykey.cer 
+
+054
+	http://120.79.243.99:8080/#/login 广告后台
+	
+	https://120.79.243.99:8080/#/login --no
+	
+	yiying.b-ymedia.com:8080	yes
+	
+	
+	sudo ufw status
+
+	/home/data/tomcat
+	
+	/home/tool/nginx
+	
+053
+	eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1IiwiaXNzIjoiaHR0cHM6Ly93d3cua2FuZ2Fyb29iYWJ5Y2FyLmNvbSIsInN1YiI6IjEzNDc2Mjk2NjUxIiwiaWF0IjoxNTYyNzYwMTE3fQ.rtx5CNGbkNpNzdD_5D90v5W53BWH6k88n-VjbBUeN3c
+
+052
+	
+	select su.* from sys_user su,sys_user_role sur,sys_role sr 
+						where	
+						user_type = 'user_admin' 
+						and	su.user_status = 1
+            and su.id = sur.user_id and sur.role_id = sr.id
+            and sr.id = 1 
+
+051 
+	确定角色表中id为1的标识为客服 
+	可以设置多个标签
+	查询包括用户的渠道id,渠道名称(应该是每个用户都有),用户来源
+	
+050	我的token
+	{"token":"eyJhbGciOiJIUzI1NiJ9.
+	eyJqdGkiOiIyNSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzQ3NzkwNzYzOSIsImlhdCI6MTU2MjgwNzQwMX0.
+	iBLZ4IOECb286VWOmhOhn8UZDUUNn0vyWJmy6pYzCZo"}
+	
+049
+	前后端文档 分离	
+	查询已读未读消息	-后台
+	统计已读未读消息	-后台
+	批量已读			-后台
+	批量删除			-前后台
+	
+	sys_user电话关联门店或渠道的联系人电话 
+	
+048	
+	//        String messageTypeCN = DictionUtil.getValue(DictConstant.MESSAGE_TYPE, messageType);
+	//        String contentCN = DictionUtil.getValue(MessageConstant.MESSAGE_CONTENT, content);
+	
+			String tel = tbReturnBill.getContactTel();
+            Integer reveicerId = tbReturnBill.getCustomerId();
+            String messageType = DictConstant.MESSAGE_TYPE_INDENT;
+            //取得一条客服数据
+            String phone = serviceConfigMapper.getList().getPhone();
+            String title = MessageConstant.DEAL_AFTERSALE_NOTICE;
+            String content =MessageConstant.MESSAGE_DEAL_AFTERSALE;
+            String[] strArr = new String[]{"",phone};
+            SysMessageUtils.saveAndSend(tel,reveicerId,messageType,"",content,strArr,true);
+		
+047	 
+	预计工期：1.5天
+	1，消息类型：系统消息，订单消息
+	2，推送方式：消息加短信
+	3，发送位置：
+
+	A，预约安装消息，门店确认安装时间并推送消息给买家 消息加短信
+
+		预约安装：	您的订单%s已安排工人上门安装，安装时间为：%s，请悉知；如有疑问，请联系%s。				message_appointment_install	
+																		
+																		标题：预约安装通知					message_appointment_notice
+		
+
+	B，下单推送对应的消息给渠道，分配到对应门店后推送消息给门店  消息加短信
+
+		下单推送：	会员%s购买并支付了%s商品，请及时处理（有分配门店消息推送给门店，没分配推送给渠道）		message_order_send	
+
+																		标题：下单提醒通知					order_send_notice
+		
+	C，团购消息
+
+		团购下单：	您参与团购的商品%s下单成功  消息														message_group_order
+
+																		标题：拼团下单通知					group_order_notice
+
+		团购成功：	您参与的团购商品%s已生效，卖家正在安排安装，请耐心等待并保持电话畅通  消息				message_group_success
+		
+																		拼团成功通知						group_success_notice
+
+		团购失败：	由于参与人数不够，您参与的团购商品%s已过期 消息											message_group_fail
+
+																		拼团失败通知						group_fail_notice
+	D，众筹消息
+		
+		众筹下单：	您参与众筹的商品%s下单成功   消息														message_crowd_order 
+
+																		标题：众筹下单通知					crowd_order_notice
+
+		众筹成功：	您参与的众筹商品%s已生效，卖家正在安排安装，请耐心等待并保持电话畅通  消息				message_crowd_success
+
+																		标题：众筹成功通知					crowd_success_notice
+						
+		众筹失败：	由于参与人数不够，您参与的众筹商品%s已过期  消息										message_crowd_fail
+
+																		消息标题：众筹失败通知				crowd_fail_notice
+
+	E，秒杀消息
+		
+		秒杀下单：	您已成功抢购到商品%s   消息																message_seckill_order
+
+																		抢购成功通知						seckill_order_notice
+	F，砍价商品
+
+		发起砍价：	您发起了%s商品的砍价，努力加油哦   消息													message_start_cutprice
+			
+																		发起砍价通知						start_cutprice_notice
+
+		砍价成功：	恭喜您已成功砍到了商品%s   消息															message_cutprice_success
+
+																		砍价消息							cutprice_success_notice
+	G，售后消息
+	
+		发起售后：	会员张三发起了申请售后，请及时处理  消息加短信											message_start_aftersale
+					
+																		售后待处理通知						start_aftersale_notice
+		
+		处理售后：	您的售后单%s已处理，如有问题请联系%s  消息加短信										message_deal_aftersale 
+
+																		售后反馈通知						deal_aftersale_notice
+
+046 算法工程师
+	1、基于机器学习,并结合现有的自然语言处理技术，研发实体识别、关键词提取、短文本近似、信息抽取、关系推断、知识图谱、智能聊天机器人等的解决方案;
+	2、基于机器学习、数据分析、数据挖掘和数据可视化等实现电商平台数据的数据清洗、数据挖掘等;
+	3、基于大数据和机器学习做电商平台的风控。
+	
+	1、本科及以上学历，熟悉自然语言处理、机器学习、数据分析和挖掘等常用算法，熟悉NLP领域当前热点和前沿技术，对NLP有完整的、系统的认识；
+	2、熟练掌握Java编程语言，熟练使用Python，Shell等脚本语言,了解scala编程语言,有一定的spark使用经验者更佳；
+	3、有相关项目经历，包含但不仅限于以下方向：中文分词、实体识别、情感分析、信息抽取、知识图谱、机器学习、自动摘要、聊天机器人和金融或电商领域风控等,
+		有大数据和深度学习背景更佳；
+	4、优秀的分析和解决问题的能力，能够从海量数据中发现有价值的规律;
+	5、有tensorflow/caffe/PyTorch、scikit-learn、gensim、word2vec等软件包使用检验者更佳；
+	6、良好的团队合作和沟通能力，快速准确的理解能力，极强的自我驱动力，有一定的抗压能力，有责任心，对解决问题充满热情。
+	7、对新技术有好奇心和钻研精神。
+	
+
+	职责描述： 
+	1. 负责完成公司大数据相关产品的算法功能实现。
+	2. 基于javaPython和相关工具脚本语言，将公司研究成果进行算法转化，业务化实现。
+	3. 数据产品其它功能的技术实现。 
+	任职要求： 
+	1. 计算机相关专业，本科及其以上的学历，扎实的数学和基本算法知识；
+	2. 3年以上IT互联网行业或软件行业后端开发工作经验；
+	3. 熟悉大数据技术栈，熟悉hadoopspark生态圈；
+	4. 良好的Java开发基本功，对JVM、Java多线程并发以及网络通信开发有良好的经验； 
+	5. 熟练掌握Java开发主流框架，如SpringSpringBoot，MyBatis等； 
+	6. 熟练掌握MySQL、Redis、HBase等关系型非关系型数据库的使用和开发； 
+	7. 良好的英语阅读能力，基本能阅读国外专业书刊。
+	
+045
+	--spring.profiles.active=my
+
+044 
+	售后消息处理
+	 private void messageStartAftersale(TbIndent tbIndent) {
+
+        if(!tbIndent.getShopId().equals(Constant.DEFAULE_VALUE_SHOP_ID)){
+            //分配门店推给门店
+            SysCustomer sysCustomer = RequestUtil.getCurrentUser(SysCustomer.class);
+            String userName = sysCustomer.getUserName();
+
+            Integer id = tbIndent.getShopId();
+            TbShop tbShop = tbShopMapper.details(id);
+
+            String contactTel = tbShop.getContactTel();
+            String contentKey = String.format(MessageConstant.MESSAGE_START_AFTERSALE, userName,"");
+            String titleKey = DictConstant.MESSAGE_TYPE_INDENT;
+
+            SysMessageUtils.saveAndSend(contactTel,id,titleKey,contentKey,true);
+            
+        }else{
+            //无门店推送给渠道
+            //取得消息接收人手机号与id
+            SysCustomer sysCustomer = RequestUtil.getCurrentUser(SysCustomer.class);
+            String userName = sysCustomer.getUserName();
+
+            Integer agentId = tbIndent.getAgentId();
+            TbAgent tbAgent = tbAgentMapper.details(agentId);
+
+            String contactTel = tbAgent.getContactTel();
+            String contentKey = String.format(MessageConstant.MESSAGE_START_AFTERSALE, userName,"");
+            String titleKey = DictConstant.MESSAGE_TYPE_INDENT;
+
+            SysMessageUtils.saveAndSend(contactTel,agentId,titleKey,contentKey,true);
+        }
+    }
+
+	 //团购成功推送消息
+                SysCustomer sysCustomer = RequestUtil.getCurrentUser(SysCustomer.class);
+                String tel = sysCustomer.getTel();
+                Integer reveicerId = sysCustomer.getId();
+                String messageType = DictConstant.MESSAGE_TYPE_ACTIVITY;
+                String content = String.format(MessageConstant.MESSAGE_GROUP_SUCCESS,"");
+                SysMessageUtils.saveAndSend(tel,reveicerId,messageType,content,false);
+				
+043	
+	
+	str=String.format("Hi,%s %s %s", "小超","是个","大帅哥");            
+    System.out.println(str);  
+
+
+041	
+	13.
+		账号：791588228@qq.com
+		密码：Kds123456
+		 AppKey ：a0e86aa0aaf42dedcdfbabcb
+		 Secret： 4d23f2612182a47e5c395084
+				OfenLocation ofenLocation= BeanUtil.copy(ofenLocationDto,OfenLocation.class);
+			
+			<if test="ofenLocation.name != null and ofenLocation.name != ''">
+                and name like concat('%',#{ofenLocation.name},'%')
+            </if>
+		
+	12 查询平台的客服
+		PageInfo<OfenLocation> addressPage(@Param("ofenLocation") OfenLocation ofenLocation, Page page);
+		
+		select * from sys_user su,sys_user_role sur,sys_role sr where user_type = 'user_admin' 
+		and su.id = sur.user_id and sur.role_id = sr.id and sr.role_name = '客服'
+		and su.name like '%dante%'
+		
+
+		select * from sys_user su,sys_user_role sur,sys_role sr where user_type = 'user_admin' 
+		and su.id = sur.user_id and sur.role_id = sr.id and sr.role_name = '客服' and su.user_status = 1
+		
+
+		查询平台所有具有数据分析权限功能的客服(为什么没有最下面一行会有如此多的重复数据)
+		select su.* from sys_user su,sys_user_role sur,sys_role sr,sys_role_permission srp,sys_permission sp  where su.user_type = 'user_admin' 
+		and su.id = sur.user_id and sur.role_id = sr.id and sr.role_name = '客服' and su.user_status = 1
+		and sr.id = srp.role_id and srp.permission_id = sp.id 
+		and sp.permission_name='用户分析'
+		
+		
+		
+
+
+	11 订单状态
+	between #{startDate} and #{endDate}
+
+		IndentStaVo indent_status_wait_comment
+		
+	   订单状态 indent_status			
+					
+					indent_status_completed		已完成
+
+					indent_status_wait_comment	待评价
+					
+					indent_status_wait_install	待安装
+
+					成交比例	已完成+已完成/成交总量
+					
+					indent_status_wait_pay
+					
+	10 按渠道统计销售额 成交额 带上渠道名称
+		select
+			sum(real_pay) saleTotal,ti.agent_id as agentId,ta.`name` as agentName
+			from tb_indent ti,tb_agent ta
+			where date_format(create_date,'%Y-%m-%d') between '2019-05-30' and '2019-07-31' and ti.agent_id = ta.id
+			group by ti.agent_id
+		
+		union
+		
+		select
+			sum(real_pay) indentTotal,ti.agent_id as agentId,ta.`name` as agentName
+			from tb_indent ti,tb_agent ta
+			where date_format(create_date,'%Y-%m-%d') between '2019-05-30' and '2019-07-31' and ti.agent_id = ta.id
+			and ti.indent_status in ('indent_status_wait_comment','indent_status_completed')
+			group by ti.agent_id
+		
+
+	09	按月统计
+		select 
+		sum(real_pay) saleTotal,
+		month(create_date) month
+		
+		from tb_indent
+		where date_format(create_date,'%Y-%m-%d') between '2019-05-30' and '2019-07-31'
+		group by month(create_date)
+		
+
+	08	按周统计
+		
+		select 
+		sum(real_pay) saleTotal,
+		week(create_date) week
+		from tb_indent
+
+		where date_format(create_date,'%Y-%m-%d') between '2019-05-30' and '2019-07-31'
+		group by week(create_date),
+		week(create_date)
+		ORDER BY create_date desc
+		
+	07 
+		//按年月日统计	(好像跟按日统计是一个效果)
+		select year(create_date) 年，
+		month(create_date) 月,
+		day(create_date) 日，
+		sum(real_pay) 销售合计
+		from tb_indent
+		group by year(create_date)，
+		month(create_date),
+		day(create_date)
+		
+
+	06 按日统计销售总额
+		//yes
+	
+		SELECT 
+		sum(real_pay) AS saleTotal,
+		DATE_FORMAT(create_date,'%Y-%m-%d') AS time
+		FROM
+		tb_indent
+		
+		where date_format(create_date,'%Y-%m-%d') between #{startDate} and #{endDate}	
+		and agent_id = #{id} 
+		GROUP BY DATE_FORMAT(create_date,'%Y-%m-%d') 
+		ORDER BY create_date desc
+		
+		
+		SELECT 
+		sum(real_pay) AS saleTotal,
+		DATE_FORMAT(create_date,'%Y-%m-%d') AS time
+		FROM
+		tb_indent
+
+		where date_format(create_date,'%Y-%m-%d') between '2018-07-30' and '2019-07-31' 	
+		GROUP BY DATE_FORMAT(create_date,'%Y-%m-%d') 
+		ORDER BY create_date desc
+
+		
+	05 订单成交笔数  param:agent_id or shop_id or 不传,开始时间,结束时间
+		select count(id) from tb_indent 
+		where date_format(create_date,'%Y-%m-%d') between '2018-07-30' and '2019-07-31' and agent_id = 82 
+		and indent_status in ('indent_status_wait_comment','indent_status_completed')
+		
+		
+	04 销售总量	 param:agent_id or shop_id or 不传,开始时间,结束时间
+		select count(id) from tb_indent where date_format(create_date,'%Y-%m-%d') between '2018-07-30' and '2019-07-31' and agent_id = 82 ;
+		
+	03 新增会员 param:agent_id 不传,开始时间,结束时间	对门店客户隐藏	active_time为空的情况需要处理
+	select count(id) from customer_extend where date_format(active_time,'%Y-%m-%d') between '2018-07-30' and '2019-07-31'
+	and agent_id = 82  
+		
+		双表关联
+		select count(ce.id) from customer_extend ce,sys_customer sc where date_format(sc.create_date,'%Y-%m-%d') between '2018-07-30' and '2019-07-31'
+	and ce.agent_id = 82  and ce.id = sc.id
+	
+		
+	02 待处理订单: param:agent_id or shop_id or 不传,开始时间,结束时间
+	//yes 
+	select count(id) from tb_indent 
+	where date_format(create_date,'%Y-%m-%d') between '2018-07-30' and '2019-07-31' and agent_id = 82 
+	and indent_status in ('indent_status_wait_install');
+	
+	01 统计一段时间内的销售总额 param:agent_id or shop_id or 不传,开始时间,结束时间
+	select count(real_pay) from tb_indent 
+
+	select sum(real_pay) from tb_indent where create_date  < now()
+	
+	//yes
+	select sum(real_pay) from tb_indent where date_format(create_date,'%Y-%m-%d') between '2018-07-30' and '2019-07-31' and agent_id = 82 ;
+	
+
+
+	订单:
+	tb_indent			real_pay
+	渠道:
+	tb_agent
+	门店:
+	tb_shop
+	客户:
+	customer_extend
+	
+	新增会员对门店登录隐藏
+
+
+040 
+	entity
+	controller
+	service
+	impl
+	mapper
+	repo
+	dto
+	mapper.xml
+	
+
+	getLabelRecord
+	deleteLabelRecord
+	
+	update customer_extend set user_service_id = 23 where id in (910,912)
+	
+039
+	接口：列表接口，
+		  设置客服接口（可批量设置），
+		  客服列表 
+		  设置标签，
+		  标签变更记录 (新增 label_record)
+	
+038
+	share_qty,view_qty,label,user_service_id
+
+	--         select ce.*,su.user_name as userServiceName from customer_extend ce,sys_user su where ce.user_service_id = su.id
+	--         and user_service_id = #{id}
+
+	--         select ce.*,su.user_name as userServiceName from customer_extend ce,sys_user su where ce.user_service_id = su.id
+	
+	List<WaybillDetail> getCarWbdList(@Param("carOwnnerId") Integer carOwnnerId);
+	
+
+	com.github.pagehelper.Page<Object> page = PageHelper.startPage(pageNum, pageSize);
+	List<WaybillDetail> list = waybillDetailMapper.getCargoWbdList(cargoId);
+	
+	PageData<WaybillDetail> pageData = new PageData<>(page.getPageSize(), page.getPageNum(), page.getTotal(), list);
+	return ServerResponse.successWithData(pageData);
+	
+037	
+	share_count	
+	see_count
+	label
+	user_service_id
+	
+	入口页面: 记录采集js脚本的页面
+
+036 
+	分享详情表
+	资讯	帖子	活动	(3个tab页)
+	
+
+	customer_extend
+	添加字段：share_qty,view_qty,label,user_service_id
+	接口：列表接口，
+		  设置客服接口（可批量设置），
+		  客服列表 
+		  设置标签，
+		  标签变更记录 (新增 label_record)
+	
+	学云
+
+	label_record
+	6分钟前
+	学云
+	sys_user
+	sys_user_role
+	sys_role
+	
+
+
+	http://admin@120.25.212.63:10101/r/newshop.git
+
+	
+
+035 /api/cargoMatter/add
+	
+
+034 车辆模块
+	
+	carLength
+	"carLength":"three"
+
+	/api/car/add 	
+
+	/api/car/updateCheck
+	
+
+033 密码
+	
+
+032	消息模块
+	无法捕获该异常
+	try {
+            MessageReadDto params = requestParams.getParams();
+        }catch (Exception e){
+            throw new BusinessException(112, "集合参数形式错误");
+        }
+
+	@RequestBody RequestParams<HotPlacePageDto> requestParams, BindingResult result
+
+	注意mybatis和jpa中传递参数格式的区别
+	
+	批量已读
+	update sys_message set 	mark_read = 1 where  reveicer_id = ?id and id in (15,16)
+	
+	update sys_message set 	mark_read = 1 where  reveicer_id = 12 and id in (15,16)
+	
+	private String listToStr(List<Integer> list) {
+        String idsStr = "(";
+        for (int i = 0; i < list.size() ; i++) {
+            if (i==list.size()-1){
+                idsStr = idsStr + list.get(i);
+            }else{
+                idsStr = idsStr + list.get(i) + ",";
+            }
+        }
+        idsStr = idsStr +")";
+        return idsStr;
+    }
+
+	//
+	 @Update("<script>"
+                + "update sys_message set mark_read = 1 where reveicer_id = ?id and id IN "
+                + "<foreach item='item' index='index' collection='idList' open='(' separator=',' close=')'>"
+                +	"#{item}"
+                + "</foreach>"
+            + "</script>")
+    public List<Integer> markRead(@Param("id") Integer id , @Param("idList") List<Integer> idList);
+	
+	
+	<insert id="batch" parameterType="java.util.List" useGeneratedKeys="true">
+        insert ignore into cargo_send_record
+        (
+        cargo_id,
+        car_ownner_id,
+        create_date
+        )
+        values
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (
+            #{id},
+            #{item},
+            #{date}
+            )
+        </foreach>
+
+	@Select("<script>"
+              + "SELECT IDFA FROM t_xxx WHERE IDFA IN "
+             + "<foreach item='item' index='index' collection='strList' open='(' separator=',' close=')'>"
+                + "#{item}"
+             + "</foreach>"
+		 + "</script>")
+   @Results(value = { @Result(column = "user_name", property = "username") })
+    public List<String> getXxxList(@Param("strList") List<String> strList);
+	
+
+
+	//  统计所有未读消息
+    private Integer allNotRead;
+
+//  统计每个分类下的未读消息
+
+    //审核分类下未读
+    private Integer approvingNotRead;
+    //竞价分类下未读
+    private Integer biddingNotRead;
+    //运单分类下未读
+    private Integer waybillNotRead;
+
+	select count(id) from sys_message where mark_read = 0 and reveicer_id = ?id
+	
+
+	//    审核消息(系统消息)
+    public static final String MSG_TYPE_APPROVING = "approving_message";
+    //    竞价消息
+    public static final String MSG_TYPE_BIDDING = "bidding_message";
+    //    运单消息
+    public static final String MSG_TYPE_WAYBILL = "waybill_message";
+
+	SysMessageConstants
+	
+	MessageApiController
+	
+	public class CustomerConstants {
+	
+		/** 客户类型  */
+		public static final String TYPE = "customer_type";
+		/** 客户类型：司机  */
+		public static final String TYPE_DRIVER = "driver";
+		/** 客户类型：车主  */
+		public static final String TYPE_CAR_OWNER = "car_owner";
+		/** 客户类型：货主  */
+		public static final String TYPE_CARGO_OWNER = "cargo_owner";
+		
+		
+	}
+
+031 android相关
+		adb install renren_android_1.5.apk
+		adb install suibiji.apk
+		adb install wnj.apk
+		adb devices 
+		报错要关闭360手机助手
+
+		D:\002_software\android-sdk-windows\tools
+		d/002_software/android-sdk-windows/platform-tools
+		
+030			
+		以下片断来自项目代码里的文件：example / cn.jpush.api.examples.PushExample
+
+		JPushClient jpushClient = new JPushClient(MASTER_SECRET, APP_KEY, null, ClientConfig.getInstance());
+
+		// For push, all you need do is to build PushPayload object.
+		PushPayload payload = buildPushObject_all_all_alert();
+
+		try {
+			PushResult result = jpushClient.sendPush(payload);
+			LOG.info("Got result - " + result);
+
+		} catch (APIConnectionException e) {
+			// Connection error, should retry later
+			LOG.error("Connection error, should retry later", e);
+
+		} catch (APIRequestException e) {
+			// Should review the error, and fix the request
+			LOG.error("Should review the error, and fix the request", e);
+			LOG.info("HTTP Status: " + e.getStatus());
+			LOG.info("Error Code: " + e.getErrorCode());
+			LOG.info("Error Message: " + e.getErrorMessage());
+		}
+	
+		
+		构建推送对象：所有平台，推送目标是别名为 "alias1"，通知内容为 ALERT。
+		public static PushPayload buildPushObject_all_alias_alert() {
+			return PushPayload.newBuilder()
+					.setPlatform(Platform.all())
+					.setAudience(Audience.alias("alias1"))
+					.setNotification(Notification.alert(ALERT))
+					.build();
+		}
+
+029		eureka-client		
+
+
+028     当前使用账号
+		huo1   w123456.		13809255975
+		
+		che1   w123456.		
+		
+027 
+		medium
+
+											单位
+		waybillId	waybill.name	qty		weight_unit
+		
+
+		select wbd.id,c.car_no as carNo,cp.name as driverName,cp.id_card as driverIdCard,
+		cp2.name as supercargoName,cp2.id_card as supercargoIdCard ,
+		wb.id as waybillId,wb.name as waybillName,wbd.qty as qty, wbd.weight_unit as weightUnit
+		from waybill wb,waybill_detail wbd,car c,car_person cp ,car_person cp2
+
+		where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+		
+		and  wbd.driver_id = cp.id
+
+		and  wbd.supercargo_id = cp2.id
+
+		and  wb.car_ownner_id = 10
+
+026 
+
+	原来:
+	SmsSeriveImpl
+		
+	VerifCodeUtil 
+	
+	public static String getVerifCode() {
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+
+        for(int i = 0; i < 4; ++i) {
+            sb.append(random.nextInt(10));
+        }
+
+        return sb.toString();
+    }
+
+025 运单项代码整理
+		查询运单项对应的车辆 车牌 司机 压货人
+		ok
+		select wbd.id,c.car_no as carNo,cp.name as driverName,cp.id_card as driverIdCard,
+		cp2.name as supercargoName,cp2.id_card as supercargoIdCard 
+		from waybill wb,waybill_detail wbd,car c,car_person cp ,car_person cp2
+
+		where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+		
+		and  wbd.driver_id = cp.id
+
+		and  wbd.supercargo_id = cp2.id
+
+		and  wb.car_ownner_id = 15
+		
+		--
+
+		/api/waybilldetail/list
+		
+		select wbd.*,cp.* from waybill wb,waybill_detail wbd,car c,car_person cp ,car_person cp2 where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+		
+		and  wbd.driver_id = cp.id
+
+		and  wbd.supercargo_id = cp2.id
+
+		and  wb.car_ownner_id = 15
+		
+		huo1	w123456.	
+		che2	w123456.
+		
+024		
+		focus_cargo focus_car
+		
+		Statistics 
+		
+		 //定位中心的数量
+		private Integer locCarCount;
+		//推荐货源的数量
+		private Integer recCargoCount;
+		//关注货主的数量
+		private Integer followCargoOwnerCount;
+
+		select count(*) from my_focus_person where focuser_id = 1 and focus_type = 1
+
+		//关注车主的数量
+		private Integer followCarOwnerCount;
+
+		//熟车的数量
+		private Integer fimiliarCarCount;
+		
+
+		select count(*) from familiar_car where cargo_ownner_id = 1 
+
+023	
+		车主货主身份
+		Customer customer = RequestUtil.getCurrentUser(Customer.class);
+		ServerResponse response = null;
+		if(customer.getCustomerType().equalsIgnoreCase("car_owner")){
+			Integer carId = customer.getCarOwner().getId();
+			//车主
+			response =  service.getCarWbdList(pageNum,pageSize,carId);
+		}else if(customer.getCustomerType().equalsIgnoreCase("cargo_owner")){
+			//货主
+			Integer cargoId = customer.getCarOwner().getId();
+			response =  service.getCargoWbdList(pageNum,pageSize,cargoId);
+		}
+		
+
+022 
+	certified		be_approved
+021 
+	/api/waybilldetail/list
+	
+	select wbd.*,cp.* from waybill wb,waybill_detail wbd,car c,car_person cp ,car_person cp2 where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+	
+	and  wbd.driver_id = cp.id
+
+	and  wbd.supercargo_id = cp2.id
+
+	and  wb.car_ownner_id = 15
+
+
+	--ok	
+	
+	select wbd.*,cp.* from waybill wb,waybill_detail wbd,car c,car_person cp ,car_person cp2 where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+	
+	and  wbd.driver_id = cp.id
+
+	and  wbd.supercargo_id = cp2.id
+
+	and  wb.car_ownner_id = 15
+	
+
+
+	--ok
+	select wbd.*,cp.* from waybill wb,waybill_detail wbd,car c,car_person cp  where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+	
+	and  wbd.supercargo_id = cp.id
+	
+	and  wb.car_ownner_id = 15
+
+
+	--完整版  ok
+	select wbd.*,cp.* from waybill wb,waybill_detail wbd,car c,car_person cp  where wb.status='waybill_status_in_transit' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+	
+	and wbd.driver_id = cp.id and  wbd.supercargo_id = cp.id
+	
+	and  wb.car_ownner_id = 13
+
+
+	select wbd.*,cp.* from waybill wb,waybill_detail wbd,car c,car_person cp  where wbd.flow_name='运输中' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+	
+	and wb.driver_id = cp.id and  wb.supercargo_id = cp.id
+	
+	and  wb.car_ownner_id = 1
+
+	---
+
+	select wbd.* cp.* from waybill wb,waybill_detail wbd,car c,car_person cp  where wbd.flow_name='运输中' and wbd.waybill_id = wb.id  and wbd.car_id = c.id
+	
+	and car.driver_id = car_person.id and  car.supercargo_id = car_person.id
+	
+
+	可暂时认为运单状态是待收货
+	
+	car_owner	cargo_owner
+	
+	
+020 常用路线分页相关
+	/admin/usedAddress
+	
+	分页相关
+	if (requestParams.getParams() == null) {
+		throw new BusinessException(new CommonResult(ResultEnum.OBJECT_ERROR));
+	}
+	
+		Page page = requestParams.getPage();
+		if (page == null) {
+			page = new Page(1, 10);
+		}
+		Integer pageNum = page.getPageNum();
+		Integer pageSize = page.getPageSize();
+		if (pageNum == null) {
+			pageNum = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 10;
+		}
+	
+		Customer cur_customer = RequestUtil.getCurrentUser(Customer.class);
+		//取得车主id
+		Integer id = cur_customer.getCarOwner().getId();
+		com.github.pagehelper.Page<Object> page = PageHelper.startPage(pageNum, pageSize);
+		
+		List<Cargo> list = cargoMapper.recommendCargo(id);
+
+		PageData<Cargo> pageData = new PageData<>(page.getPageSize(), page.getPageNum(), page.getTotal(), list);
+		return ServerResponse.successWithData(pageData);
+	
+
+	@Valid
+    @PostMapping("/page")
+    @ApiOperation(value = "常用地址分页列表信息")
+    public ServerResponse addressPage(@RequestBody RequestParams<OfenLocationDto> requestParams,BindingResult result) {
+        if (requestParams.getParams() == null) {
+            throw new BusinessException(new CommonResult(ResultEnum.OBJECT_ERROR));
+        }
+        return ofenLocationService.addressPage(requestParams.getParams(),requestParams.getPage());
+    }
+	
+
+	货源查询时如果是抢标方式的货源只展示当前时间>创建时间 1天(配置)的货源
+	
+	
+
+	//大于号后面都是获取times十五分钟后的时间
+	//ok
+	select	* from cargo where now() >= SUBDATE(create_date,interval -11 day)		
+	
+
+	select	* from cargo where now() >SUBDATE(create_date,interval -15 minute);
+	select*from table where now() > SUBDATE(times,interval -900 second);
+	select*from table where now() > date_add(times,interval 15 minute);
+	select*from table where now() >ADDDATE(times,interval 15 minute);
+	
+	
+019 货源抢标公开时间
+
+	在货源表(cargo)中新增一个是否公开展示字段is_open_show,发布货源时如果是抢标将该字段设置为false,
+	查询所有人可见的货源列表时只展示该字段为true的记录,使用任务调度框架quatz每隔10分钟查找货源表中发布中状态且该字段为false
+	,如果当前时间超过表中创建时间1小时(配置),则将该字段改为true
+	
+		
+@Repository
+public interface CargoExtRepository extends CarCargoOwnnerRepository{
+
+//    @Query(value = "select name from CarCargoOwnner where id = ?1")
+//    public String findNameById(Integer id);
+
+    @Query(value = "from Cargo where status = 'cargo_source_status_release' and isOpenShow = 1")
+    public List<Cargo> findByStatusAndIsOpenShow();
+
+}
+
+科比传人 2019/6/11 0:07:18
+//查询货源状态为发布中且不公开展示的货源
+    @Test
+    public void test2(){
+        List<Cargo> list = cargoExtRepository.findByStatusAndIsOpenShow();
+        System.out.println(list.size());
+    }
+
+
+
+
+
+018 审核发送消息模块
+	if(ApproveConstants.RESULT_AGREE.equalsIgnoreCase(dto.getResult())){
+			SysMessage sysMessage = new SysMessage("系统消息",1,"系统",new Date(),
+					"您的认证资料已审核通过,请须知",cargoOwner.getId(),"货主",0,null);
+			sysMessageRepository.saveAndFlush(sysMessage);
+		}else{
+			SysMessage sysMessage = new SysMessage("系统消息",1,"系统",new Date(),
+					"您的认证资料审核不通过，原因如下:"+dto.getContent(),cargoOwner.getId(),"货主",0,null);
+			sysMessageRepository.saveAndFlush(sysMessage);
+		}
+		
+	
+	//审核通过推送消息
+	SysMessage sysMessage = new SysMessage("系统消息",1,"系统",new Date(),
+					"审批失败：货主暂未填写认证信息",cargoOwner.getId(),"货主",0,null);
+			throw new BusinessException(112, "审批失败：货主暂未填写认证信息");
+
+	SysMessage sysMessage = new SysMessage("系统消息",1,"系统",new Date(),
+			"您的认证资料已审核通过,请须知",carOwner.getId(),"车主",0,null);
+	sysMessageRepository.saveAndFlush(sysMessage);
+
+	CarCargoOwnerServiceImpl
+
+	消息类型：系统消息
+	通过消息内容：您的认证资料已审核通过，请须知
+	不通过消息内容：您的认证资料审核不通过，原因如下：（审核时填写的原因）
+	
+	String msgType,		系统消息
+	String senderId,	1	
+	String senderType,	系统
+	Date senderDate,	new Date()
+	String content,		您的认证资料已审核通过,请须知
+	Integer reveicerId, 被审核人id
+	String reveicerType, 车主
+	Integer markRead,		0
+	Date readDate		null
+	
+	SysMessage sysMessage = new SysMessage("系统消息",1,"系统",new Date(),
+				"您的认证资料已审核通过,请须知",carOwner.getId(),"车主",0,null);
+	
+017 cur1
+	原密码校验
+	//        CheckFieldUtils.checkObjecField(passwordDto.getNewPassword());
+	//        String newPasswordEnc = PasswordUtil.encryptPassword(passwordDto.getNewPassword());
+	
+	设置密码
+	cargoCustomer.setPwd(PasswordUtils.encryptStringPassword(cargoCustomerDto.getPwd(), cargoCustomer.getLoginCounter()));
+
+	 "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyMjIiLCJpc3MiOiJodHRwczovL3d3dy5rYW5nYXJvb2JhYnljYXIuY29tIiwic3ViIjoiMTM0MTIzNDEyMzQiLCJyb2xlcyI6ImNhck93bmVyIiwiaWF0IjoxNTYwMTQxMjE3fQ.ZUV37GPdoqzyjiHPBY70u3gtXW58wbM_4d29msIOvak"
+	
+	 
+	
+
+	czxmqy
+	A123456.		ea4c12f3857f88e1fc08add09a698119
+	A123456#		8faf4cb442779c3a024e091bfae51654
+	## 1.新增司机或压货人 ##
+
+	**备注**
+	**URL**
+	>/api/carPerson/create 
+	
+
+	司机压货人实现
+	CarPersonServiceImpl
+	
+	密码正则
+	public static final String PASSWORD = "^.*(?=.{6,16})(?=.*\\d)(?=.*[A-Za-z])(?=.*[\\p{Punct}]).*|()$";
+	public static final String PASSWORDERR_MSG = "密码格式错误：密码必须同时包含字母、数字、特殊符号，长度（6-16）";
+	
+	密码工具类
+	PasswordUtil
+	
+
+016 
+	/*
+	 Navicat Premium Data Transfer
+
+	 Source Server         : 192.168.0.142-物流pc
+	 Source Server Type    : MySQL
+	 Source Server Version : 50642
+	 Source Host           : 192.168.0.142:3306
+	 Source Schema         : logistics
+
+	 Target Server Type    : MySQL
+	 Target Server Version : 50642
+	 File Encoding         : 65001
+		
+	 Date: 05/06/2019 10:31:12
+	*/
+	
+	SET NAMES utf8mb4;
+	SET FOREIGN_KEY_CHECKS = 0;
+	
+	-- ----------------------------
+	-- Table structure for hot_place
+	-- ----------------------------
+	DROP TABLE IF EXISTS `hot_place`;
+	CREATE TABLE `hot_place`  (
+	  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	  `province` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '省份',
+	  `city` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '城市',
+	  `county` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '县',
+	  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+	  PRIMARY KEY (`id`) USING BTREE
+	) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
+
+	-- ----------------------------
+	-- Records of hot_place
+	-- ----------------------------
+	INSERT INTO `hot_place` VALUES (1, '湖北', '武汉', '洪山区', '2019-06-05 10:24:40');
+	
+	SET FOREIGN_KEY_CHECKS = 1;
+	
+
+
+015 
+	select * from `car_source` cs,`car_record_place` crp ,
+	`car_source_car` csc WHERE cs.id = crp.car_source_id and cs.id=csc.car_source_id and and `status` = ?
+	order by cs.`create_date` desc
+	
+	车源按照起止地,车辆类型模糊搜索,
+	按照车辆运输量排序,创建日期排序,
+	
+
+	目前都是一对一关联
+
+	sql书写
+
+	//ok
+	select cs.* from car_source cs,car_record_place crp ,car_source_car csc where cs.id = crp.car_source_id
+	and cs.id=csc.car_source_id
+	
+	//
+	
+
+014	
+	SELECT * FROM sys_dict WHERE dict_key = "ffmpeg_path"
+ 
+	
+013	
+	后台问题：
+	1，新闻相关接口
+	2，车源大厅，我的车源
+	3，货源审核通过后推送消息给车主，先随机推送给5个车主
+	4，热门货源
+	5，推荐货源接口
+
+012		//根据用户id获取用户logo
+		Integer customerId = cargoOwner.getCustomerId();
+		Customer customer = logisticsCustomerRepository.findOne(customerId);
+		cargo.setLogo(customer.getLogo());
+	
+011	物流项目最初启动需要一张权限表
+	
+			
+010	mysql相关
+	mysqld --console --mysql_upgrade
+	mysql_upgrade
+	
+	my.ini配置可能有错误
+	d:
+	cd D:\002_software\mysql-5.7.15-winx64
+	
+	3.以管理员身份运行cmd并进入到mysql的bin目录，输入mysqld install命令进行安装，
+	安装成功后输入命令mysqld --initialize-insecure进行初始化，由于它是自动读取my.ini配置，
+	所以运行命令后会在根目录下自动生成data目录，最后输入命令net start mysql启动mysql服务
+
+009 
+	params: {name: "", tel: "", legalerName: "", status: "approval_pending", customerType: "organize"}
+	token: "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaXNzIjoiaHR0cHM6Ly93d3cua2FuZ2Fyb29iYWJ5Y2FyLmNvbSIsInN1YiI6IjEzMTYzMzQwNTY3Iiwicm9sZXMiOiJ1c2VyIiwiaWF0IjoxNTU4OTIxODA3fQ.
+	jVUzLYszjvO0TT9mbtQfIFTPZsjyqXCKyAy2QuRIYMo"
+	
+	
+	Resolved value: "^(approval_pending)|(be_approved)|(not_approved)|()$"
+008 详情
+	目前返回
+	{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "id": 34,
+        "cargoId": 10,
+        "cargo": {
+            "id": 10,
+            "cargoLocations": null,	//todel
+            "name": "name",
+            "logo": "logo",
+            "qty": 100,
+
+            "mulShipment": false,
+            "mulUnload": false,
+            "packaged": true,
+            "matterPrice": 1,
+            "realPrice": null,
+
+            "marketPrice": 1,
+            "startProvince": "湖北",
+            "startCity": "武汉",
+            "startCountry": "江夏",
+            "endProvince": "湖北",
+
+            "endCity": "武汉",
+            "endCountry": "江夏",
+            "line": null,
+            "canShare": false,
+            "arrivalDate": "2019-05-21 11:00:00",
+
+            "pickupDate": "2019-05-20 12:00:00",
+            "endDate": "2019-05-21 12:00:00",
+            "remark": "1",
+            "createBy": 4,
+            "createDate": "2019-05-22 13:48:21",
+
+            "weightUnit": "ton",
+            "tenderWay": "tender_mark",
+            "payType": "arrival_pay",
+            "priceUnit": "price_yuan",
+            "priceType": null,
+
+            "carType": "car_tractor",
+            "status": "cargo_source_status_release",
+            "statusCN": "发布中",
+            "weightUnitCN": "吨",
+            "carTypeCN": "牵引车",
+		
+            "priceUnitCN": "人民币",
+            "tenderWayCN": "招标",
+            "payTypeCN": null,
+            "priceTypeCN": ""
+        },
+        "createBy": 68,
+        "carOwnnerId": 3,
+        "carOwnerName": "武汉XX公司",
+
+        "cargoOwnerName": "武汉XX公司",
+        "matterPrice": 10.32,
+        "status": "cargo_matter_status_release",
+        "loadDate": null,
+        "createDate": "2019-05-23 15:42:40",
+	
+        "statusCN": null
+    }
+}
+
+
+	需要返回
+	 {
+        "code": 1,
+        "msg": "success",
+        "data": {
+            "id": 9,
+            "cargoId": 1,
+            "cargo": {                                  【货源】
+                "id": 1,		
+                "name": "天然气",
+                "logo": "1",
+                "qty": 1,
+                "weightUnit": "1",		  //o
+		
+                "weightUnitCN": null,		
+                "tenderWay": "1",
+                "tenderWayCN": null,
+                "payType": "1",
+                "payTypeCN": null,		//o
+
+                "mulShipment": false,		
+                "mulShipmentList": null,	//toadd
+                "mulUnload": false,	
+                "mulUnloadList": null,		//toadd
+                "packaged": false,
+		
+                "matterPrice": 1,
+                "realPrice": 1,
+                "marketPrice": 1,
+                "priceUnit": "1",
+                "priceUnitCN": null,
+
+                "priceType": "1",
+                "priceTypeCN": null,
+                "startProvince": "1",
+                "startCity": "1",
+                "startCountry": "1",
+
+                "endProvince": "1",
+                "endCity": "1",
+                "endCountry": "1",
+                "line": "1",
+                "canShare": false,
+
+                "carType": "1",
+                "carTypeCN": null,
+                "status": null,
+                "statusCN": null,
+                "arrivalDate": "2019-02-20 14:11:59",
+
+                "pickupDate": "2019-02-20 14:11:57",
+                "endDate": "2019-02-20 14:12:04",
+                "remark": "1",
+                "createBy": 1,
+                "createDate": "2019-02-20 14:12:08"
+            },
+            "createBy": 1,
+            "carOwnnerId": 1,
+            "carOwnerName": null,
+
+            "matterPrice": 10.01,
+            "status": "pending",
+            "statusCN": "待处理",
+            "loadDate": null,
+            "createDate": "2019-03-01 16:57:04",
+
+            "cargoOwnerName": "货主企业名称"
+        }
+    }
+
+
+007 分页返回对比   @JsonIgnore 
+	以前
+	{
+	    "code": 1,
+	    "msg": "success",
+	    "data": {
+		"total": 1,
+		"list": [
+		    {
+			"id": 34,
+			"cargoId": 10,
+			"cargo": null,
+			"createBy": 68,
+			"carOwnnerId": 3,
+			
+			"cargoOwnerId": 4,   //todelete
+			"carOwnerName": "武汉XX公司",
+			"cargoOwnerName": "武汉XX公司",
+			"matterPrice": 10.32,
+			"status": "cargo_matter_status_release",   
+			
+			"loadDate": null,
+			"createDate": "2019-05-23 15:42:40",
+			"approveStatus": null,		//todelete
+			"approveContentCN": null,	//todelete
+			"approveStatusCN": null,	//todelete
+			
+			"statusCN": null
+		    }
+		],
+		"pageNo": 1,
+		"pageSize": 10
+	    }
+	}
+	
+	需要返回
+
+	{
+        "code": 1,
+        "msg": "success",
+        "data": {
+            "total": 1,
+            "list": [
+                {
+                    "id": 9,
+                    "cargoId": 1,
+                    "cargo": null,
+                    "createBy": null,
+                    "carOwnnerId": 1,
+
+                    "carOwnerName": null,
+                    "matterPrice": 10.01,
+                    "status": "pending",
+                    "statusCN": "待处理",
+                    "loadDate": null,
+
+                    "createDate": "2019-03-01 16:57:04",
+                    "cargoOwnerName": "货主企业名称"
+                }
+            ],
+            "pageNo": 1,
+            "pageSize": 2
+        }
+    }
+   
+   目前返回
+    {
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "total": 1,
+        "list": [
+            {
+                "id": 34,
+                "cargoId": 10,
+                "cargo": null,
+                "createBy": 68,
+                "carOwnnerId": 3,
+
+                "carOwnerName": "武汉XX公司",
+                "cargoOwnerName": "武汉XX公司",
+                "matterPrice": 10.32,
+                "status": "cargo_matter_status_release",
+                "loadDate": null,
+
+                "createDate": "2019-05-23 15:42:40",
+                "statusCN": null
+            }
+        ],
+        "pageNo": 1,
+        "pageSize": 10
+    }
+}
+	
+
+    
+
+006 
+	{"carLoad":100,"carType":"car_tractor","carUnit":"ton","mulStore":false,"storeQty":1}
+	
+005 添加关注 
+	//ok
+	{
+	  "params":{
+                "cargoOwnnerId": 4,  
+                "carOwnnerId": 3     
+	  } ,
+	  
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1ODQxNzc0Nn0.sKe5_CF2OT28OxQPqyVxv4Nk-S7kxvS4RCvsd-53lHY"
+	}
+004 手机号正则
+	@Pattern(regexp = RegExConstants.CHINA_PHONE_NUMBER, message = "联系电话格式有误")
+	
+	
+003 货主登录
+	**URL**
+
+	>/api/customer/cargoOwner/login
+
+	**请求参数**
+
+	    {
+		"params": {
+		    "userAccount": "lisi",          // （必填）（str）用户名
+		    "password": "A123456."          // （必填）（str）密码
+		}
+	    }
+
+
+002 分页参数
+	{
+	  "params":{} ,
+	  "page":{
+		"pageNum": 1,   
+	    "pageSize": 10
+	   },
+	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1ODQxMDk4OX0.2dsCwmsBQfjXf5Dsoa1f4AdoYt4LW6jTpOMPFvHwRPw"
+	}
+
+001 请求参数
+      {
+    	"params": {
+            
+    	},
+        "page": {
+    		"pageSize": "10",
+    		"pageNum": "1"
+    	},
+    	"token": ""
+	}
+
+
+/** 车辆类型 */
+	@NotBlank(message = "车辆类型不能为空")
+	@Pattern(regexp = CarConstants.REG_EX_CAR_TYPE, message = CarConstants.REG_EX_CAR_TYPE_ERR_MSG)
+	private String carType;
+
+	/** 运输量 */
+	@NotNull(message = "运输量不能为空")
+	@Range(min = 1, message = "运输量不能小于1")
+	private Integer qty;

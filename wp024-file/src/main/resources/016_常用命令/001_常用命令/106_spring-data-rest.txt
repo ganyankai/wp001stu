@@ -1,0 +1,12 @@
+001 常用接口路径
+	/stus/search/findStuByName
+	
+	@RepositoryRestResource(path = "user")
+	public interface UserRepository extends JpaRepository<User,Long> {
+	    @RestResource(path="username",rel="username")
+	    List<User> findUserByUsername(@Param("username")String username);
+	    @RestResource(path="login",rel="login")
+	    List<User> findUserByUsernameAndPassword(@Param("username")String username,
+						     @Param("password")String passwrod);
+	 
+	}
