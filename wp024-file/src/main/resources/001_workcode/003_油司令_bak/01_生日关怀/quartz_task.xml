@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- ***************** quartz 自动结算统计任务开始 ***************** -->
+    <bean id="statusMonitorJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="SettlementStatService"/>
+        </property>
+        <property name="targetMethod">
+            <value>autoSettlementStat</value>
+        </property>
+    </bean>
+
+    <bean id="stationPriceJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="stationPriceServiceImpl"/>
+        </property>
+        <property name="targetMethod">
+            <value>execute</value>
+        </property>
+    </bean>
+    <!--&lt;!&ndash;余油宝统计   用户余油宝数据统计 &ndash;&gt;-->
+    <!--<bean id="youBaoStatJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="settYouBaoStatService"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>youBaoSettlementStat</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;余油宝统计   新浪账户操作数据统计 &ndash;&gt;-->
+    <!--<bean id="sinaOperRecordJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject">-->
+            <!--<ref bean="settYouBaoStatService"/>-->
+        <!--</property>-->
+        <!--<property name="targetMethod">-->
+            <!--<value>sinaOperRecord</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- ***************** 定义统计触发器开始 ***************** -->
+    <!-- 结算统计触发器 -->
+    <bean id="autoSettlementStat" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="statusMonitorJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0/5 * * * ?</value><!-- 5分钟执行一次 -->
+        </property>
+    </bean>
+
+    <!-- ***************** 定义统计触发器开始 ***************** -->
+    <!-- 结算统计触发器 -->
+    <bean id="autoStationPrice" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="stationPriceJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0 * * * ?</value><!-- 整点执行一次 -->
+        </property>
+    </bean>
+    <!--&lt;!&ndash;余油宝统计   用户余油宝数据统计 &ndash;&gt;-->
+    <!--<bean id="youBaoSettlementStat" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="youBaoStatJobDetail"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>0 0 7 * * ?</value>&lt;!&ndash; 每天7点整触发 &ndash;&gt;-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;余油宝统计   新浪账户(充值/提现)操作数据统计 &ndash;&gt;-->
+    <!--<bean id="sinaOperRecord" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail">-->
+            <!--<ref bean="sinaOperRecordJobDetail"/>-->
+        <!--</property>-->
+        <!--<property name="cronExpression">-->
+            <!--<value>59 * * * * ? *</value>&lt;!&ndash; 每天7点整触发 &ndash;&gt;-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--
+		调度作业
+		如果lazy-init='false',则容器启动时就会执行调度程序;否则需要实例化该bean才能执行调度程序
+	-->
+
+    <!--  -->
+    <bean id="testPrintJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <!--<ref bean="testPrintServiceImpl"/>-->
+            <ref bean="testStart"/>
+        </property>
+        <property name="targetMethod">
+            <value>execute</value><!-- 整点执行一次 -->
+        </property>
+    </bean>
+
+    <!-- ***************** 定义统计触发器开始 ***************** -->
+    <!--  -->
+    <bean id="testPrint" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="testPrintJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>*/3 * * * * ?</value>
+        </property>
+    </bean>
+
+
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+        <property name="triggers">
+            <list>
+                <!-- 统计任务 -->
+                <ref local="autoSettlementStat"/>
+                <ref local="autoStationPrice"/>
+                <ref local="testPrint"/>
+                <!--<ref local="sinaOperRecord"/>-->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="testStart" class="com.catt.oil.settlement.service.impl.stationPrice.TestStart" lazy-init="false">
+    </bean>
+
+</beans>

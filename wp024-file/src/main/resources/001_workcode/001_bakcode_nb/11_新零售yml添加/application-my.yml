@@ -1,0 +1,206 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8080
+#  ssl:
+#    key-store: classpath:ssl/2329126_test.zrytech.com.pfx
+#    key-store-password: 3z2z2Gjo
+#    keyStoreType: PKCS12
+debug: true
+spring:
+  devtools:
+    restart:
+      enabled: true   #spring-boot-devtools
+    freemarker:
+      cache: false    #页面不加载缓存，修改即时生效
+      spring:
+  resources:
+    static-locations: file:/home/zry/qfapp/newshop/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/resources/static/,classpath:/public/
+  profiles:
+    active: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 100Mb
+  jpa:
+    show-sql: true
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        hbm2ddl:
+            auto: none
+        temp:
+            use_jdbc_metadata_defaults: false
+
+  output:
+    ansi:
+      enabled: detect
+  aop:
+    auto: true
+    proxy-target-class: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: utf-8
+  datasource:
+      continue-on-error: true
+      hikari:
+        connection-test-query: SELECT DISTINCT 1 FROM employee
+        maximum-pool-size: 50
+        connection-timeout: 3000
+        validation-timeout: 3000
+      #url: jdbc:mysql://119.23.172.36:3306/frmshop?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      #username: root
+      #password: Zry_123
+      url: jdbc:mysql://119.23.172.36:3306/frmeshop?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: Zry_123
+      driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    pool:
+     max-active: 300
+     min-idle: 0
+     max-wait: 10000
+     max-idle: 100
+     timeout: 5000
+    host: 119.23.172.36
+    password: 123456
+    database: 11
+    port: 6379
+pool:
+    maxActive: 50
+    maxIdle: 10
+    minIdle: 5
+    maxWait: 3000
+    testOnBorrow: true
+    testOnReturn: true
+    softMinEvictableIdleTimeMillis: -1
+    lifo: false
+
+logging:
+  level:
+    com.zrytech.framework.*.mapper: trace
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+wechat:
+  pay:
+    appId: wx4ba088dd9c63f22d
+    mchId: 1507226251
+    mchKey: 96926f935117426c85c5861918b68bd9
+    subAppId:
+    subMchId:
+    keyPath: classpath:/apiclient_cert.p12
+    notifyDomain: http://203.195.191.128:8380
+    planId: 121324
+  mp:
+    appId: wx4ba088dd9c63f22d
+    secret: 5c1eae68251734a0a68f69a77c9261af
+    token:
+    aesKey:
+    notifyDomain: http://ydxfp9.natappfree.cc
+tx:
+  sms:
+    appId: 1400093221
+    appKey: a9d06a13b8efd49b7b6961f35539d5ee
+    template1: 122254
+    sign: 144459
+    nationCode: 86
+
+im:
+  alibc:
+    aliUrl: http://gw.front.taobao.com/router/rest
+    aliAppKey: 25028535
+    aliSecret: fa21535ec834fbc56e35a53c4e4a5f8d
+file:
+  tmp:
+    dir: /home/newshop/tmp
+    #dir: D:/tmp
+
+
+upload:
+  file:
+    #dir: d:/tmp
+    dir: /home/newshop/tmp
+
+ftp:
+  clientTimeout: 10000
+  encoding: UTF-8
+  passiveMode: true
+  #host: 119.23.172.36
+  #port: 21
+  #username: zrytech
+  #password: Zry@321#
+  host: 120.79.27.107
+  port: 21
+  username: admin
+  password: 123456
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+mapper:
+    not-empty: false
+    identity: MYSQL
+
+
+alipay:
+  url: https://openapi.alipaydev.com/gateway.do
+  app_private_key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCat7qCh4gnSllbdKS46IIjyvusfwQEs5xSamSH7CUZ8AsxGdnMq13MOaUfoqRHGNhLJb++gcJn5WdsoNfYybBrY2lDS2srspI2QYLYZXzkWmiiUUPyP5xLVETroHvLuXSA1P+UswFcbWxwdV3ZiINKx/K9nRo4wYLh84b7sz4mmNZxGzpg2AjjeMVzE1hje3nzDV7mCNK2VPYfdmnto1+yGg5yYiS9X7CWW5SCWNaGW22bvdKILwBaKvr/xLhAn+/MI9CmGv5zR0etF0InqsQws8jNxN38gKUZfA4oAV1Sv7cVA9fm+wwARKACDXe21eIlXdcerCr2Gz0MEv1fXmJ5AgMBAAECggEABkqcWfx66+YZFh/7Js3FpQD3FP+hQTOwkqVi6ygOJizdt6Rud+UsDkb10QCDH6UB/qRNVMjgB+uLNh6gSF+DPgqv2B20APXk/jHRyUzvNDX89UTKt4ogp+uIVfCTuCgVdbuznO9eicylUTlklJj5hcv1sgI2c8JiuR93CLs0NsuF0GIc5ddjZ76Xrzt6hAyUGweDF4JP92+ThKblzwpqQrw7Y9p7y6uhos+8qYhXsKChipQe7Fc2jAjVIbK3XWOGxFe8RbzZ+5svwbA9fjj+smt/ZDK5L6ZChQxA4HZkPE70C4uknrd4CcJc08ISVXMMXJapPAcWMdWVOk9x9Jh6BQKBgQDuwuwi0NzKVEkgws9Kz9mu46rqnFyEiIaIzXfg+Hdegm+Dpfa3ET/+Je7Xk74NZ60+18KMEOKdcWXVqr4YX/uJ0hyrFU0kIUiAG5QPVqAR9YNpdgqzhpiovK5OydeLZJouzwsZUEc8tmfkzQ1Ij6gK4XZTTXO+snCf4knRtA24uwKBgQCl42iCSh5IWD1vS8V4WEIBqOzdeLQi+eG9UP5lCYPe4NmA5WhKyatWwV4XZQvTsHf9FRazQfjTLf4whSqkGBRLF6mGcdxifU1SYx2lRpKIZ737qV4B4y3/T5G3nT/AMB8ojLOpUynkHJRXfDDgt88MOq4vH0lO4KZhncL/SRmoWwKBgQDGUojcfor3UT2RBeAzrySM/bVJvWmn+NNvLOSHrTtR+JxySNf+xkhWbeHPlXwHHHguO//wYlIqHzhMW9Ac5RVGLI39mesCuNbE+qNofjbl0/49CnznFEUX2+oZrdTphz3+5aG9fA5AIu93gM+o1xLpPtAPb8VVwFiGpetVUe8X4wKBgHVkis64+NklaMRcELBrdLqL+qN4CbI+t1sr9/s0Upfk8sbekYFrWc8ZJCbWIRp7ZU46IEhWxWlcwOdBNb3ONH43joZQCS/BkHhfH9mYKZZSJAX2A0q+pAxrGKmhpD2zUDl36KRI7/o3p1qJzmUYbnMvC5jZQR2KqPOnmxjheEDFAoGBAJloEBsx/xt9xO/I9C3yd8oNiS1OkSVt3Njfz1EHlFWDIKluEihNV1b5PCNKTEa+LKUzix+oUO3q/x4XQ+IDFWx9EUaPJbv2mrC0SIoiOECYBVLXAG31M7NUtYG820ytvsZ6KbAEk+Ldp77IM20IwdY2Jy75Hogjd9W0pa3ni1zG
+  alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuXkUCQxlsXp7G1qNpnPE9GgZVBPmEbDCq+Y+KylGSotFJrqzEILQmGKZrhinOGbwR6P9HPB0tx4RMildG5u+rUENtQOazG7hICsnRhQvUzbZbXIWtr0r0Rcq1ai7IS1PFrK0mBVrsWwKtx5e2oUwvPd9xI2poXsmebOQxCEGaizQG50wTDIc/tlqsZ503N4nQwSWJVH345n97gfGnQLT2yQnHgT0q3M1+5YVIluJExcOBszYxp/eq0SiwbihZ9sRinEYqt2hLjJzkD9/LbCs2MiaLIahWiAz6UE0t4M8Gdl0idCxxYZMKPEsT0tKWwYv5/2l3sGAKXoH3wn6qC7YCQIDAQAB
+  app_id: 2016092800614633
+  timeout: 30m
+  notify_url: https://kangaroobabycar.com/payment/wxpay/notify
+  return_url: https://www.midebest.com/app/index.html#/guide
+
+#微信服务端配置参数
+wx:
+  url: https://api.mch.weixin.qq.com/pay/unifiedorder
+  appid: wxd1cccfeb16cd07d1
+  appsecret: 5d3d1005f5fc485c65adfcf64320b6d9
+  mch_id: 1491174132
+  key: 12345678
+  spbill_create_ip: 127.0.0.1
+  notify_url: https://kangaroobabycar.com/payment/wxpay/notify
+  trade_type: APP
+  refund_url: https://api.mch.weixin.qq.com/secapi/pay/refund
+  pay_to_user_url: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
+  appid_h5: wx089145d95d1d8ac1
+  appsecret_h5: d9d8a1fefcd6ad328ce8c8cd6ba8c1ed
+
+oss:
+  access_key_id: LTAIhEVthlmaZGUy
+  access_key_secret: 4BOqs1UHRLX0ugxzpaKIMwPW51Gc2h
+  bucket_name: zry-wuhan
+  end_point: oss-cn-beijing.aliyuncs.com
+
+
+#al:
+#  sms:
+#    msgSign: 起知
+#    accessKeyId: LTAITKkvXBwnuNe1
+#    accessKeySecret: NXQVXOKIL5Y2JLUdqoE4n9k8cFdqFH
+#    templateId: SMS_162180179
+
+al:
+  sms:
+    msgSign: 凯迪仕
+    accessKeyId: LTAIxK1qu1Kptwrb
+    accessKeySecret: NJ7j5GMpQpPLnolDcaf1R11CbfcHET
+   # templateId: SMS_167972065
+    templateId: SMS_169643042
+
+
+no_check_token: /customerApp/checkPhoneCode,/customerApp/getCode,/commonApp/imgUpload,/commonApp/getAllKeyValue,/home/getFirstPart,/home/getSecdPart,/home/getFirstSearch,/home/getFirstAll,/front/product/page,/front/product/get,/front/product/getSku,/front/product/getCommentListByProductId,/wxApp/authByH5,/wxApp/login,/articleApp/invitationPage,/commonApp/getBannerList,/articleApp/informationPage,/articleApp/get,/articleApp/commentPage,/front/product/getCommentListByProductIdToNum,/appAactivity/detail,/appcounpon/getNotokenCoupon
+code:
+  length: 4

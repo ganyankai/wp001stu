@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zrytech.framework.newshop.mapper.CustomerExtendMapper">
+    <resultMap type="com.zrytech.framework.newshop.entity.app.CustomerExtend" id="customerExtend">
+        <result property="parentCode" column="parent_code"/>
+        <result property="level" column="level_name"/>
+        <result property="isVip" column="is_vip"/>
+        <result property="activeType" column="active_type"/>
+        <result property="directOneCount" column="direct_one_count"/>
+
+        <result property="directTwoCount" column="direct_two_count"/>
+        <result property="todayMoney" column="today_money"/>
+        <result property="yestodayMoney" column="yestoday_money"/>
+        <result property="monthMoney" column="month_money"/>
+        <result property="allMoney" column="all_money"/>
+
+        <result property="vipCount" column="vip_count"/>
+        <result property="fansCount" column="fans_count"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="randomCode" column="self_code"/>
+        <result property="activeTime" column="active_time"/>
+
+        <result property="qrImgUrl" column="qr_img_url"/>
+        <result property="teamDate" column="team_date"/>
+        <result property="levelIndex" column="level_index"/>
+        <result property="selarTasks" column="selar_tasks"/>
+        <result property="shareQty" column="share_qty"/>
+
+        <result property="viewQty" column="view_qty"/>
+        <result property="userServiceId" column="user_service_id"/>
+        <result property="id" column="id"/>
+
+    </resultMap>
+
+    <resultMap type="com.zrytech.framework.common.entity.User" id="user">
+
+
+    </resultMap>
+
+    <select id="getCustomerExtendList"
+            resultMap="customerExtend">
+        select * from customer_extend
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="customerExtend.name != null and customerExtend.name !=''">
+                and name like concat('%',#{customerExtend.userName},'%')
+            </if>
+            <if test="customerExtend.tel != null and customerExtend.tel !=''">
+                and tel like concat('%',#{customerExtend.tel},'%')
+            </if>
+        </trim>
+    </select>
+
+    <select id="getCustomerSerList"  parameterType="int"
+            resultMap="customerExtend">
+        select * from customer_extend where user_service_id = #{id}
+    </select>
+
+
+    <select id="getCustomerExtendById" resultMap="customerExtend">
+         select * from customer_extend where id=#{id}
+    </select>
+
+    <select id="getUserAgentListParam" resultMap="user">
+        select su.* from sys_user su,sys_user_role sur,sys_role sr
+        <trim prefix="where " prefixOverrides="and ">
+            user_type = 'user_admin'
+            and su.id = sur.user_id and sur.role_id = sr.id
+            and sr.role_name = '客服'
+            <if test="user.userName != null and user.userName !=''">
+                and su.user_name like concat('%',#{user.userName},'%')
+            </if>
+            <if test="user.tel != null and user.tel !=''">
+                and su.tel like concat('%',#{user.tel},'%')
+            </if>
+        </trim>
+    </select>
+
+</mapper>

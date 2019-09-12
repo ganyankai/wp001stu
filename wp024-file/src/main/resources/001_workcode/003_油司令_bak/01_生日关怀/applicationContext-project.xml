@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+       default-lazy-init="true">
+
+    <!-- required -->
+    <!--<import resource="service/applicationContext-framework-rmi.xml" />-->
+    <!--<import resource="service/applicationContext-bis-rmi.xml" />-->
+
+    <!--后台服务-框架-->
+    <import resource="service/applicationContext-framework-rmi-client-test.xml" />
+    <!--后台服务-业务-->
+    <import resource="service/applicationContext-bis-rmi-client-test.xml" />
+
+    <!-- 统计定时器 -->
+    <import resource="quartz_task.xml" />
+
+
+
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+       default-lazy-init="true">
+
+    <!-- test -->
+    <bean id="parentRmiProxyFactoryBean" class="org.springframework.remoting.rmi.RmiProxyFactoryBean" abstract="true">
+        <property name="lookupStubOnStartup" value="false"/>
+        <property name="refreshStubOnConnectFailure" value="true"/>
+    </bean>
+
+    <!-- 用户查询 -->
+    <bean id="cusInfoBaseServiceImpl" name="cusInfoBaseServiceImpl"
+          parent="parentRmiProxyFactoryBean">
+        <property name="serviceUrl" value="${service.rmi.url}/cusInfoBaseServiceImpl"/>
+        <property name="serviceInterface" value="com.catt.oil.service.base.customerMgr.CusInfoBaseService"/>
+    </bean>
+
+    <!-- 用户查询 -->
+    <bean id="cusInfoServiceImpl" name="cusInfoServiceImpl"
+          parent="parentRmiProxyFactoryBean">
+        <property name="serviceUrl" value="${service.rmi.url}/cusInfoServiceImpl"/>
+        <property name="serviceInterface" value="com.catt.oil.service.customerMgr.CusInfoService"/>
+    </bean>
+
+</beans>
