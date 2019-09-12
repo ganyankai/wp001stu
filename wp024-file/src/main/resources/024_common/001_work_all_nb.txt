@@ -1,61 +1,61 @@
-2019Äê8ÔÂ21ÈÕ
+ï»¿2019å¹´8æœˆ21æ—¥
+095 ----
 
+094 çŸ­ä¿¡éªŒè¯ç å‚è€ƒ SmsController
+	å…¨å±€æœç´¢å¥½åƒä¸èƒ½æœç´¢jaråŒ…é‡Œé¢çš„è·¯å¾„
 
-094 ¶ÌĞÅÑéÖ¤Âë²Î¿¼ SmsController
-	È«¾ÖËÑË÷ºÃÏñ²»ÄÜËÑË÷jar°üÀïÃæµÄÂ·¾¶
-
-093 ½«·ÇmavenÖĞÑë²Ö¿â¹ÜÀíjar°üÒıÈë±¾µØºó,´úÂëÖĞ²»»á±¨´í,µ«ÒıÓÃ»á±¨´í
+093 å°†émavenä¸­å¤®ä»“åº“ç®¡ç†jaråŒ…å¼•å…¥æœ¬åœ°å,ä»£ç ä¸­ä¸ä¼šæŠ¥é”™,ä½†å¼•ç”¨ä¼šæŠ¥é”™
 		
-092 ¿É±ä²ÎÊı¿ÉÒÔ´«ÈëÊı×é
+092 å¯å˜å‚æ•°å¯ä»¥ä¼ å…¥æ•°ç»„
 	
-091 ·½·¨
-	¾ßÌå²½ÖèÊµÏÖ·¨ 
+091 æ–¹æ³•
+	å…·ä½“æ­¥éª¤å®ç°æ³• 
 	 
 
-090 ´ò¿ªie
-	ÔËĞĞ iexplore 
-	ÃüÁîĞĞÊäÈë	start iexplore.exe
-089 ´¦ÀíÕâÖÖÅäÖÃÎÊÌâ
-		02 ×Ö·û´®Æ´½ÓÄ£Ê½
-		01 ²ã¼¶Ä£Ê½
+090 æ‰“å¼€ie
+	è¿è¡Œ iexplore 
+	å‘½ä»¤è¡Œè¾“å…¥	start iexplore.exe
+089 å¤„ç†è¿™ç§é…ç½®é—®é¢˜
+		02 å­—ç¬¦ä¸²æ‹¼æ¥æ¨¡å¼
+		01 å±‚çº§æ¨¡å¼
 
-088 ideaÖĞÓĞĞ©Î´¸ú×ÙµÄÎÄ¼ş¿ÉÒÔÔÚ²é¿´Ê±Ö±½ÓÉ¾³ı,idea±àÒëºóµÄÎÄ¼ş¿É±¸·İºóÊÖ¶¯É¾³ı
+088 ideaä¸­æœ‰äº›æœªè·Ÿè¸ªçš„æ–‡ä»¶å¯ä»¥åœ¨æŸ¥çœ‹æ—¶ç›´æ¥åˆ é™¤,ideaç¼–è¯‘åçš„æ–‡ä»¶å¯å¤‡ä»½åæ‰‹åŠ¨åˆ é™¤
 	
-087 mysqlÖĞ´´½¨Ê±¼äµÄÄ¬ÈÏÖµ¿ÉÉèÎªCURRENT_TIMESTAMP
+087 mysqlä¸­åˆ›å»ºæ—¶é—´çš„é»˜è®¤å€¼å¯è®¾ä¸ºCURRENT_TIMESTAMP
 	
-086 ¼ÓÓÍÕ¾µÄ´úÂë¿ÉÔİÊ±ÏÈ·Åµ½consumerÀïÃæ
+086 åŠ æ²¹ç«™çš„ä»£ç å¯æš‚æ—¶å…ˆæ”¾åˆ°consumeré‡Œé¢
 	
-085 ÄÑµÀ´úÂëÖĞ²»ÄÜÖ±½ÓÖ´ĞĞsqlÂğ
+085 éš¾é“ä»£ç ä¸­ä¸èƒ½ç›´æ¥æ‰§è¡Œsqlå—
 	
-084 ÎÒÃÇ×öÊÂÇéµÄÌØĞÔ¶¼ÊÇ²ÉÓÃ×î¼òµ¥,×î¿ìËÙµÄ°ì·¨
+084 æˆ‘ä»¬åšäº‹æƒ…çš„ç‰¹æ€§éƒ½æ˜¯é‡‡ç”¨æœ€ç®€å•,æœ€å¿«é€Ÿçš„åŠæ³•
 	
-083 Éí·İĞ£Ñé½¨ÒéË³Ğò
-	Ö÷ÈË
-	×ÔÉíÈÏÖ¤
-	×´Ì¬ÈÏÖ¤
+083 èº«ä»½æ ¡éªŒå»ºè®®é¡ºåº
+	ä¸»äºº
+	è‡ªèº«è®¤è¯
+	çŠ¶æ€è®¤è¯
 	
 
 	Customer customer = RequestUtil.getCurrentUser(Customer.class);
 
-	//È¡µÃ³µÖ÷ĞÅÏ¢
+	//å–å¾—è½¦ä¸»ä¿¡æ¯
 	CarCargoOwnner carOwner = customer.getCarOwner();
 	Car car = carService.assertCarBelongToCurrentUser(requestParams.getParams().getId(), carOwner.getId());
 	carService.assertCarCertified(car);
 			
-	//Ğ£Ñé³µÁ¾×´Ì¬±ØĞëÎª¿ÕÏĞ
+	//æ ¡éªŒè½¦è¾†çŠ¶æ€å¿…é¡»ä¸ºç©ºé—²
 	if(!car.getStatus().equalsIgnoreCase(CarConstants.CAR_STATUS_FREE)){
-		throw new BusinessException(112, "³µÁ¾²»ÊÇ¿ÕÏĞ×´Ì¬");
+		throw new BusinessException(112, "è½¦è¾†ä¸æ˜¯ç©ºé—²çŠ¶æ€");
 	}
 	
 
-082 ÖØĞÂ¼ÓÔØÀàºó¶Ôaop×÷ÓÃµÄ×¢½âºÃÏñÎŞĞ§¹û,ÎªÊ²Ã´
+082 é‡æ–°åŠ è½½ç±»åå¯¹aopä½œç”¨çš„æ³¨è§£å¥½åƒæ— æ•ˆæœ,ä¸ºä»€ä¹ˆ
 
-081 Êı¾İĞ£Ñé·ÅÔÚc²ã¿ÉÄÜºÃÒ»µã
+081 æ•°æ®æ ¡éªŒæ”¾åœ¨cå±‚å¯èƒ½å¥½ä¸€ç‚¹
 
 080 
-	ÎªÊ²Ã´½ñÌì³Ù³Ù²»Ô¸Òâ¶¯ÊÖ×ö,ÒòÎªÄã¾õµÃÎÊÌâÌ«¸´ÔÓÁË,ÕÒ²»µ½Èë¿Ú,ÏÈ´Ó¼òµ¥¹¦ÄÜÆğ²½,¿ìËÙ×ö³ö¾ö¶¨
+	ä¸ºä»€ä¹ˆä»Šå¤©è¿Ÿè¿Ÿä¸æ„¿æ„åŠ¨æ‰‹åš,å› ä¸ºä½ è§‰å¾—é—®é¢˜å¤ªå¤æ‚äº†,æ‰¾ä¸åˆ°å…¥å£,å…ˆä»ç®€å•åŠŸèƒ½èµ·æ­¥,å¿«é€Ÿåšå‡ºå†³å®š
 	
-079	»ñÈ¡token´úÂë
+079	è·å–tokenä»£ç 
 	public String getToken(Customer customer) {
 		String jwtToken = Jwts.builder().setId(String.valueOf(customer.getId())).setIssuer(Constant.ISS_URL)
 				.setSubject(customer.getTel())
@@ -63,36 +63,36 @@
 //				.claim("roles", null))
 				.setIssuedAt(new Date())
 				.signWith(SignatureAlgorithm.HS256, Constant.PUBLIC_KEY).compact();
-		String tokenStr = TokenUtil.obtainToken(customer, jwtToken);//·ÅÈëredis»º´æ
+		String tokenStr = TokenUtil.obtainToken(customer, jwtToken);//æ”¾å…¥redisç¼“å­˜
 		return tokenStr;
 	}
 
-078 Ğ£Ñétoken´úÂë²»Í¨¹ıÊÇ²»»á½øcontrollerÁËµÄ
+078 æ ¡éªŒtokenä»£ç ä¸é€šè¿‡æ˜¯ä¸ä¼šè¿›controlleräº†çš„
 
-077 shiroºÍÓÃ»§ĞÅÏ¢¾¹È»¾¹È»¿ÉÒÔÁ¬½Ó²»Í¬µÄredis·şÎñÆ÷
+077 shiroå’Œç”¨æˆ·ä¿¡æ¯ç«Ÿç„¶ç«Ÿç„¶å¯ä»¥è¿æ¥ä¸åŒçš„redisæœåŠ¡å™¨
 
-076 ÎªÊ²Ã´ÏÖÔÚÎïÁ÷ÏîÄ¿Ö»ÄÜÁ¬245µÄredisÁË
+076 ä¸ºä»€ä¹ˆç°åœ¨ç‰©æµé¡¹ç›®åªèƒ½è¿245çš„redisäº†
 
-075 ÄÑµÀÖ»ÓĞÖ´ĞĞÕâĞĞ´úÂëÊ±»á±¨ÎŞĞ§µÄtoken
+075 éš¾é“åªæœ‰æ‰§è¡Œè¿™è¡Œä»£ç æ—¶ä¼šæŠ¥æ— æ•ˆçš„token
 	User user = RequestUtil.getCurrentUser(User.class);
 
-074 ÏñÕâÖÖ¸ù¾İµ±Ç°Ê±¼ä¸üĞÂµÄ²âÊÔ·½·¨×îºÃÊÇÔÚ³ÌĞòÀïĞÂÔö²âÊÔ
-	Éè¼Æ½Ó¿ÚÊ±¿ÉÒÔ¿¼ÂÇ½Ó¿ÚÖ®¼äµÄ»¥Ïàµ÷ÓÃ
+074 åƒè¿™ç§æ ¹æ®å½“å‰æ—¶é—´æ›´æ–°çš„æµ‹è¯•æ–¹æ³•æœ€å¥½æ˜¯åœ¨ç¨‹åºé‡Œæ–°å¢æµ‹è¯•
+	è®¾è®¡æ¥å£æ—¶å¯ä»¥è€ƒè™‘æ¥å£ä¹‹é—´çš„äº’ç›¸è°ƒç”¨
 	
-2019Äê8ÔÂ2ÈÕ
-073 Ö±½Ó²é¿´Èí¼ş¸Ä±ä×´Ì¬ºÃ×îÔ´Í·µÄÎÄ¼ş±ä»¯ÊÇµ÷ÊÔ´íÎóµÄ¼«ºÃ·½·¨
+2019å¹´8æœˆ2æ—¥
+073 ç›´æ¥æŸ¥çœ‹è½¯ä»¶æ”¹å˜çŠ¶æ€å¥½æœ€æºå¤´çš„æ–‡ä»¶å˜åŒ–æ˜¯è°ƒè¯•é”™è¯¯çš„æå¥½æ–¹æ³•
 
-072 ÏîÄ¿·ÅÔÚtomcatÄ¿Â¼ÎÊÌâ¼°Â·¾¶·ÃÎÊÎÊÌâÉÏ´ÎÀË·ÑÁË´óÁ¿Ê±¼ä,»¹ÊÇÓ¦¸Ã¾¡Á¿¸ãÃ÷°×
+072 é¡¹ç›®æ”¾åœ¨tomcatç›®å½•é—®é¢˜åŠè·¯å¾„è®¿é—®é—®é¢˜ä¸Šæ¬¡æµªè´¹äº†å¤§é‡æ—¶é—´,è¿˜æ˜¯åº”è¯¥å°½é‡ææ˜ç™½
 
-2019Äê7ÔÂ23ÈÕ
-071 Ã¿´Î²¿ÊğÔö¼Ó°æ±¾ºÅ,Æô¶¯ºó²é¿´°æ±¾ºÅÓëµ±Ç°°æ±¾ÊÇ·ñÒ»ÖÂ
+2019å¹´7æœˆ23æ—¥
+071 æ¯æ¬¡éƒ¨ç½²å¢åŠ ç‰ˆæœ¬å·,å¯åŠ¨åæŸ¥çœ‹ç‰ˆæœ¬å·ä¸å½“å‰ç‰ˆæœ¬æ˜¯å¦ä¸€è‡´
 	
 070
-	jRebel »·¾³´î½¨ÓëÆÆ½â B 
-	ºÃÏñ¸ÄÁËÅäÖÃÎÄ¼şjrebel²»»á×Ô¶¯±àÒë
-		±àÒëÈÕÖ¾
+	jRebel ç¯å¢ƒæ­å»ºä¸ç ´è§£ B 
+	å¥½åƒæ”¹äº†é…ç½®æ–‡ä»¶jrebelä¸ä¼šè‡ªåŠ¨ç¼–è¯‘
+		ç¼–è¯‘æ—¥å¿—
 		JRebel: Reloading class 
-		¸ÄÁËÅäÖÃºó»¹ĞèÔÙ¸ÄÒ»ĞĞ´úÂë
+		æ”¹äº†é…ç½®åè¿˜éœ€å†æ”¹ä¸€è¡Œä»£ç 
 		JRebel: Reconfiguring bean
 	
 	@Value("${code.length}")
@@ -104,9 +104,9 @@
 	
 069	
 	
-	Ğ£ÑéÑéÖ¤Âë
+	æ ¡éªŒéªŒè¯ç 
 
-	//Ğ£ÑéÑéÖ¤Âë ÊÖ»úºÅ,ÑéÖ¤Âë
+	//æ ¡éªŒéªŒè¯ç  æ‰‹æœºå·,éªŒè¯ç 
 	@Autowired
     private ICache cache;
 	
@@ -114,30 +114,30 @@
 
         String code = cache.get(Constant.VERFI_CODE_PREFIX + dto.getTel());
         if (!dto.getSmsCode().equalsIgnoreCase(code)) {
-            throw new BusinessException(112,"ÑéÖ¤ÂëĞ£Ñé´íÎó");
+            throw new BusinessException(112,"éªŒè¯ç æ ¡éªŒé”™è¯¯");
         }
 	
 068	
-	INSERT INTO `advanceManage`.`sys_customer`(`id`, `user_account`, `tel`, `password`, `user_name`, `logo`, `app_open_id`, `open_id`, `union_id`, `extend`, `customer_type`, `user_status`, `create_by`, `create_date`, `is_active`) VALUES (32, '18627011956', '18627011956', NULL, 'ÄãÔÙÊÔÊÔ', NULL, NULL, 'oGcsIsy2NaHMpqYUA1eWtuQXHx24', NULL, NULL, NULL, 1, NULL, '2019-07-22 15:17:45', NULL);
+	INSERT INTO `advanceManage`.`sys_customer`(`id`, `user_account`, `tel`, `password`, `user_name`, `logo`, `app_open_id`, `open_id`, `union_id`, `extend`, `customer_type`, `user_status`, `create_by`, `create_date`, `is_active`) VALUES (32, '18627011956', '18627011956', NULL, 'ä½ å†è¯•è¯•', NULL, NULL, 'oGcsIsy2NaHMpqYUA1eWtuQXHx24', NULL, NULL, NULL, 1, NULL, '2019-07-22 15:17:45', NULL);
 	
 	
-	µÚ¶ş´Îcode
+	ç¬¬äºŒæ¬¡code
 	081zTxUs07BLuf1mIMTs0KzyUs0zTxUu
 	
 	openid:	
 	oGcsIsy2NaHMpqYUA1eWtuQXHx24
 068
-	13277098261  Íõ»Ê±¦
+	13277098261  ç‹çš‡å®
 			
 	openid = "oGcsIs-MsphqgxgKvJDYuZ3T6V_0"
 	
-		ÒÔÇ°µÄopenId 011mjUOH0czImg2WzXQH0XRUOH0mjUOP
+		ä»¥å‰çš„openId 011mjUOH0czImg2WzXQH0XRUOH0mjUOP
 
-	ÒÔÇ°µÄopenId 
+	ä»¥å‰çš„openId 
 	
 
 067
-	µÚÒ»´Îcode
+	ç¬¬ä¸€æ¬¡code
 		
 	"tel"		18627011956
 	"code":"081SaHGI0EfZZe2kKNFI0RRrGI0SaHGC"          
@@ -171,44 +171,44 @@
 	}
 
 065 
-	redis²»ÉèÖÃÃÜÂëÒ²¿ÉÄÜ±¨¿ÕÖ¸ÕëÒì³£
+	redisä¸è®¾ç½®å¯†ç ä¹Ÿå¯èƒ½æŠ¥ç©ºæŒ‡é’ˆå¼‚å¸¸
 	
 
-2019Äê7ÔÂ18ÈÕ
-064 Áé»îÀûÓÃÏîÄ¿ÓÒ²àmavenÖĞµÄ+
-	ÏîÄ¿ÖĞpomÎÄ¼şÓÒ¼üÒ²¿ÉÒÔ²Ù×÷
-	±»maven¹ÜÀíµÄÏîÄ¿×ó²à»òÓĞ´óĞ´µÄM×Ö·û
+2019å¹´7æœˆ18æ—¥
+064 çµæ´»åˆ©ç”¨é¡¹ç›®å³ä¾§mavenä¸­çš„+
+	é¡¹ç›®ä¸­pomæ–‡ä»¶å³é”®ä¹Ÿå¯ä»¥æ“ä½œ
+	è¢«mavenç®¡ç†çš„é¡¹ç›®å·¦ä¾§æˆ–æœ‰å¤§å†™çš„Må­—ç¬¦
 	
-2019Äê7ÔÂ13ÈÕ
+2019å¹´7æœˆ13æ—¥
 063 
-	tomcatÅäÖÃ(×¢Òâ»·¾³±äÁ¿ÅäÖÃ)  Ö¤ÊéÃÜÂë123456
-		server.xml   ¿ÉÅäÖÃ²»Í¬Ó¦ÓÃ²»Í¬¶Ë¿Ú
-		web.xml		 ÅäÖÃÊ×Ò³
-		webapps/ROOT ×¢Òâ²»ÒªÊ¡ÂÔÓ¦ÓÃ¸ùÄ¿Â¼	
+	tomcaté…ç½®(æ³¨æ„ç¯å¢ƒå˜é‡é…ç½®)  è¯ä¹¦å¯†ç 123456
+		server.xml   å¯é…ç½®ä¸åŒåº”ç”¨ä¸åŒç«¯å£
+		web.xml		 é…ç½®é¦–é¡µ
+		webapps/ROOT æ³¨æ„ä¸è¦çœç•¥åº”ç”¨æ ¹ç›®å½•	
 		
-2019Äê7ÔÂ11ÈÕ
+2019å¹´7æœˆ11æ—¥
 062
 	http://localhost/home.html
 	
 061
-		µ¥ÀıÄ£Ê½ÏÂ»á¹²ÏíÆÕÍ¨³ÉÔ±±äÁ¿ºÍ¾²Ì¬³ÉÔ±±äÁ¿,¶àÀıÄ£Ê½ÏÂÆÕÍ¨³ÉÔ±±äÁ¿²»¹²Ïí,¾²Ì¬³ÉÔ±¹²Ïí. 
-	ÔÚ¿ª·¢ÖĞ,springMVCÓÅÏÈÊ¹ÓÃµ¥ÀıÄ£Ê½,¶øÇÒ¾¡Á¿²»ÒªÔÚcontrollerÖĞÉè¶¨³ÉÔ±±äÁ¿. 
-	Èç¹ûÒª¶¨Òå³ÉÔ±±äÁ¿²¢Îª³ÉÔ±±äÁ¿¸³Öµ¿ÉÒÔÅäÖÃsource.properties,Í¨¹ı¶ÁÈ¡ÅäÖÃÎÄ¼şÎª³ÉÔ±±äÁ¿³õÊ¼»¯. 
+		å•ä¾‹æ¨¡å¼ä¸‹ä¼šå…±äº«æ™®é€šæˆå‘˜å˜é‡å’Œé™æ€æˆå‘˜å˜é‡,å¤šä¾‹æ¨¡å¼ä¸‹æ™®é€šæˆå‘˜å˜é‡ä¸å…±äº«,é™æ€æˆå‘˜å…±äº«. 
+	åœ¨å¼€å‘ä¸­,springMVCä¼˜å…ˆä½¿ç”¨å•ä¾‹æ¨¡å¼,è€Œä¸”å°½é‡ä¸è¦åœ¨controllerä¸­è®¾å®šæˆå‘˜å˜é‡. 
+	å¦‚æœè¦å®šä¹‰æˆå‘˜å˜é‡å¹¶ä¸ºæˆå‘˜å˜é‡èµ‹å€¼å¯ä»¥é…ç½®source.properties,é€šè¿‡è¯»å–é…ç½®æ–‡ä»¶ä¸ºæˆå‘˜å˜é‡åˆå§‹åŒ–. 
 
-2019Äê7ÔÂ10ÈÕ
+2019å¹´7æœˆ10æ—¥
 060 
-	»ù´¡jar°üµÄÓ¦¸Ã»¹Á¬½ÓÁËÆäËûµÄredis
+	åŸºç¡€jaråŒ…çš„åº”è¯¥è¿˜è¿æ¥äº†å…¶ä»–çš„redis
 	
-2019Äê7ÔÂ8ÈÕ
-059	ÏîÄ¿ÒÑ¾­ÑÏÖØÒÀÀµredis,redis³öÁËÎÊÌâ²»ºÃÇĞ»»
+2019å¹´7æœˆ8æ—¥
+059	é¡¹ç›®å·²ç»ä¸¥é‡ä¾èµ–redis,rediså‡ºäº†é—®é¢˜ä¸å¥½åˆ‡æ¢
 	
 058
-	Ë¼¿¼jar°üÀïÃæµÄ´úÂëÈçºÎĞŞ¸Ä
+	æ€è€ƒjaråŒ…é‡Œé¢çš„ä»£ç å¦‚ä½•ä¿®æ”¹
 
 057
-	×òÌìÅÅredis´íÎóµÄÌå»á,Ö»ÓĞ¸ãÃ÷°×ÏîÄ¿Æô¶¯Á÷³Ì²ÅÄÜÃ÷È·ÅÅ´íµÄ·½Ïò
+	æ˜¨å¤©æ’redisé”™è¯¯çš„ä½“ä¼š,åªæœ‰ææ˜ç™½é¡¹ç›®å¯åŠ¨æµç¨‹æ‰èƒ½æ˜ç¡®æ’é”™çš„æ–¹å‘
 	
-	¹Ø×¢
+	å…³æ³¨
 	com.zrytech.framework.common.config.ShiroConfig
 	
 	public RedisManager redisManager() {
@@ -241,46 +241,46 @@
 056 
 	--spring.profiles.active=my
 	
-	ÃëÉ±	tb_seckill_product 	
+	ç§’æ€	tb_seckill_product 	
 	
-	Ö§¸¶½Ó¿Ú	PayBussinessServiceImpl 
+	æ”¯ä»˜æ¥å£	PayBussinessServiceImpl 
 	
-	ÏûÏ¢ÎÄµµ	ÏûÏ¢.md
+	æ¶ˆæ¯æ–‡æ¡£	æ¶ˆæ¯.md
 	
 	
-2019Äê6ÔÂ15ÈÕ
+2019å¹´6æœˆ15æ—¥
 055
-	Ò»¸öÍÅ¶ÓµÄ¶¨º£ÉñÕë£¬¾ÍÊÇÄÜ°ÑÎÊÌâ×ª»¯³ÉÄ¿±êº¯ÊıµÄÄÇ¸öÈË¡ª¡ªÄÄÅÂËûÁ¬¿ªÔ´¹¤¾ß¶¼²»»áÓÃ¡£100ÍòÕÒµ½ÕâÑùµÄÈË£¬¿ÉÕæÊÇ¼ñÁË¸ö´ó±ãÒË¡£
+	ä¸€ä¸ªå›¢é˜Ÿçš„å®šæµ·ç¥é’ˆï¼Œå°±æ˜¯èƒ½æŠŠé—®é¢˜è½¬åŒ–æˆç›®æ ‡å‡½æ•°çš„é‚£ä¸ªäººâ€”â€”å“ªæ€•ä»–è¿å¼€æºå·¥å…·éƒ½ä¸ä¼šç”¨ã€‚100ä¸‡æ‰¾åˆ°è¿™æ ·çš„äººï¼Œå¯çœŸæ˜¯æ¡äº†ä¸ªå¤§ä¾¿å®œã€‚
 	
 054	
-	½­ÅÏºÎÈË³õ¼ûÔÂ,½­ÔÂºÎÄê³õÕÕÈË
+	æ±Ÿç•”ä½•äººåˆè§æœˆ,æ±Ÿæœˆä½•å¹´åˆç…§äºº
 	Who by the riverside first saw the moon arise,When did the moon first see a man by riverside
 	
-	ºèÑã³¤·É¹â²»¶È£¬ÓãÁúÇ±Ô¾Ë®³ÉÎÄ¡£
+	é¸¿é›é•¿é£å…‰ä¸åº¦ï¼Œé±¼é¾™æ½œè·ƒæ°´æˆæ–‡ã€‚
 	Hongyan Chang Fei-ray, fish and dragons written submersible water jump. 
 	
 	But message-bearing swans can't fly out of moonlight,Nor can letter-sending fish leap out of their place
 	
 053	
-	µ±Ç°token	Î¢ĞÅµÇÂ¼
+	å½“å‰token	å¾®ä¿¡ç™»å½•
 	"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxOCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxODY3NDA3MDI3MiIsImlhdCI6MTU2MjMxODUxMX0.y2-fc_hvmy5QKlKAMsnc2eVzCgvusxMOWDnPnG-yAx8"
 	
 052	
-	»áÔ±%s¹ºÂò²¢Ö§¸¶ÁË%sÉÌÆ·£¬Çë¼°Ê±´¦Àí£¨ÓĞ·ÖÅäÃÅµêÏûÏ¢ÍÆËÍ¸øÃÅµê£¬Ã»·ÖÅäÍÆËÍ¸øÇşµÀ£©
+	ä¼šå‘˜%sè´­ä¹°å¹¶æ”¯ä»˜äº†%så•†å“ï¼Œè¯·åŠæ—¶å¤„ç†ï¼ˆæœ‰åˆ†é…é—¨åº—æ¶ˆæ¯æ¨é€ç»™é—¨åº—ï¼Œæ²¡åˆ†é…æ¨é€ç»™æ¸ é“ï¼‰
 	
-051	Ä£ºı²éÑ¯
+051	æ¨¡ç³ŠæŸ¥è¯¢
 	private String userName;
 	private String tel;
 	
 	OfenLocation ofenLocation= BeanUtil.copy(ofenLocationDto,OfenLocation.class);
 	
-050	¿Í·ş²éÑ¯´úÂë²Î¿¼
+050	å®¢æœæŸ¥è¯¢ä»£ç å‚è€ƒ
 	<select id="getUserAgentListParam" resultMap="user">
         select su.* from sys_user su,sys_user_role sur,sys_role sr
         <trim prefix="where " prefixOverrides="and ">
             user_type = 'user_admin'
             and su.id = sur.user_id and sur.role_id = sr.id
-            and sr.role_name = '¿Í·ş'
+            and sr.role_name = 'å®¢æœ'
             <if test="user.userName != null and user.userName !=''">
                 and su.user_name like concat('%',#{user.userName},'%')
             </if>
@@ -291,19 +291,19 @@
     </select>
 	
 
-049 Æ½Ì¨¿Í·ş²éÑ¯¿ÉÒÔ²éÑ¯×Ô¼º¿Í·şµÄÊı¾İ(ÏÖÔÚÏÈ´¦ÀíÆ½Ì¨µÄÊı¾İ)
+049 å¹³å°å®¢æœæŸ¥è¯¢å¯ä»¥æŸ¥è¯¢è‡ªå·±å®¢æœçš„æ•°æ®(ç°åœ¨å…ˆå¤„ç†å¹³å°çš„æ•°æ®)
 
-	ÇşµÀºÍÃÅµê¿Í·ş
+	æ¸ é“å’Œé—¨åº—å®¢æœ
 	
-048	git·¢ÏÖÎÄ¼şÓëÔ¶³Ì³åÍ»
-	¿ÉÒÔ stash change
+048	gitå‘ç°æ–‡ä»¶ä¸è¿œç¨‹å†²çª
+	å¯ä»¥ stash change
 	
 
-047 ĞéÄâ»ú±¸·İ·½Ê½
-	Ö±½Ó¸´ÖÆvmxµ±Ç°Ä¿Â¼ÏÂµÄËùÓĞÎÄ¼ş
-	ÓÃvm´ò¿ªÊ±Ñ¡ÔñÎÒÒÑ¸´ÖÆ¸ÃĞéÄâ»ú vm»áÖØĞÂ¸ø¸´ÖÆµÄĞéÄâ»ú·ÖÅäipµØÖ·
+047 è™šæ‹Ÿæœºå¤‡ä»½æ–¹å¼
+	ç›´æ¥å¤åˆ¶vmxå½“å‰ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶
+	ç”¨vmæ‰“å¼€æ—¶é€‰æ‹©æˆ‘å·²å¤åˆ¶è¯¥è™šæ‹Ÿæœº vmä¼šé‡æ–°ç»™å¤åˆ¶çš„è™šæ‹Ÿæœºåˆ†é…ipåœ°å€
 	
-046 navicat¾¹È»Ö§³ÖÈ«¿âÉ¨Ãè²éÕÒ
+046 navicatç«Ÿç„¶æ”¯æŒå…¨åº“æ‰«ææŸ¥æ‰¾
 	
 	SELECT * FROM `logistics`.`sys_dict` WHERE CAST
 	(`logistics`.`sys_dict`.`dict_key` AS CHAR CHARACTER SET utf8)
@@ -315,7 +315,7 @@
 	COLLATE utf8_general_ci LIKE '%three%' OR CAST(`logistics`.`sys_dict`.`create_time` AS CHAR CHARACTER SET utf8)
 	COLLATE utf8_general_ci LIKE '%three%'
 	
-045 ÏîÄ¿²¿Êğ
+045 é¡¹ç›®éƒ¨ç½²
 	cd /home/app/logistics
 	mv zrytech-framework-app-1.0-SNAPSHOT.jar bak/
 	rz 
@@ -332,42 +332,42 @@
 	netstat -ntlp|grep 8181	
 	nohup java -Dfile.encoding=utf-8 -jar     zrytech-framework-app-1.0-SNAPSHOT.jar --spring.profiles.active=aliyun &
 	
-044 spring cloud°æ±¾¿ØÖÆ	
+044 spring cloudç‰ˆæœ¬æ§åˆ¶	
 	"spring-cloud": {
-	¡°Edgware.SR5¡±: ¡°Spring Boot >=1.5.0.RELEASE and <=1.5.20.RELEASE¡±,
-	¡°Edgware.BUILD-SNAPSHOT¡±: ¡°Spring Boot >=1.5.999.BUILD-SNAPSHOT and <2.0.0.M1¡±,
-	¡°Finchley.M2¡±: ¡°Spring Boot >=2.0.0.M3 and <2.0.0.M5¡±,
-	¡°Finchley.M3¡±: ¡°Spring Boot >=2.0.0.M5 and <=2.0.0.M5¡±,
-	¡°Finchley.M4¡±: ¡°Spring Boot >=2.0.0.M6 and <=2.0.0.M6¡±,
-	¡°Finchley.M5¡±: ¡°Spring Boot >=2.0.0.M7 and <=2.0.0.M7¡±,
-	¡°Finchley.M6¡±: ¡°Spring Boot >=2.0.0.RC1 and <=2.0.0.RC1¡±,
-	¡°Finchley.M7¡±: ¡°Spring Boot >=2.0.0.RC2 and <=2.0.0.RC2¡±,
-	¡°Finchley.M9¡±: ¡°Spring Boot >=2.0.0.RELEASE and <=2.0.0.RELEASE¡±,
-	¡°Finchley.RC1¡±: ¡°Spring Boot >=2.0.1.RELEASE and <2.0.2.RELEASE¡±,
-	¡°Finchley.RC2¡±: ¡°Spring Boot >=2.0.2.RELEASE and <2.0.3.RELEASE¡±,
-	¡°Finchley.SR3¡±: ¡°Spring Boot >=2.0.3.RELEASE and <2.0.999.BUILD-SNAPSHOT¡±,
-	¡°Finchley.BUILD-SNAPSHOT¡±: ¡°Spring Boot >=2.0.999.BUILD-SNAPSHOT and <2.1.0.M3¡±,
-	¡°Greenwich.M1¡±: ¡°Spring Boot >=2.1.0.M3 and <2.1.0.RELEASE¡±,
-	¡°Greenwich.SR1¡±: ¡°Spring Boot >=2.1.0.RELEASE and <2.1.5.BUILD-SNAPSHOT¡±,
-	¡°Greenwich.BUILD-SNAPSHOT¡±: ¡°Spring Boot >=2.1.5.BUILD-SNAPSHOT¡±
+	â€œEdgware.SR5â€: â€œSpring Boot >=1.5.0.RELEASE and <=1.5.20.RELEASEâ€,
+	â€œEdgware.BUILD-SNAPSHOTâ€: â€œSpring Boot >=1.5.999.BUILD-SNAPSHOT and <2.0.0.M1â€,
+	â€œFinchley.M2â€: â€œSpring Boot >=2.0.0.M3 and <2.0.0.M5â€,
+	â€œFinchley.M3â€: â€œSpring Boot >=2.0.0.M5 and <=2.0.0.M5â€,
+	â€œFinchley.M4â€: â€œSpring Boot >=2.0.0.M6 and <=2.0.0.M6â€,
+	â€œFinchley.M5â€: â€œSpring Boot >=2.0.0.M7 and <=2.0.0.M7â€,
+	â€œFinchley.M6â€: â€œSpring Boot >=2.0.0.RC1 and <=2.0.0.RC1â€,
+	â€œFinchley.M7â€: â€œSpring Boot >=2.0.0.RC2 and <=2.0.0.RC2â€,
+	â€œFinchley.M9â€: â€œSpring Boot >=2.0.0.RELEASE and <=2.0.0.RELEASEâ€,
+	â€œFinchley.RC1â€: â€œSpring Boot >=2.0.1.RELEASE and <2.0.2.RELEASEâ€,
+	â€œFinchley.RC2â€: â€œSpring Boot >=2.0.2.RELEASE and <2.0.3.RELEASEâ€,
+	â€œFinchley.SR3â€: â€œSpring Boot >=2.0.3.RELEASE and <2.0.999.BUILD-SNAPSHOTâ€,
+	â€œFinchley.BUILD-SNAPSHOTâ€: â€œSpring Boot >=2.0.999.BUILD-SNAPSHOT and <2.1.0.M3â€,
+	â€œGreenwich.M1â€: â€œSpring Boot >=2.1.0.M3 and <2.1.0.RELEASEâ€,
+	â€œGreenwich.SR1â€: â€œSpring Boot >=2.1.0.RELEASE and <2.1.5.BUILD-SNAPSHOTâ€,
+	â€œGreenwich.BUILD-SNAPSHOTâ€: â€œSpring Boot >=2.1.5.BUILD-SNAPSHOTâ€
 	},
 	
-043 ×¢Òâspring bootÓëspring cloud°æ±¾¼æÈİĞÔ
+043 æ³¨æ„spring bootä¸spring cloudç‰ˆæœ¬å…¼å®¹æ€§
 
-042 ÇĞÃæpointcutÅäÖÃ
-	//Æ¥Åäcn¼°Æä×Ó°üÏÂµÄËùÓĞcontroller
+042 åˆ‡é¢pointcuté…ç½®
+	//åŒ¹é…cnåŠå…¶å­åŒ…ä¸‹çš„æ‰€æœ‰controller
     @Pointcut("execution(* cn..*.controller..*(..))")
 
 	
-041 ÈçºÎ¸øÎÒµÄÀ¹½ØÆ÷ÉèÖÃÀ¹½ØÂ·¾¶ÄØ?
+041 å¦‚ä½•ç»™æˆ‘çš„æ‹¦æˆªå™¨è®¾ç½®æ‹¦æˆªè·¯å¾„å‘¢?
 		
 	
 040	
 	@Configuration
 
-	¼ÓÈëÁËÕâ¸ö×¢½âµÄÀà±»ÈÏÎªÊÇ Spring Boot µÄÅäÖÃÀà£¬ÎÒÃÇÖªµÀ¿ÉÒÔÔÚ application.yml ÉèÖÃÒ»Ğ©ÅäÖÃ£¬Ò²¿ÉÒÔÍ¨¹ı´úÂëÉèÖÃÅäÖÃ¡£
+	åŠ å…¥äº†è¿™ä¸ªæ³¨è§£çš„ç±»è¢«è®¤ä¸ºæ˜¯ Spring Boot çš„é…ç½®ç±»ï¼Œæˆ‘ä»¬çŸ¥é“å¯ä»¥åœ¨ application.yml è®¾ç½®ä¸€äº›é…ç½®ï¼Œä¹Ÿå¯ä»¥é€šè¿‡ä»£ç è®¾ç½®é…ç½®ã€‚
 
-	Èç¹ûÎÒÃÇÒªÍ¨¹ı´úÂëÉèÖÃÅäÖÃ£¬¾Í±ØĞëÔÚÕâ¸öÀàÉÏ±ê×¢ Configuration ×¢½â¡£ÈçÏÂ´úÂë£º
+	å¦‚æœæˆ‘ä»¬è¦é€šè¿‡ä»£ç è®¾ç½®é…ç½®ï¼Œå°±å¿…é¡»åœ¨è¿™ä¸ªç±»ä¸Šæ ‡æ³¨ Configuration æ³¨è§£ã€‚å¦‚ä¸‹ä»£ç ï¼š
 
 	@Configuration
 	public class WebConfig extends WebMvcConfigurationSupport{
@@ -380,13 +380,13 @@
 	}
 
 
-039 ÃüÃûÅäÖÃ
+039 å‘½åé…ç½®
 	mybatis:
 	  configuration:
-		 #ÅäÖÃÏî£º¿ªÆôÏÂ»®Ïßµ½ÍÕ·åµÄ×Ô¶¯×ª»». ×÷ÓÃ£º½«Êı¾İ¿â×Ö¶Î¸ù¾İÍÕ·å¹æÔò×Ô¶¯×¢Èëµ½¶ÔÏóÊôĞÔ¡£
+		 #é…ç½®é¡¹ï¼šå¼€å¯ä¸‹åˆ’çº¿åˆ°é©¼å³°çš„è‡ªåŠ¨è½¬æ¢. ä½œç”¨ï¼šå°†æ•°æ®åº“å­—æ®µæ ¹æ®é©¼å³°è§„åˆ™è‡ªåŠ¨æ³¨å…¥åˆ°å¯¹è±¡å±æ€§ã€‚
 		 map-underscore-to-camel-case: true
 
-038 ÊµÓÃ×¢½â
+038 å®ç”¨æ³¨è§£
 	@Value("${cargo.bidWaitTime : 24}")
 	private String bidWaitTime;
 	
@@ -394,73 +394,73 @@
 //	@Qualifier("carCargoExtImpl")
 	private CarCargoOwnerService carCargoOwnerService;
 	
-037 linxuÖĞ²éÕÒÎÄ¼şµÄÃüÁî
+037 linxuä¸­æŸ¥æ‰¾æ–‡ä»¶çš„å‘½ä»¤
 	find /home -name 'dist*'
 	
-036 ideaÖĞÄ¬ÈÏµÄÔ´ÎÄ¼şºÃÏñÊÇresourcesÄ¿Â¼ÏÂÃæ¶ÁÈ¡
+036 ideaä¸­é»˜è®¤çš„æºæ–‡ä»¶å¥½åƒæ˜¯resourcesç›®å½•ä¸‹é¢è¯»å–
 
-035 ÅĞ¶ÏÆô¶¯»·¾³
-	ËÑË÷ active
+035 åˆ¤æ–­å¯åŠ¨ç¯å¢ƒ
+	æœç´¢ active
 	
-034 ÈÕÖ¾¼¶±ğÅäÖÃ:
+034 æ—¥å¿—çº§åˆ«é…ç½®:
 	logging:
 	  level:
 		com.zry.framework.mapper: trace
 		root: warn
 
-033 mysql¶à´Î·ÖÒ³
+033 mysqlå¤šæ¬¡åˆ†é¡µ
 	select b.* from (select a.* from cargo a limit 1,10) b limit 1,5 
 
-032 ²âÊÔ»·¾³¼ÓÁËÅäÖÃÎÄ¼şidea¾Í»áÄ¬ÈÏÈ¥¶ÁÈ¡ÁË
+032 æµ‹è¯•ç¯å¢ƒåŠ äº†é…ç½®æ–‡ä»¶ideaå°±ä¼šé»˜è®¤å»è¯»å–äº†
 
-031 ÎªÊ²Ã´ @SelectÖĞ²»ÄÜÊ¹ÓÃ<![CDATA[ from user_info where user_id = #{userId} ]]>  
+031 ä¸ºä»€ä¹ˆ @Selectä¸­ä¸èƒ½ä½¿ç”¨<![CDATA[ from user_info where user_id = #{userId} ]]>  
 	
 030 
 	
 	
-029	BeanUtils.copyProperties(dto, car);			//»á¸²¸ÇcarµÄÔ­ÓĞÊôĞÔ
+029	BeanUtils.copyProperties(dto, car);			//ä¼šè¦†ç›–carçš„åŸæœ‰å±æ€§
 
 028	
-	sqlÖĞÔ­ÑùÊä³ö
+	sqlä¸­åŸæ ·è¾“å‡º
 	<![CDATA[ from user_info where user_id = #{userId} ]]>  
 	
-027 ÏîÄ¿Æô¶¯²ÎÊı 
-	--spring.profiles.active=mystart	£¿ÎªÊ²Ã´ÕâÃ´ÇĞ»»»áÓĞÎÊÌâ	
-		Ó¦¸ÃÊÇ·ÖÀà·Ö¼¶µÄºÏ²¢	
+027 é¡¹ç›®å¯åŠ¨å‚æ•° 
+	--spring.profiles.active=mystart	ï¼Ÿä¸ºä»€ä¹ˆè¿™ä¹ˆåˆ‡æ¢ä¼šæœ‰é—®é¢˜	
+		åº”è¯¥æ˜¯åˆ†ç±»åˆ†çº§çš„åˆå¹¶	
 	
 	nohup java -jar zrytech-framework-app-1.0-SNAPSHOT.jar --spring.profiles.active=142 &
 	
-026 mapperÓÃ·¨¾ÙÀı
+026 mapperç”¨æ³•ä¸¾ä¾‹
 	@Select("SELECT AVG(`evaluate_level`) FROM `evaluate` WHERE `appraiser_by_id` = #{appraiserById}")
 	BigDecimal levelAVG(@Param("appraiserById") Integer appraiserById);
 	
-025 ĞÂÔöÒ»¸ö×Ö¶ÎÀ´´¦ÀíÕâÖÖ»õÔ´¹«¿ªµÄÎÊÌâÎÒ¾õµÃ½ÏÎªºÏÊÊ
-	ÔÚ»õÔ´±í(cargo)ÖĞĞÂÔöÒ»¸öÊÇ·ñ¹«¿ªÕ¹Ê¾×Ö¶Î,·¢²¼»õÔ´Ê±
+025 æ–°å¢ä¸€ä¸ªå­—æ®µæ¥å¤„ç†è¿™ç§è´§æºå…¬å¼€çš„é—®é¢˜æˆ‘è§‰å¾—è¾ƒä¸ºåˆé€‚
+	åœ¨è´§æºè¡¨(cargo)ä¸­æ–°å¢ä¸€ä¸ªæ˜¯å¦å…¬å¼€å±•ç¤ºå­—æ®µ,å‘å¸ƒè´§æºæ—¶
 	
-	²éÑ¯»õÔ´Ê±Ö»²é¿´·¢²¼ÖĞµÄ»õÔ´
+	æŸ¥è¯¢è´§æºæ—¶åªæŸ¥çœ‹å‘å¸ƒä¸­çš„è´§æº
 	
-024 ÅäÖÃÎŞĞè»Ø¹öµÄÒì³£
+024 é…ç½®æ— éœ€å›æ»šçš„å¼‚å¸¸
 	@Transactional(noRollbackFor = BusinessException.class)
 	
-023 ½ñÈÕ¹Ø¼ü×Ö
-	¿ÉÎ¬»¤	
+023 ä»Šæ—¥å…³é”®å­—
+	å¯ç»´æŠ¤	
 	
 022 hotplace 
-	½¨±íÊ±¼ÓÉÏÎ¨Ò»ĞÔÔ¼Êø
+	å»ºè¡¨æ—¶åŠ ä¸Šå”¯ä¸€æ€§çº¦æŸ
 	CREATE TABLE `t_user` (
-		  `Id` int(11) NOT NULL AUTO_INCREMENT,  -- ×ÔÔö
-		  `username` varchar(18) NOT NULL unique,  -- Î¨Ò»ĞÔÔ¼Êø
+		  `Id` int(11) NOT NULL AUTO_INCREMENT,  -- è‡ªå¢
+		  `username` varchar(18) NOT NULL unique,  -- å”¯ä¸€æ€§çº¦æŸ
 		  `password` varchar(18) NOT NULL,
 		  PRIMARY KEY (`Id`)
 	) ENGINE=InnoDB AUTO_INCREMENT=1018 DEFAULT CHARSET=gbk;
 
-	¸øÒÑ¾­½¨ºÃµÄ±í¼ÓÉÏÎ¨Ò»ĞÔÔ¼Êø
+	ç»™å·²ç»å»ºå¥½çš„è¡¨åŠ ä¸Šå”¯ä¸€æ€§çº¦æŸ
 	ALTER TABLE `hot_place` ADD unique(`city`);
 	
 
-021 Ä¿Ç°Õâ¸ö±í³µÖ÷idºÍÓÃ»§µÄidÄ¿Ç°ÊÇ²»Ò»ÑùµÄ,×¢ÒâÇø±ğ¿ª
+021 ç›®å‰è¿™ä¸ªè¡¨è½¦ä¸»idå’Œç”¨æˆ·çš„idç›®å‰æ˜¯ä¸ä¸€æ ·çš„,æ³¨æ„åŒºåˆ«å¼€
 	
-020 ÍÆËÍ¼ÇÂ¼ÅúÁ¿²åÈë	
+020 æ¨é€è®°å½•æ‰¹é‡æ’å…¥	
 	void batch(@Param("list") List<Integer> list, @Param("id") Integer id,@Param("date") Date date);
 	
 	<insert id="batch" parameterType="java.util.List" useGeneratedKeys="true">
@@ -482,67 +482,67 @@
     </insert>
 	
 
-019 //¼ÓÁËhotPlaceÒÔºó
-	¼ÓÁË@Param("hotPlace")
-	mapper.xmlÖĞĞèÒªhotPlace.
+019 //åŠ äº†hotPlaceä»¥å
+	åŠ äº†@Param("hotPlace")
+	mapper.xmlä¸­éœ€è¦hotPlace.
 	
 018 
 	
 	
-017 mysqlÊ±¼ä±¨´í
+017 mysqlæ—¶é—´æŠ¥é”™
 	show variables like '%time_zone%';
 
 	set global time_zone='+08:00';
 	
-016	ÕıÔò±í´ïÊ½ËÑ¼¯
+016	æ­£åˆ™è¡¨è¾¾å¼æœé›†
 	
-015 linux ÃüÁî
-	netstat -ntlp  ²é¿´½ø³Ìid¼´¶Ë¿Ú
-	free ²é¿´ÄÚ´æ
-	top  ²é¿´½ø³ÌÄÚ´æÕ¼ÓÃÂÊ
+015 linux å‘½ä»¤
+	netstat -ntlp  æŸ¥çœ‹è¿›ç¨‹idå³ç«¯å£
+	free æŸ¥çœ‹å†…å­˜
+	top  æŸ¥çœ‹è¿›ç¨‹å†…å­˜å ç”¨ç‡
 	
-014 ¼¯ºÏĞ£Ñé²Î¿¼
-	/** ³µÔ´µÄ³µÁ¾Ë¾»úÑ¹»õÈË */
+014 é›†åˆæ ¡éªŒå‚è€ƒ
+	/** è½¦æºçš„è½¦è¾†å¸æœºå‹è´§äºº */
 	@Valid
-	@NotNull(message = "³µÁ¾²»ÄÜÎª¿Õ")
-	@Size(min = 1, message = "ÖÁÉÙÓĞÒ»¸ö³µÁ¾")
+	@NotNull(message = "è½¦è¾†ä¸èƒ½ä¸ºç©º")
+	@Size(min = 1, message = "è‡³å°‘æœ‰ä¸€ä¸ªè½¦è¾†")
 	List<CarSourceCarAddDto> carSourceCars;
 
-013 Í¨¹ıÊı¾İ²é¿´½Ó¿ÚÊÇ²»´íµÄÑ¡Ôñ
+013 é€šè¿‡æ•°æ®æŸ¥çœ‹æ¥å£æ˜¯ä¸é”™çš„é€‰æ‹©
 	
-012 ÅúÁ¿±£´æ²Î¿¼
+012 æ‰¹é‡ä¿å­˜å‚è€ƒ
 	carRecordPlaceRepository.save(lines);
 	
-011 ¶ÔÏó×ªjson
+011 å¯¹è±¡è½¬json
 	JSON.toJSONString(temp)
 	
-010 @Transient±íÊ¾Êı¾İ¿â±íÖĞÎŞ´Ë×Ö¶Î
+010 @Transientè¡¨ç¤ºæ•°æ®åº“è¡¨ä¸­æ— æ­¤å­—æ®µ
 	
 
-009 queryÊ¾Àı
+009 queryç¤ºä¾‹
 	@Modifying
 	@Query("update Car set status = ?2 where id = ?1")
 	int updateStatusById(Integer id, String status);
 
-008 Ñ¡ÔñÕıÔò±í´ïÊ½
-	/** ³µÁ¾ºËÔØÁ¿µ¥Î»:ÕıÔò */
+008 é€‰æ‹©æ­£åˆ™è¡¨è¾¾å¼
+	/** è½¦è¾†æ ¸è½½é‡å•ä½:æ­£åˆ™ */
 	public static final String REG_EX_CAR_UNIT = "^(" + CAR_UNIT_TON + ")|(" + CAR_UNIT_LITRE + ")|()$";
 
-007 mapper×¢Òâ
+007 mapperæ³¨æ„
 	 List<Car> selectSelective(CarPageDto record); 
 	 <select id="selectSelective" parameterType="Object" resultMap="BaseResultMap">
 
-006 gitÃüÁî
-	²é¿´ÓÃ»§Ãû cat ~/.gitconfig 
+006 gitå‘½ä»¤
+	æŸ¥çœ‹ç”¨æˆ·å cat ~/.gitconfig 
  
 005_token
 	eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OSIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTExMiIsInJvbGVzIjoiY2FyZ29Pd25lciIsImlhdCI6MTU1ODQxNzc0Nn0.sKe5_CF2OT28OxQPqyVxv4Nk-S7kxvS4RCvsd-53lHY
 	
-	»õÖ÷id 4
-004_ÏîÄ¿devÎÄ¼şÆô¶¯
+	è´§ä¸»id 4
+004_é¡¹ç›®devæ–‡ä»¶å¯åŠ¨
 	program arguments --spring.profiles.active=dev
 
-003_½Ó¿Ú²âÊÔ
+003_æ¥å£æµ‹è¯•
 	 http://localhost:8392/ofenLocation/page
 	
 	{
@@ -564,8 +564,8 @@
 			"id": 1,
 			"name": "xm",
 			"tel": "134",
-			"province": "ºş±±",
-			"city": "Îäºº",
+			"province": "æ¹–åŒ—",
+			"city": "æ­¦æ±‰",
 			"county": null,
 			"detailedAddress": null,
 			"longitude": null,
@@ -577,8 +577,8 @@
 	    }
 	}
 	
-	ĞÂÔö http://localhost:8392/ofenLocation/add
-	Èë²Î¼òÒ×:
+	æ–°å¢ http://localhost:8392/ofenLocation/add
+	å…¥å‚ç®€æ˜“:
 	{
 	  "params":{
 		"id":4,
@@ -587,33 +587,33 @@
 	  
 	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
 	}
-	ÏêÏ¸
+	è¯¦ç»†
 	{
 	  "params":{
 		"id":5,
 		"name":"xm",
 		"tel":"134",
-		"province":"ºş±±",
-		"city":"Îäºº",
+		"province":"æ¹–åŒ—",
+		"city":"æ­¦æ±‰",
 		
-		"county":"ºéÉ½",
-		"detailedAddress":"¹â¹ÈÃ³Ò×ÖĞĞÄ",
+		"county":"æ´ªå±±",
+		"detailedAddress":"å…‰è°·è´¸æ˜“ä¸­å¿ƒ",
 		"longitude":18,
 		"latitude":19
 	  } ,
 	  
 	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
 	}
-	·µ»Ø
+	è¿”å›
 	{
 	    "code": 1,
 	    "msg": "success",
-	    "data": "Ìí¼Ó³É¹¦"
+	    "data": "æ·»åŠ æˆåŠŸ"
 	}
 	
 	
-	ĞŞ¸Ä http://localhost:8392/ofenLocation/update
-	Èë²Î:
+	ä¿®æ”¹ http://localhost:8392/ofenLocation/update
+	å…¥å‚:
 	{
 	  "params":{
 		"id":3,
@@ -622,24 +622,24 @@
 	  
 	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
 	}
-	ÏêÏ¸:
+	è¯¦ç»†:
 	{
 	  "params":{
 		"id":1,
 		"name":"xmxmxm",
 		"tel":"134",
-		"province":"ºş±±",
-		"city":"Îäºº",
+		"province":"æ¹–åŒ—",
+		"city":"æ­¦æ±‰",
 		
-		"county":"ºéÉ½",
-		"detailedAddress":"¹â¹ÈÃ³Ò×ÖĞĞÄ",
+		"county":"æ´ªå±±",
+		"detailedAddress":"å…‰è°·è´¸æ˜“ä¸­å¿ƒ",
 		"longitude":18,
 		"latitude":19
 	  } ,
 	  
 	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
 	}
-	·µ»Ø:
+	è¿”å›:
 	{
 	    "code": 1,
 	    "msg": "success",
@@ -647,7 +647,7 @@
 	}
 
 	http://localhost:8392/ofenLocation/get
-	ÊäÈë
+	è¾“å…¥
 	{
 	  "params":{
 		"id":1
@@ -655,7 +655,7 @@
 	  
 	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
 	}
-	·µ»Ø
+	è¿”å›
 	{
 	    "code": 1,
 	    "msg": "success",
@@ -663,10 +663,10 @@
 		"id": 1,
 		"name": "xmxmxm",
 		"tel": "134",
-		"province": "ºş±±",
-		"city": "Îäºº",
-		"county": "ºéÉ½",
-		"detailedAddress": "¹â¹ÈÃ³Ò×ÖĞĞÄ",
+		"province": "æ¹–åŒ—",
+		"city": "æ­¦æ±‰",
+		"county": "æ´ªå±±",
+		"detailedAddress": "å…‰è°·è´¸æ˜“ä¸­å¿ƒ",
 		"longitude": 18,
 		"latitude": 19,
 		"createDate": null,
@@ -675,7 +675,7 @@
 	}
 	
 	http://localhost:8392/ofenLocation/delete
-	ÊäÈë
+	è¾“å…¥
 	{
 	  "params":{
 		"id":1
@@ -683,17 +683,17 @@
 	  
 	  "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NCIsImlzcyI6Imh0dHBzOi8vd3d3Lmthbmdhcm9vYmFieWNhci5jb20iLCJzdWIiOiIxMzYxMTExMTEyMyIsImlhdCI6MTU1ODMxODg2NX0.dm783BZftTJPa-YNu6N-OvJRHvbl6D5DLXTnSoJMiBU"
 	}
-	·µ»Ø
+	è¿”å›
 	{
 	    "code": 1,
 	    "msg": "success",
 	    "data": null
 	}
 
-002_±¾µØÊı¾İ¿âÅäÖÃ
+002_æœ¬åœ°æ•°æ®åº“é…ç½®
     
 	
-001_ÎïÁ÷ÍøÏîÄ¿
+001_ç‰©æµç½‘é¡¹ç›®
     zrytech-framework-baseProject
 
 	
