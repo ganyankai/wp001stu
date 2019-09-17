@@ -1,0 +1,38 @@
+013 电脑的主动弹框可能是电脑的计划任务
+	如mysql有个安装的任务是每晚11点执行
+
+012 开发过程中尽量把所有linux系统中的软件安装到相同的目录
+	
+011 idea项目中的.iml文件包含了很多信息,删除之后可通过更新pom.xml文件的方式还原
+
+
+001.jsonview插件可以把json可视化展示
+
+002.注意活用JSON.stringify
+
+003.可以通过设置缓存的过期时间,来缓存热销商品
+	比如:
+	set ITEM_INFO:123456:BASE 123456789
+	set ITEM_INFO:123456:DESC abcdefg
+
+	set ITEM_INFO:123457:BASE 123456789
+	set ITEM_INFO:123457:DESC abcdefg
+004.window中DOS命令 netstat -ano可以查看进程监听端口及进程编号,window任务管理器详细信息中也可以找到对应的编号
+
+005.eclipse在文件夹上按crtl+z竟然可以还原被删除的文件夹
+
+006.当你修改了js文件而页面不跳转时,一定要注意清除缓存
+
+007.数据库可用utf8mb4编码存储微信表情
+
+008.我们公司的库竟然可以外网连接
+	主要服务器
+	106.2.13.42
+	root
+	ibzdkmfwps (ssh)
+	hxcy2018@
+
+009.<scope>test</scope>竟然可能导致程序读不到jar包
+
+010.idea中快捷键竟然支持eclipse
+	在keyMap中配置映射

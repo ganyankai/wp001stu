@@ -1,0 +1,84 @@
+006 html样本
+	html_doc = """
+	<html><head><title>The Dormouse's story</title></head>
+	<body>
+	<p class="title"><b>The Dormouse's story</b></p>
+
+	<p class="story">Once upon a time there were three little sisters; and their names were
+	<a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
+	<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+	<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+	and they lived at the bottom of a well.</p>
+
+	<p class="story">...</p>
+	"""
+
+005 输出当前时间
+	System.out.println("自定义的作业执行了:"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+004 发送ajax请求
+	<script type="text/javascript">
+		$(function(){
+			//页面加载完成后，为手机号输入框绑定离焦事件
+			$("input[name=telephone]").blur(function(){
+				//获取页面输入的手机号
+				var telephone = this.value;
+				//发送ajax请求,请求Action,在Action中远程调用crm服务，获取客户信息,用于页面回显
+				$.post('noticebillAction_findCustomerByTelephone.action',{"telephone":telephone},function(data){
+					if(data != null){
+						//查询到了客户信息，可以进行页面回显
+						var customerId = data.id;
+						var customerName = data.name;
+						var address = data.address;
+						$("input[name=customerId]").val(customerId);
+						$("input[name=customerName]").val(customerName);
+						$("input[name=delegater]").val(customerName);
+						$("input[name=pickaddress]").val(address);
+					}else{
+						//没有查询到客户信息，不能进行页面回显
+						$("input[name=customerId]").val("");
+						$("input[name=customerName]").val("");
+						$("input[name=delegater]").val("");
+						$("input[name=pickaddress]").val("");
+					}
+				});
+			});
+		});
+	</script>			
+
+003 js触发事件
+    // 选中菜单第一项(触发点击事件)
+    $(".blog-menu .list-group-item:first").trigger("click");
+
+002 从结构化文件中获取指定内容
+    @Test
+    //从结构化文件中获取指定内容 needbak
+    public void testReadFile() throws Exception {
+        File file = new File("C:\\Users\\admin\\Desktop\\002_生活实践汇总\\004_音乐.txt");
+        System.out.println("file:");
+        System.out.println(file);
+        FileReader fr = new FileReader(file);
+        BufferedReader bf = new BufferedReader(fr);
+        int line = 0;
+        while (bf.read()!=-1){
+            line ++;
+            String s = bf.readLine();
+//            System.out.println(s);
+            if(line>1){
+                System.out.println(s.split("\t")[1]);
+            }
+        }
+    }
+
+001 jquery选择器
+	//为左右移动按钮绑定事件
+	$("#toRight").click(function(){
+		//一句代码竟然可以搞定
+		$("#associationSelect").append($("#noassociationSelect option:selected"));
+	});
+
+	//为隐藏域id赋值
+	$("input[name=id]").val(id);
+	//先把关联该定区的客户区域id全部设为null
+	//再把右侧的用户加上区域id
+	//下拉框只提交选中的内容,提交表单前需要将右侧下拉框中所有的选项选中,为option添加一个selected属性,
+	$("#associationSelect option").attr("selected","selected");

@@ -1,0 +1,37 @@
+﻿002值得分享的链接
+	002.外卖小哥返乡 http://tv.cctv.com/2019/03/01/VIDE3hoH4nxMqKBNaXsDtPx6190301.shtml?spm=C52448022284.PcWqxSD7WlSZ.0.0
+	001.农业创业项目 http://baike.sm.cn/item/3b5fc55af59cc660c814fedd66c25ce2.html?from=smsc&uc_param_str=dnntnwvepffrgibijbpr
+	
+
+001技术学习
+	20.elk官网 https://www.elastic.co/cn/
+	19.数据说话 https://www.talkingdata.com/
+
+	1.腾讯课堂 https://ke.qq.com/course/
+	2.it资源网 http://www.itjiaocheng.com/index.html
+	3.传智博客 http://www.itcast.cn/
+	4.淘宝购买
+	你购买的商品如下:
+	亲亲，你好！欢迎光临本店！本店自动发货！在百度云盘链接: 
+	链接:  https://pan.baidu.com/s/1cAFE-2Dmho6k3qL7hsz_cw  密码: k9jr
+	5.web服务
+	wsimport -s . http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?wsdl
+
+	6.本地svn路径 https://DESKTOP-D4N0M66:8443/svn/xyshop/
+	  gan 123456
+	7.svn操作:‪  F:\005_javaStudy\008_宣立方商城\e3商城_day01\黑马32期\day01\15.svn的使用_.flv
+	8.xy-dubbo-register虚拟机: ip:192.168.0.192 登录名:root 密码:123456 
+	9.360记事本云地址: https://cloud.360shouji.com/note/
+	10.博学谷 https://www.boxuegu.com/
+
+	11.快捷生成前端页面 http://www.ibootstrap.cn/
+	12.微信小程序
+		下载链接:  https://pan.baidu.com/s/1bQzh-8yu_vY_Qv_mGorT7w  密码: qvj9
+		赠品链接:  https://pan.baidu.com/s/1cBJAUdpcyQVzaeeauknOYQ  密码: bg4n
+	13.破解MD5:
+		https://www.cmd5.com/
+	14.第一种子:	https://diyizhongzi.me/
+	15.cron表达式在线生成器: http://cron.qqe2.com/
+
+	16.highcharts: www.hcharts.cn
+	17.python工具包: https://www.lfd.uci.edu/~gohlke/pythonlibs/

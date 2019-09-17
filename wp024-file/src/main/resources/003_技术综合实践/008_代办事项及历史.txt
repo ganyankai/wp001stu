@@ -1,0 +1,82 @@
+
+
+015	研究怎么让自己保持最佳状态	B
+
+014	设计模式学习	B
+
+013	高并发问题研究	B
+
+012    通用数据库交互代码研究	B
+
+011	黑客技术探讨	B	
+
+	
+010     自己的分布式项目 A
+
+009     技术变现探讨	A
+
+008	token机制,aop的研究与落地	
+	
+007	区块链技术了解与落地	
+
+006    公司git代码代码下载	B
+
+005     架构师技能数据库设计	A	o
+	
+004	客户数据库设计  A	
+
+003	person类:
+	
+	public class Person {
+	    String lastName;
+	    int age ;
+	    boolean boss;
+	    Date birth;
+	    Map<String ,String > maps;
+	    List<String> list;
+
+	}
+002_商城项目启动顺序
+	zoolkeeper 
+		/root/apps/zookeeper-3.4.5/bin/zkServer.sh start
+		/root/apps/zookeeper-3.4.5/bin/zkServer.sh stop 
+							   status
+	redis
+		/usr/local/redis/bin/redis-server /usr/local/redis/bin/redis.conf
+	solr(单机版)
+		/usr/local/solr/tomcat/bin/startup.sh 
+		http://192.168.1.195:8080/solr/
+	solr集群
+	cd /usr/local/solr-cloud
+		/usr/local/solr-cloud/start-all.sh
+	/usr/local/solr-cloud/start-tomcat-all.sh 
+
+	启动: /root/apache-activemq-5.12.0/bin/activemq start
+		http://192.168.1.191:8161/
+	activemq:
+	启动: /root/apache-activemq-5.12.0/bin/activemq start
+		http://192.168.1.191:8161/
+
+	图片服务器
+		
+	clean tomcat7:run
+	1.manager
+	2.xy-content
+	3.search
+	4.manager-web
+		http://localhost:8081/
+	5.portal-web
+		http://localhost:8082/
+	6.search-web
+		http://localhost:8085/
+	7.xy-item-web
+	8.xy-sso
+	9.xy-sso-web
+	10.xy-cart
+	11.xy-cart-web
+	
+001_方法模板
+	@Test
+	public void queryIndex() throws Exception{
+		
+	}
