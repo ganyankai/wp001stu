@@ -1,6 +1,6 @@
-001.´´½¨±í
+ï»¿001.åˆ›å»ºè¡¨
 
-	ÇøÓò±í
+	åŒºåŸŸè¡¨
 
 	CREATE TABLE `tb_area`(
 		`area_id` INT(2) NOT NULL AUTO_INCREMENT,
@@ -13,7 +13,7 @@
 		) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 		
 		
-		ÊµÌåÀà
+		å®žä½“ç±»
 		public class Area {
 
 	    private Integer areaId;
