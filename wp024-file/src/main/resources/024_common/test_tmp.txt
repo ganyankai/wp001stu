@@ -1,6 +1,36 @@
 0999 current
 
+102 
+	代码jks
+	https://run.mockplus.cn/anbo1zz2SwaCtAl5/index.html
+	
+	06 
 
+	05 service顺序
+		
+		01	applicationContext-bis-rmi.xml
+	
+	04 例子
+		CusInfoService
+		
+
+	03 代码
+		04 dao
+			02 mapper
+				xml
+			01 repository
+		03 service
+			impl
+		02 dto
+		01 controller
+		
+	02 实体 o
+		 
+	01 表 o 
+		tb_coupon
+	    user_coupon	
+		t_pub_setup
+	
 101 优惠券编辑
 	
 	08 数据库日期类型用string接收好像也是可以的
