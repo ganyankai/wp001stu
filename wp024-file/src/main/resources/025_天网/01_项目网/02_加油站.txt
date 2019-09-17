@@ -1,3 +1,166 @@
+45 锁价实体
+	03 
+	
+	
+	02 
+	DROP TABLE IF EXISTS `t_cus_lock_station`;	CusLockStation
+	CREATE TABLE `t_cus_lock_station`  (
+	  `S_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	  `CUS_LOCK_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '车主锁价表ID',
+	  `STATION_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '油站ID',
+	  `D_CREATE_DATE` datetime(0) NOT NULL,
+	  `D_MODIFY_DATE` datetime(0) NOT NULL,
+	  PRIMARY KEY (`S_ID`) USING BTREE,
+	  INDEX `FK_TCA_CUSID`(`CUS_LOCK_ID`) USING BTREE,
+	  CONSTRAINT `FK_TCLS_CUSLOCKID` FOREIGN KEY (`CUS_LOCK_ID`) REFERENCES `t_cus_lock_order` (`S_ID`) ON DELETE CASCADE ON UPDATE RESTRICT
+	) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '车主锁价对应油站列表' ROW_FORMAT = Dynamic;
+
+	SET FOREIGN_KEY_CHECKS = 1;
+	
+	01 
+	t_cus_lock_order			CusLockOrder
+		
+		DROP TABLE IF EXISTS `t_cus_lock_order`;
+		CREATE TABLE `t_cus_lock_order`  (
+		  `S_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		  `ORDER_NO` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+		  `CUS_ID` bigint(20) NOT NULL COMMENT '车主ID',
+		  `PRODUCT_KIND` int(11) NOT NULL COMMENT '油品类型（字典表）',
+		  `LOCK_TYPE` int(2) NOT NULL COMMENT '锁价方式：锁死/跟跌不跟涨（字典表）',
+			
+		  `LAST_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价时价格',
+		  `DEATH_PRICE` decimal(10, 2) NULL DEFAULT NULL COMMENT '锁死价格（锁价方式为锁死时必填）',
+		  `FLAOT_RANGE` decimal(10, 2) NULL DEFAULT NULL COMMENT '跟跌不跟涨浮动价格（锁价方式为跟跌不跟涨时必填）',
+		  `LOCK_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单金额',
+		  `REMAIN_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单剩余金额',
+		  `TRANS_CUS_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '转让来源车主ID',
+		  `D_CREATE_DATE` datetime(0) NOT NULL,
+		  `D_MODIFY_DATE` datetime(0) NOT NULL,
+		  PRIMARY KEY (`S_ID`) USING BTREE,
+		  INDEX `FK_TCA_CUSID`(`CUS_ID`) USING BTREE,
+		  CONSTRAINT `t_cus_lock_order_ibfk_1` FOREIGN KEY (`CUS_ID`) REFERENCES `t_cus_info` (`I_ID`) ON DELETE CASCADE ON UPDATE RESTRICT
+		) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户锁价表' ROW_FORMAT = Dynamic;	
+	
+	
+		
+	t_cus_lock_station			CusLockStation
+	t_cus_lock_trans_record		CusLockTransRecord	
+	t_cus_lock_use_record		CusLockUseRecord
+	
+44 传入油品是返回数据展示
+	{
+  "content" : [ {
+    "modifyDate" : "2019-09-12 11:30:04",
+    "floatRange" : 3.00,
+    "groupId" : "1",
+    "productKindName" : "90#汽油",
+    "productKind" : 2,
+    "stationListStr" : "油站1",
+    "stationList" : [ {
+      "id" : "1",
+      "createDate" : "",
+      "modifyDate" : "",
+      "name" : "油站1",
+      "code" : "",
+      "shortName" : "",
+      "enName" : "",
+      "isPartners" : "",
+      "type" : "",
+      "contractPeriod" : "",
+      "level" : "",
+      "tel" : "",
+      "desc" : "",
+      "address" : "",
+      "longitude" : "",
+      "latitude" : "",
+      "coverPic" : "",
+      "delFlag" : "",
+      "isDisplay" : "",
+      "isTop" : "",
+      "seq" : "",
+      "accountActive" : "",
+      "provinceId" : "",
+      "provinceName" : "",
+      "cityId" : "",
+      "cityName" : "",
+      "regionId" : "",
+      "regionName" : "",
+      "postcode" : "",
+      "payCycle" : "",
+      "responsiblePerson" : "",
+      "responsiblePersonTel" : "",
+      "createStaffId" : "",
+      "validaityPeriod" : ""
+    } ],
+    "deathRange" : 2.00,
+    "statusName" : "启用",
+    "id" : "c5824f62713145b3904b54d0f023a072",
+    "status" : 1,
+    "createDate" : "2019-09-12 11:30:04"
+  } ],
+  "total" : 1,
+  "totalPages" : 1,
+  "pageNo" : 1,
+  "pageSize" : 15
+}
+
+43 维护时你发现根据锁价id查询附近的油站和查询锁价列表不适合放在一个方法里,比较适合在一个service里写两个方法,
+	这样既适合提供单接口,也适合接口合并,如果需要和并可以在c层单独调用这两个方法
+	
+	
+42 接口列表
+	03 锁价订单详情 
+		
+	02 锁价订单列表
+		
+	01 锁价选择页面
+		02 查询参与锁价的的所有油站 注意状态与其他条件 
+		01 查询锁价价格   条件:油品   过滤:状态 
+			同一个油品只能添加一个锁价  (这个逻辑后台也要改)
+			
+		
+
+41 	我为什么觉得两个表要比一张表复杂很多呢?
+
+40 相关sql可以参考
+	OilstationInfoDaoImpl
+
+	OilstationServiceImpl
+
+	距离竟然是通过sql计算公式求出来的 
+	
+39 查询附近油站发接口
+	
+	String rangeQuerySql = "SELECT S_ID FROM t_oilstation_info 
+	WHERE I_LATITUDE > (:lat - 1 ) AND I_LATITUDE < (:lat + 1 ) AND I_LONGITUDE > (:lng - 1) AND I_LONGITUDE
+	< (:lng + 1) AND
+	round(6378.138 * 2 * asin(sqrt(pow(sin((:lat * pi() / 180 - I_LATITUDE * pi() / 180) / 2), 2)
+	+ cos(:lat * pi() / 180) *
+	cos(I_LATITUDE * pi() / 180) * pow(sin((:lng * pi() / 180 - I_LONGITUDE * pi() / 180) / 2), 2))) * 1000)
+	<= :range";
+
+	http://127.0.0.1:8080/MrOilMobile//guest/oilStation/findNear.json
+	
+	pageNo=1&pageSize=10&lng=114.34253&lat=30.49984&isValid=1&isPartners=2
+
+38 锁价后台必须两种方式都支持,不能只选一种
+	其实这个能配置更好 
+	
+37 数据库表结构
+	t_cus_lock_order			锁价订单
+	t_cus_lock_station			订单关联油站(创建以后不能修改)
+								后台锁价关联的油站是可以修改的 
+	
+	t_cus_lock_trans_record		转让记录查询
+	t_cus_lock_use_record		使用记录查询 
+	
+	
+36 物流系统车主不能是司机吗?多角色设计是不是更好 
+	
+35 每次做的功能既好像似曾相似,又好像各有不同
+
+34 最花费时间的就是业务及其与代码的关联 
+
 33 过滤代码参考
 	List<Filter> filters = new ArrayList<>();
         filters.add(Filter.eq("relId", relId));
@@ -74,9 +237,17 @@
 	
 
 24 锁价功能
+	04 油站列表 
+	   	
+
 	03 前台
+		
+		
+		03 首页 
+			03B 锁价 >> 锁价订单提交页面 
+
 		02 支付
-			02A 锁价支付 >> 锁价详情 >> 		
+			02A 锁价支付 >> 		
 			
 		01 原型和跳转
 			01 个人中心
@@ -86,7 +257,7 @@
 										04A	>>	05 转让 
 										04B	>>	06 使用记录
 										04C	>>	07 转让记录
-				
+										
 	02 新增
 		01 新增时需选择集团
 		油品				productKind

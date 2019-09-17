@@ -1,4 +1,8 @@
 2019年7月26日
+042 腾讯企业邮箱
+	13477907639
+
+
 041 蓝湖
 	609021076@qq.com
 	------1234
@@ -102,8 +106,8 @@
 	 Secret：	7d9f4fc34755829e89d59858 
 
 	 安卓包名	com.yun.software.kaadas
-	 苹果bundle id	com.yun.software.kaadas
-	 
+	 苹果bundle id	com.yun.software.kaadas	
+	
 022 新零售36地址
 	https://test.zrytech.com/customerExtend/getLabelRecord
 	后台

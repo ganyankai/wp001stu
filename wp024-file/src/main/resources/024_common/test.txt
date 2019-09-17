@@ -1,5 +1,37 @@
+2019年9月17日
+099 周报
+	01 加油站锁价页面相关接口提供
+	
+
 2019年7月25日
 
+019 周报模板
+	changzhong.xia@zrytech.com
+	david.cheng@zrytech.com
+	wang.liu@zrytech.com
+	xueyun.peng@zrytech.com
+	zhanhongmei@zrytech.com
+	
+	10 {}代码重用性,可维护性改造	
+		
+	09 {}接口自测 
+		 
+	08 {}代码逻辑审查 
+
+	07 {}配合前端人员测试接口
+	
+	06 {}代码熟悉 
+
+	05 {}页面展示字段与数据库核对
+
+	04 {}业务流程梳理
+
+	03 {}原型梳理
+
+	02 {}数据库分析
+
+	01 {}接口提供
+	
 
 018 maven安装本地文件
 	本地安装的文件和maven中央仓库管理的配置文件是有差别的
