@@ -1,5 +1,5 @@
 45 锁价实体
-	03 
+	03 @JsonAutoDetect帮我们自动写json时回显?
 		
 	
 	02 

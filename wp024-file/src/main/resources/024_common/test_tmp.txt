@@ -1,14 +1,20 @@
 0999 current
+103
+	/admin/cusLockOrder
 
 102 
-	代码jks
+	代码jks	 CusLockOrder	cusLockOrder
 	https://run.mockplus.cn/anbo1zz2SwaCtAl5/index.html
 	
 	06 
 
 	05 service顺序
-		
-		01	applicationContext-bis-rmi.xml
+		02	
+			调用
+			applicationContext-bis-rmi-client.xml
+			
+		01	定义
+			applicationContext-bis-rmi.xml
 	
 	04 例子
 		CusInfoService
