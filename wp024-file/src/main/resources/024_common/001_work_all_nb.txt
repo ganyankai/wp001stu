@@ -1,4 +1,11 @@
 ﻿2019年9月16日
+104 这个框架果然只检测加了@JsonProperty	注解的属性
+	用这个检测全部 
+	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+	
+103 果然属性上加注解不行
+	改这个 DataSource 好像也无效
+
 102 今天在处理
 	{
 		"content": [

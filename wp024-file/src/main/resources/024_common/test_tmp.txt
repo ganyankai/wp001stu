@@ -1,13 +1,22 @@
 0999 current
-103
-	/admin/cusLockOrder
 
+103 转让测试
+	 id 1
+	 15073018427
+ 	 1000
 102 
-	代码jks	 CusLockOrder	cusLockOrder
+	
+	
+
+	代码jks
+	t_cus_lock_trans_record  CusLockTransRecord cusLockTransRecord
+	t_cus_lock_use_record	 CusLockUseRecord	cusLockUseRecord
+	
+	CusLockOrder	cusLockOrder
 	https://run.mockplus.cn/anbo1zz2SwaCtAl5/index.html
 	
 	06 
-
+	   
 	05 service顺序
 		02	
 			调用
@@ -36,7 +45,10 @@
 		tb_coupon
 	    user_coupon	
 		t_pub_setup
-	
+
+102 
+	/admin/cusLockOrder
+
 101 优惠券编辑
 	
 	08 数据库日期类型用string接收好像也是可以的

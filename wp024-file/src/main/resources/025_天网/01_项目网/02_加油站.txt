@@ -1,3 +1,65 @@
+47 锁价订单转让
+	
+	05 流程
+		03 插入转账记录表
+			cusLockId	transToCusPhone	 transToCusId
+		02 插入新表
+			S_ID	TRANS_CUS_ID	LOCK_PRICE	REMAIN_PRICE	c
+			
+		01 修改原表
+			LOCK_PRICE	del
+			REMAIN_PRICE	
+			
+	04 身份校验	
+		@CurrentUser Long userId
+		放在controller的方法参数中
+		
+	03  请求	cusLockOrderTrans
+					
+	02 上送参数 o	
+		03 转让金额		transAmount	
+		02 转让手机号	transTel
+		01 订单id		s_id 
+			
+	01 实体
+		DROP TABLE IF EXISTS `t_cus_lock_order`;
+		CREATE TABLE `t_cus_lock_order`  (
+		  `S_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+		  `ORDER_NO` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+		  `CUS_ID` bigint(20) NOT NULL COMMENT '车主ID',
+		  `PRODUCT_KIND` int(11) NOT NULL COMMENT '油品类型（字典表）',
+		  `LOCK_TYPE` int(2) NOT NULL COMMENT '锁价方式：锁死/跟跌不跟涨（字典表）',
+			
+		  `LAST_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价时价格',
+		  `DEATH_PRICE` decimal(10, 2) NULL DEFAULT NULL COMMENT '锁死价格（锁价方式为锁死时必填）',
+		  `FLAOT_RANGE` decimal(10, 2) NULL DEFAULT NULL COMMENT '跟跌不跟涨浮动价格（锁价方式为跟跌不跟涨时必填）',
+		  `LOCK_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单金额',
+		  `REMAIN_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单剩余金额',
+			
+		  `TRANS_CUS_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '转让来源车主ID',
+		  `D_CREATE_DATE` datetime(0) NOT NULL,
+		  `D_MODIFY_DATE` datetime(0) NOT NULL,
+		  PRIMARY KEY (`S_ID`) USING BTREE,
+		  INDEX `FK_TCA_CUSID`(`CUS_ID`) USING BTREE,
+		  CONSTRAINT `t_cus_lock_order_ibfk_1` FOREIGN KEY (`CUS_ID`) REFERENCES `t_cus_info` (`I_ID`) ON DELETE CASCADE ON UPDATE RESTRICT
+		) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户锁价表' ROW_FORMAT = Dynamic;	
+	
+
+46 page枚举
+	public PageNew<CusLockOrder> cusLockOrderList(CusLockOrderForm cusLockOrderForm, Pageable pageable) {
+        PageNew<CusLockOrder> pageNew = cusLockOrderDao.findPageNew(pageable);
+        System.out.println("flag:1b");
+        enumMgrService.transformEnum(pageNew.getContent(),
+                new ArrayList<EnumTransformData>() {
+                    {
+                        add(new EnumTransformData("T_OILSTATION_PRODUCT",
+                                "I_KIND", "productKind",
+                                "productKindName"));
+                    }
+                });
+        return pageNew;
+    }
+
 45 锁价实体
 	03 @JsonAutoDetect帮我们自动写json时回显?
 		
@@ -33,6 +95,7 @@
 		  `FLAOT_RANGE` decimal(10, 2) NULL DEFAULT NULL COMMENT '跟跌不跟涨浮动价格（锁价方式为跟跌不跟涨时必填）',
 		  `LOCK_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单金额',
 		  `REMAIN_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单剩余金额',
+			
 		  `TRANS_CUS_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '转让来源车主ID',
 		  `D_CREATE_DATE` datetime(0) NOT NULL,
 		  `D_MODIFY_DATE` datetime(0) NOT NULL,
@@ -617,7 +680,7 @@
 		01 油站编辑
 			
 
-	06 t_whs_enum_tbl 字典表 
+	06 t_whs_enum_tbl 字典表jks 
 		T_OILSTATION_PRODUCT	I_KIND
 
 	05 删除配置了集团删除 

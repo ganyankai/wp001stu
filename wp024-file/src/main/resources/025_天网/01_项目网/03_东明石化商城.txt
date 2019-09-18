@@ -1,8 +1,8 @@
-2019Äê9ÔÂ3ÈÕ
-20 Ò³ÃæÌø×ªÊ±µÄÇëÇóÈçºÎ²¶»ñ
-	²¶×½htmlÇëÇóÈ»ºóË¢ĞÂ ?
+ï»¿2019å¹´9æœˆ3æ—¥
+20 é¡µé¢è·³è½¬æ—¶çš„è¯·æ±‚å¦‚ä½•æ•è·
+	æ•æ‰htmlè¯·æ±‚ç„¶ååˆ·æ–° ?
 	
-19 ×¢²á´úÂë²éÕÒ
+19 æ³¨å†Œä»£ç æŸ¥æ‰¾
 	
 
 18 top4company
@@ -15,16 +15,16 @@
 	FROM T_DS_CUS_INFO cusinfo0_
 	WHERE cusinfo0_.I_ID = 42329
 
-18 µÇÂ¼´úÂë²éÕÒ
+18 ç™»å½•ä»£ç æŸ¥æ‰¾
 	
 	02 http://localhost:8080/dmshShop/login
 	
 	01 LoginController
 	
-17 ¼¼ÇÉ
-	·µ»Ø[]Ò»°ãÊÇÕı³£µÄ,Òì³£»á±¨´í
+17 æŠ€å·§
+	è¿”å›[]ä¸€èˆ¬æ˜¯æ­£å¸¸çš„,å¼‚å¸¸ä¼šæŠ¥é”™
 	
-16 µÇÂ¼sql
+16 ç™»å½•sql
 	SELECT cusinfo0_.I_ID AS I_ID1_25_, cusinfo0_.D_CREATE_DATE AS D_CREATE2_25_, cusinfo0_.D_MODIFY_DATE AS D_MODIFY3_25_, cusinfo0_.S_ACCOUNT AS S_ACCOUN4_25_, cusinfo0_.S_NAME AS S_NAME5_25_
 			, cusinfo0_.S_CUS_INVIATION_CODE AS S_CUS_IN6_25_, cusinfo0_.I_DEL_FLAG AS I_DEL_FL7_25_, cusinfo0_.S_DES AS S_DES8_25_, cusinfo0_.S_EMAIL AS S_EMAIL9_25_, cusinfo0_.S_HEADPIC_PATH AS S_HEADP10_25_
 			, cusinfo0_.S_INVIATION_CODE AS S_INVIA11_25_, cusinfo0_.I_IS_SINGLE_GIFT AS I_IS_SI12_25_, cusinfo0_.I_LEVEL AS I_LEVEL13_25_, cusinfo0_.S_NICK_NAME AS S_NICK_14_25_, cusinfo0_.S_PINYIN AS S_PINYI15_25_
@@ -37,34 +37,34 @@
 	ORDER BY cusinfo0_.D_CREATE_DATE DESC
 
 
-15 ²Î¿¼:¿Í»§¹ÜÀí 
+15 å‚è€ƒ:å®¢æˆ·ç®¡ç† 
 	http://localhost:8080/dmshMgr/admin/customerMgr/getMgrList
 
-16 ²»Òª·´¸´µÄÈ¥·¸ÏàÍ¬µÄ´íÎó,×öÁË¼ì²âÊÇ·ñ³É¹¦Ïàµ±¹Ø¼ü
+16 ä¸è¦åå¤çš„å»çŠ¯ç›¸åŒçš„é”™è¯¯,åšäº†æ£€æµ‹æ˜¯å¦æˆåŠŸç›¸å½“å…³é”®
 	
-15 ÅÀÈ¡ÍøÖ·
+15 çˆ¬å–ç½‘å€
 	http://www.silver.org.cn/quotation/
 	
-14 Ïú¿Ø×ÜÁ¿
+14 é”€æ§æ€»é‡
 	http://localhost:8080/dmshMgr/admin/marketSale/findList
 
 
-13 ÒıÈëÒÔÏÂÒ³ÃæÎªÊ²Ã´»á±¨´í
+13 å¼•å…¥ä»¥ä¸‹é¡µé¢ä¸ºä»€ä¹ˆä¼šæŠ¥é”™
 	<%@include file="/common/jstlLib.jsp" %> 
 	
 	
-12 ±¨´í
-	13 t_product_cate ²»´æÔÚ
+12 æŠ¥é”™
+	13 t_product_cate ä¸å­˜åœ¨
 
-	12 t_cus_info ²»´æÔÚ
+	12 t_cus_info ä¸å­˜åœ¨
 
-	11 ³£ÓÃË¾»ú
+	11 å¸¸ç”¨å¸æœº
 		could not resolve property: cusId of: com.catt.oil.repository.entity.consumerMgr.companyInfo.LogisticsDriver [select count(cattGeneratedAlias8)
 		from com.catt.oil.repository.entity.consumerMgr.companyInfo.LogisticsDriver
 		as cattGeneratedAlias8 where cattGeneratedAlias8.cusId=471480209435000832L]
 		
 
-	10  ÇøÓò¹ÜÀí
+	10  åŒºåŸŸç®¡ç†
 		http://localhost:8080/dmshMgr/admin/areaMgr/getAreas
 
 		select cusarea0_.I_ID as I_ID1_47_, cusarea0_.D_CREATE_DATE as D_CREATE2_47_,
@@ -76,22 +76,22 @@
 		could not resolve property: isPlan of: com.catt.oil.repository.entity.goodsMgr.ProductInfo 
 		[select generatedAlias0 from com.catt.oil.repository.entity.goodsMgr.ProductInfo
 		as generatedAlias0 where ( ( generatedAlias0.status=1 ) and ( generatedAlias0.isDel=2 ) ) and ( generatedAlias0.isPlan=1 ) order by generatedAlias0.createDate desc]
-		ÕâÓ¦¸ÃÒ²ÊÇÖØ¸´Ó³ÉäµÄÎÊÌâ
+		è¿™åº”è¯¥ä¹Ÿæ˜¯é‡å¤æ˜ å°„çš„é—®é¢˜
 		
-	08  ÏúÊÛ×ÜÁ¿ 
+	08  é”€å”®æ€»é‡ 
 		Table 'dmsh_prod.t_product_cate' doesn't exist	// o
-		ÖØ¸´Ó³ÉäÎÊÌâ o 
+		é‡å¤æ˜ å°„é—®é¢˜ o 
 		
-	07	¸øµÄ²¿Êğ°ü»º´æÊÇÕâ¸öÄ¿Â¼
+	07	ç»™çš„éƒ¨ç½²åŒ…ç¼“å­˜æ˜¯è¿™ä¸ªç›®å½•
 		<diskStore path="C:\\Users\\Admin\\AppData\\Local\\Temp\\/${system.project_name}/cache" />
 		
-	06 ÏµÍ³ÁÙÊ±Ä¿Â¼
+	06 ç³»ç»Ÿä¸´æ—¶ç›®å½•
 		<diskStore path="C:/Users/lenovo/.IntelliJIdea2017.3/system/
 		compile-server/dmshshop_614b15c2/_temp_/${system.project_name}/cache" />
 		
 	05 	n 
 		2019-09-05 15:27:04.379 [http-apr-8080-exec-5]
-		WARN  INFO - [loginUserName:1,ÀÏ³Â,admin logId:add6ffe2b6334651b9b31449115ce1c7]
+		WARN  INFO - [loginUserName:1,è€é™ˆ,admin logId:add6ffe2b6334651b9b31449115ce1c7]
 		Handler execution resulted in exception: org.springframework.web.util.NestedServletException:
 		Handler dispatch failed; nested exception is java.lang.NoSuchMethodError:
 		com.fasterxml.jackson.databind.ObjectWriter.forType(Lcom/fasterxml/jackson/databind/JavaType;)
@@ -106,7 +106,7 @@
 		(Lcom/fasterxml/jackson/databind/JavaType;)
 		Lcom/fasterxml/jackson/databind/ObjectWriter;
 		
-		ÄÑµÀÊÇÒı°ü
+		éš¾é“æ˜¯å¼•åŒ…
 		<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -147,7 +147,7 @@
 		Invocation of init method failed; nested exception is net.sf.ehcache.CacheException:
 		Disk store path can't be created: C:\Users\Admin\AppData\Local\Temp\dmshShop\cache
 		
-		Õâ¸ö±¨´íÔÚcleanÖ®ºóµÄ
+		è¿™ä¸ªæŠ¥é”™åœ¨cleanä¹‹åçš„
 
 	01 
 		org.hibernate.MappingException: Repeated column in mapping for entity: com.catt.oil.repository.entity.customerMgr.PubSetup column: S_CODE (should be mapped with insert="false" update="false")
@@ -161,21 +161,21 @@
 		at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:40008)
 		at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:879)
 
-		¿ÉÄÜÊÇ¼Ì³ĞµÄÊµÌåÀàÖ®¼äÓĞÖØ¸´Ó³Éä
+		å¯èƒ½æ˜¯ç»§æ‰¿çš„å®ä½“ç±»ä¹‹é—´æœ‰é‡å¤æ˜ å°„
 
 11 viewResolver
-	Ìø×ª¹¦ÄÜÃ»ÎÊÌâ
-	³õ²½ÈÏÎªÓ¦¸ÃÊÇÒ³ÃæäÖÈ¾Òì³£
+	è·³è½¬åŠŸèƒ½æ²¡é—®é¢˜
+	åˆæ­¥è®¤ä¸ºåº”è¯¥æ˜¯é¡µé¢æ¸²æŸ“å¼‚å¸¸
 	
-10 Ç¿×ªÎÊÌâ
-	×Óµ½¸¸×Ô¶¯ÀàĞÍÌáÉı¡£¡£²»ĞèÒªÇ¿×ª¡£¡£
-	¸¸µ½×Ó²ÅĞèÒªÇ¿ÖÆÀàĞÍ×ª»»
+10 å¼ºè½¬é—®é¢˜
+	å­åˆ°çˆ¶è‡ªåŠ¨ç±»å‹æå‡ã€‚ã€‚ä¸éœ€è¦å¼ºè½¬ã€‚ã€‚
+	çˆ¶åˆ°å­æ‰éœ€è¦å¼ºåˆ¶ç±»å‹è½¬æ¢
 
-09 ÕËºÅ
+09 è´¦å·
 	02 now
 		dante	e10adc3949ba59abbe56e057f20f883e (123456)
 		admin   21232f297a57a5a743894a0e4a801fc3
-	01 Ô­À´		  
+	01 åŸæ¥		  
 				  
 		02  dmsh  c4ca4238a0b923820dcc509a6f75849b	  
 		01	admin c4ca4238a0b923820dcc509a6f75849b
@@ -183,7 +183,7 @@
 
 08 <packaging>pom</packaging>
 	
-07 ²¿ÊğÅäÖÃ
+07 éƒ¨ç½²é…ç½®
 	03 project-dmsh-web-cusApp	/dmshCusApp o
 		->	04 project-dmsh-service o 
 				-> 05 project-dmsh-data o
@@ -204,14 +204,14 @@
 
 	16 project-dmsh-service-impl-shop o
 
-06 pomÎÄ¼ş±¨´í¿É¿¼ÂÇÈ¥³ıÇ°ÃæµÄxml¸ñÊ½
+06 pomæ–‡ä»¶æŠ¥é”™å¯è€ƒè™‘å»é™¤å‰é¢çš„xmlæ ¼å¼
 	
 
-05 Á½¸öÒÀÀµÎÊÌâ
-	1 ¸¸¹¤³ÌÒÀÀµµÄjar°ü×Ó¹¤³Ì»¹ĞèÒªÒÀÀµÂğ
-		ºÃÏñ»¹ÊÇÒªÒÀÀµ ,ÓÖºÃÏñÓĞÊ±ºò²»ĞèÒª
+05 ä¸¤ä¸ªä¾èµ–é—®é¢˜
+	1 çˆ¶å·¥ç¨‹ä¾èµ–çš„jaråŒ…å­å·¥ç¨‹è¿˜éœ€è¦ä¾èµ–å—
+		å¥½åƒè¿˜æ˜¯è¦ä¾èµ– ,åˆå¥½åƒæœ‰æ—¶å€™ä¸éœ€è¦
 	
-	2 ÒÀÀµÁË¸¸¹¤³Ì»á×Ô¶¯ÒÀÀµ×Ó¹¤³ÌÂğ
+	2 ä¾èµ–äº†çˆ¶å·¥ç¨‹ä¼šè‡ªåŠ¨ä¾èµ–å­å·¥ç¨‹å—
 		
 
 	ZsBankServiceImpl
@@ -233,7 +233,7 @@
             <!--<version>0.0.2</version>-->
         <!--</dependency>-->
 
-04 ÏîÄ¿Æô¶¯Ë³Ğò
+04 é¡¹ç›®å¯åŠ¨é¡ºåº
 	03 project-dmsh-service-impl
 	
 	02 project-dmsh-service-impl-order
@@ -241,10 +241,10 @@
 	01 project-dmsh-service-impl-shop
 	
 
-03 ·½·¨
-	01 ÏîÄ¿ÕûÌå¸´ÖÆ·¨
+03 æ–¹æ³•
+	01 é¡¹ç›®æ•´ä½“å¤åˆ¶æ³•
 
-02 ÒÀÀµ¹ØÏµÕûÀí
+02 ä¾èµ–å…³ç³»æ•´ç†
 	03 
 		
 	02 
@@ -282,11 +282,11 @@
 
 
 
-01 ÏîÄ¿´ÎĞò
+01 é¡¹ç›®æ¬¡åº
 	03 war
 
-	02 jar°ü
+	02 jaråŒ…
 
-	01 »ù´¡°ü
+	01 åŸºç¡€åŒ…
 		
 	
