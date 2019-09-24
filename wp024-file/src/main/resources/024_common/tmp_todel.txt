@@ -1,3 +1,59 @@
+063	
+	
+
+062
+	SELECT DISTINCT info.S_ID AS 'id', info.S_COVER_PIC AS 'coverPic', info.S_NAME AS 'name', info.S_SHORT_NAME AS 'shortName', info.S_EN_NAME AS 'enName', info.S_PROVINCE_NAME AS 'provinceName', info.S_CITY_NAME AS 'cityName', info.S_REGION_NAME AS 'regionName', info.S_ADDRESS AS 'address', info.D_VALIDITY_PERIOD AS 'validaityPeriod', info.I_IS_PARTNERS AS 'isPartners', 
+	round(6378.138 * 2 * asin(sqrt(pow(sin((12 * pi() / 180 - info.I_LATITUDE * pi() / 180) / 2), 2) + cos(12 * pi() / 180) * cos(info.I_LATITUDE * pi() / 180) * pow(sin((13 * pi() / 180 - info.I_LONGITUDE * pi() / 180) / 2), 2))) * 1000) AS 'dis', info.I_LONGITUDE AS 'longitude', info.I_LONGITUDE AS 'lng', info.I_LATITUDE AS 'latitude', info.I_LATITUDE AS 'lat', info.S_TEL AS 'tel', info.S_DESC AS 'desc' FROM t_oilstation_info AS info WHERE 1=1
+	AND info.I_DEL_FLAG = 2 AND info.I_IS_DISPLAY = 1 AND info.S_ID IN (select DISTINCT STATION_ID from t_lock_oilstation t,t_lock_price tlp where t.LOCK_PRICE_ID = tlp.S_ID and tlp.product_kind = '2' )
+	ORDER BY dis ASC
+
+061
+	5bc6318535fd45e5a1adf4d18ec34663
+
+060
+	868738202045775872
+	
+	select * from  t_cus_lock_trans_record tr,t_cus_lock_order tco
+	where 1=1 and tr.cus_lock_id = tco.s_id and tco.cus_id = '858514856423194624' 
+	order by tr.D_CREATE_DATE desc
+	
+	
+	DROP TABLE IF EXISTS `t_cus_lock_trans_record`;
+	CREATE TABLE `t_cus_lock_trans_record`  (
+	  `S_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+
+	  `CUS_LOCK_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '车主锁价表ID',
+	  `TRANS_TO_CUS_PHONE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '转让目标车主手机号',
+	  `TRANS_TO_CUS_ID` bigint(20) NOT NULL COMMENT '转让目标车主ID',
+	  `TRANS_AMOUNT` decimal(10, 2) NOT NULL COMMENT '转让金额',
+	  `D_CREATE_DATE` datetime(0) NOT NULL COMMENT '转让时间',
+		
+	  `D_MODIFY_DATE` datetime(0) NOT NULL,
+	  PRIMARY KEY (`S_ID`) USING BTREE,
+	  INDEX `FK_TCA_CUSID`(`CUS_LOCK_ID`) USING BTREE,
+	  CONSTRAINT `FK_TCLTR_CUSLOCKID` FOREIGN KEY (`CUS_LOCK_ID`) REFERENCES `t_cus_lock_order` (`S_ID`) ON DELETE CASCADE ON UPDATE RESTRICT
+	) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '车主锁价订单使用记录表' ROW_FORMAT = Dynamic;
+
+
+059 
+	<!-- 锁价订单转让记录service -->
+    <bean id="cusLockTransRecordServiceImpl" name="cusLockTransRecordServiceImpl"
+          class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="lookupStubOnStartup" value="false"/>
+        <property name="refreshStubOnConnectFailure" value="true"/>
+        <property name="serviceUrl" value="${service.rmi.url}/cusLockTransRecordServiceImpl"/>
+        <property name="serviceInterface" value="com.catt.oil.service.base.lockPrice.CusLockTransRecordService"/>
+    </bean>
+    
+    <!--锁价订单使用记录service-->
+    <bean id="cusLockUseRecordServiceImpl" name="cusLockUseRecordServiceImpl"
+          class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="lookupStubOnStartup" value="false"/>
+        <property name="refreshStubOnConnectFailure" value="true"/>
+        <property name="serviceUrl" value="${service.rmi.url}/cusLockUseRecordServiceImpl"/>
+        <property name="serviceInterface" value="com.catt.oil.service.base.lockPrice.CusLockUseRecordService"/>
+    </bean>
+	
 058
 	{
     "content": [

@@ -1,5 +1,18 @@
 2019年8月26日
+<div id="097" class="">
+	097 分离单元测试之法 代码自闭环 
+		
+</div>
 
+<div id="096" class="">
+	096 匹配算法设计
+		
+</div>
+
+<div id="095" class="">
+	095 高并发	高可用	高性能	各项数据上限	
+		
+</div>
 
 <div id="094" class="">
 	094 积分规则代码阅读与迁移
@@ -714,6 +727,7 @@
 006 mybatis批量操作(比如批量添加关注人) A o
 
 005 idea快键键 C	continued
+	13 前进				crtl+shift+z
 	12 切换大小写		crtl+shift+u
 	11 快捷添加依赖		alt+insert	
 

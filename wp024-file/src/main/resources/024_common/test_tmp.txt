@@ -1,5 +1,18 @@
 0999 current
+106 
+	java.io.InvalidClassException: com.catt.oil.repository.form.lockPrice.CusLockOrderForm;
+	local class incompatible: stream classdesc serialVersionUID = 524395741056887964,
+	local class serialVersionUID = -6334210157408512936
 
+105 
+	/**
+     * 油站售价
+     */
+    private Double retailPrice;
+
+104 查询当前油品实时价格
+	查询参与锁价的油品
+	
 103 转让测试
 	 id 1
 	 15073018427

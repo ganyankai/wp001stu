@@ -1,4 +1,59 @@
 ﻿2019年9月16日
+
+
+110 总开关与一般开关设计
+
+109 虚拟机的快照应该如何移植
+	技术茫茫多,你应该维护怎样的体系,如何用这这些来创造价值,
+	你自己需要的功能是哪些,数据又能有怎样的价值,这一切的一切都是问题,
+	社会的各种问题对你而言将是个无底洞,你该如何自处
+	
+108 现在的定时任务为什么都是每个一段时间跑一次
+	可以根据某一个订单创建一个任务吗,定时任务的问题为什么还是模糊,
+	是因为了解不够深刻吗?
+	为什么不能增加单个任务开关,总任务开关,
+	
+107 mapper中的方法名竟不能与service中的方法名相同,为什么我以前写的时候方法名都是一致的呢?
+	这个问题有点诡
+	
+106 相同类名的不同对象竟然共享static修饰的成员变量
+	package com.mytest;
+	
+	class A {
+		 static  int num = 1;
+		private String name;
+	 
+		public String getName(String name) {
+			return name;
+		}
+	 
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public void show() {
+			System.out.println("name:" + name + " num:" + num);
+		}
+	}
+	 
+	public class TestStatic {
+		public static void main(String[] args) {
+			A a = new A();
+			a.setName("classA");
+			a.num++;
+	 
+			A b = new A();
+			b.setName("classB");
+	 
+			a.show();
+			b.show();
+		}
+	}
+
+
+
+105 不同类型的数据添加接口做成两个最好?
+	
 104 这个框架果然只检测加了@JsonProperty	注解的属性
 	用这个检测全部 
 	@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)

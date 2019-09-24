@@ -1,5 +1,141 @@
+56 question
+	03 
+
+	02 
+
+	01 优惠券 
+			
+55	加油站普通输入框搜索样式
+	<div class="searchBar">
+		<form id="form_searchField">
+			<div class="options">
+				<div class="searchWrapper" style="margin-right: 30px">
+					<span class="searchName">订单号：</span>
+					<input class="searchInputText" value="" name="orderNo" id="orderNo" type="text" style="border: 1px solid #cae5bc;vertical-align: middle;height: 28px;line-height: 28px;margin-bottom: 6px;"/>
+				</div>
+				<div class="searchWrapper" style="margin-right: 30px">
+					<span class="searchName">车主姓名：</span>
+					<input class="searchInputText" placeholder=""
+						   type="text" id="name" name="name"/>
+				</div>
+				<div class="searchWrapper" style="margin-right: 30px">
+					<span class="searchName">车主手机号：</span>
+					<input class="searchInputText" placeholder=""
+						   type="text" id="tel" name="tel"/>
+				</div>
+				<span class="btnOrange" id="search">搜索</span>
+			</div>
+		</form>
+	</div>
+	
+
+54  修改时不选集团
+	油品样式不对
+	
+53 查询
+	
+
+	 public Page<CusLockOrder> cusLockOrderList(CusLockOrderForm cusLockOrderForm, Pageable pageable) {
+        List<Filter> filters = new ArrayList<>();
+        filters.add(Filter.eq("cusId", cusLockOrderForm.getCusId()));
+        List<Order> orders = new ArrayList<>();
+        orders.add(Order.desc("createDate"));
+        pageable.setFilters(filters);
+        pageable.setOrders(orders);
+		
+        Page<CusLockOrder> page = this.findPage(pageable);
+		
+        enumMgrService.transformEnum(page,
+                new ArrayList<EnumTransformData>() {
+                    {
+                        add(new EnumTransformData("T_OILSTATION_PRODUCT",
+                                "I_KIND", "productKind",
+                                "productKindName"));
+                    }
+                });
+        return page;
+    }
+	
+52	做事步骤模板
+	以一个简单查询为例
+		08 参考资料
+				SELECT tco.*,tci.S_ACCOUNT as tel,tci.S_NAME as name from t_cus_lock_order tco,t_cus_info tci
+				where tco.CUS_ID = tci.I_ID and tci.I_DEL_FLAG=2 
+				and tco.ORDER_NO like '%SJDD%'
+				and tci.S_ACCOUNT like '%152%' 
+				and tci.S_NAME like '%NC%' 	
+
+				ORDER BY tco.D_CREATE_DATE desc
+
+			//        if (StringUtil.isNotBlank(oilstationInfoForm.getSearchField())) {// 加油站名称、加油站编码、加油站简称、加油站英文名、所属省份名称、所属城市名称、所属区/县名称、油站详细地址
+			//            sql.append("AND (info.S_NAME LIKE :searchField OR info.S_CODE LIKE :searchField  OR info.S_SHORT_NAME LIKE :searchField  OR info.S_EN_NAME LIKE :searchField  OR info.S_PROVINCE_NAME LIKE :searchField  OR info.S_CITY_NAME LIKE :searchField  OR info.S_REGION_NAME LIKE :searchField OR info.S_ADDRESS LIKE:searchField )");
+			//            map.put("searchField", "%" + oilstationInfoForm.getSearchField() + "%");
+			//        }
+
+		07 测试及代码可维护性改造
+			
+		06 后台代码
+
+		05 页面模板(尽可能多内容,然后删除)
+			01 字段
+			   `S_ID` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+
+			   name
+			   tel
+			  `ORDER_NO` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+			  `PRODUCT_KIND` int(11) NOT NULL COMMENT '油品类型（字典表）',
+			  `LOCK_TYPE` int(2) NOT NULL COMMENT '锁价方式：锁死/跟跌不跟涨（字典表）',
+				
+			  `LAST_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价时价格',
+			  `DEATH_PRICE` decimal(10, 2) NULL DEFAULT NULL COMMENT '锁死价格（锁价方式为锁死时必填）',
+			  `FLOAT_RANGE` decimal(10, 2) NULL DEFAULT NULL COMMENT '跟跌不跟涨浮动价格（锁价方式为跟跌不跟涨时必填）',
+			  `LOCK_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单金额',
+			  `REMAIN_PRICE` decimal(10, 2) NOT NULL COMMENT '锁价订单剩余金额',
+ 			
+			  `D_CREATE_DATE` datetime(0) NOT NULL,
+   			  
+			 
+
+
+		04 设置菜单跳转路径
+			01	/admin/lockPriceOrder/lockPriceOrderIndex
+			
+		03 配置菜单	o
+			
+			02 t_hr_role_rel_right
+			
+			01 t_hr_right
+			
+		02 数据库表设计
+				
+		01 确定需求及目标	
+			根据 订单号,车主姓名,手机号查询所有锁价订单列表
+			展示锁价订单表所有字段和车主姓名,手机号
+			
+51 锁价后台业务
+	根据 订单号,车主姓名,手机号查询所有锁价订单列表
+		展示锁价订单表所有字段和车主姓名,手机号
+		
+	
+50 查询转让记录的sql
+	select * from  t_cus_lock_trans_record tr,t_cus_lock_order tco where tr.cus_lock_id = tco.s_id and tco.cus_id = '858514856423194624'
+	
+		
+49 
+	 //先查询车主的所有锁价订单
+        List<Filter> filters = new ArrayList<>();
+        filters.add(Filter.eq("cusId", userId));
+		List<Order> orders = new ArrayList<>();
+        orders.add(Order.asc("createDate"));
+        List<CusLockOrder> cusLockOrderList = cusLockOrderService.findList(null, filters, null);
+       
+
+48 project-oil-service-impl-consumer - server1
+		
+	
 47 锁价订单转让
 	
+
 	05 流程
 		03 插入转账记录表
 			cusLockId	transToCusPhone	 transToCusId
@@ -285,7 +421,7 @@
 	from t_oilstation_info t,t_oilstation_rel_group torg
 	where t.s_id = torg.S_OILSTATION_ID and torg.S_GROUP_ID = '1'
 	
-
+	
 26 字符串取代list法
 	
 	
