@@ -1,12 +1,58 @@
-﻿2019年9月16日
+﻿2019年9月26日
+118 人生最好的状态一定是自信的积累,当你感觉无所适从,茫然,彷徨额时候,
+	你的静下心来看书或者学习点新知识了
+	
+117 searchAndReplace搜索时最好是勾选subdirectory
+	
+116 上次部署因为数据配置的问题导致数据库锁死,
+	杰豪直接重启了项目,一点微小的事务可能会造成相当严重的影响,
+	就像波音公司一点软件的小bug可能会造成不可逆转的灾祸
 
+115 删除玩法不如填坑玩法?
 
+114 分离与组合的关系需要好好理解
+	
+113 分类方法(三级分类较为合适)
+	15 结构分类
+	14 地点分类	B 
+	13 项目网 B
+	12 语言网 B
+	11 英文网 B 
+		
+	10 步骤网 B
+	09 测试网 B
+	08 报错网 B
+	07 数据结构网 B
+	06 配置网 B
+		02 架构
+		01 技术
+		
+	05 文件类型 C
+	04 文件大小	B
+	03 代码 B
+		01 代码自闭环 
+	02 技术 B
+	01 业务 A
+	
+
+112 上次那个打的jar包没有依赖包的问题,多亏杰豪帮助,不然自己摸索可能会花更多的时间,
+	可见技术体系的全面性多么重要,很多的细节问题你可能都来不及测试,你最好是借助于专业权威的文档,
+	最好的工作状态一定不是忙成狗的状态,而是有足够的时间去应对可能发生的问题
+	
+2019年9月24日
+111 maven打包时
+		Profiles
+			可以配置releasePackage
+
+2019年9月16日
 110 总开关与一般开关设计
 
 109 虚拟机的快照应该如何移植
 	技术茫茫多,你应该维护怎样的体系,如何用这这些来创造价值,
 	你自己需要的功能是哪些,数据又能有怎样的价值,这一切的一切都是问题,
-	社会的各种问题对你而言将是个无底洞,你该如何自处
+	社会的各种问题对你而言将是个无底洞,你该如何自处?
+	也许你最需要的是像大海一样平静的内心,应对社会一切可能的波澜
+	尽可能的去发挥自己的长处 
 	
 108 现在的定时任务为什么都是每个一段时间跑一次
 	可以根据某一个订单创建一个任务吗,定时任务的问题为什么还是模糊,
@@ -15,7 +61,26 @@
 	
 107 mapper中的方法名竟不能与service中的方法名相同,为什么我以前写的时候方法名都是一致的呢?
 	这个问题有点诡
-	
+	  /**
+     * 车辆位置分页
+     */
+    @Override
+    public ServerResponse carLocationPage(CarLocationPageDto dto, Integer pageNum, Integer pageSize) {
+        CarLocation carLocation = new CarLocation();
+        BeanUtils.copyProperties(dto, carLocation);
+
+        com.github.pagehelper.Page<Object> page = PageHelper.startPage(pageNum, pageSize);
+		
+		//如果用这行代码会报错
+//        List<CarLocation> list = carLocationMapper.carLocationPage(carLocation);
+        List<CarLocation> list = carLocationMapper.page(carLocation);
+//        List<CarLocation> list = carLocationMapper.carLocationPageAll();
+
+        PageData<CarLocation> pageData = new PageData<>(page.getPageSize(), page.getPageNum(), page.getTotal(), list);
+        return ServerResponse.successWithData(pageData);
+    }
+
+
 106 相同类名的不同对象竟然共享static修饰的成员变量
 	package com.mytest;
 	
@@ -491,6 +556,9 @@
 038 实用注解
 	@Value("${cargo.bidWaitTime : 24}")
 	private String bidWaitTime;
+	
+	@Value("${ftp.video-file-path :/root}")
+    private String  videoFilePath;
 	
 	@Autowired<span class=""></span>
 //	@Qualifier("carCargoExtImpl")

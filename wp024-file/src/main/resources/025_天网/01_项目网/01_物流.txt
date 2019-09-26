@@ -4,7 +4,125 @@
 	04 推送 o 
 		
 	03 平台计价
-		
+		03 比价网
+			03 
+			   						
+			02 比价网代码git获取
+				http://ganyankai@120.25.212.63:10101/r/priceCompare.git 
+
+			01 参考
+				http://192.168.0.107:8080/back/
+				admin 123456
+			
+		02 数据模型
+			02 结论
+				公里计价法竟然也是个列表展示
+
+			01 公里计价法
+				{
+					"token": "token_adabbca8-1a7d-414f-9eba-1fc5d549f52c",
+					"device": "device_cp",
+					"params": {
+								"carType": 4,
+								"categoryId": 12,
+								"params": [
+									{
+										"id": 269,
+										"categoryId": 12,
+										"carType": "4",
+										"nuclearLoad": 15,
+										"distMin": 0,
+										"distMax": 20,
+										"price": 700,
+										"priceUnit": null,
+										"createBy": 1,
+										"createDate": null,
+										"updateBy": 1,
+										"updateDate": "2019-08-31 14:32:23"
+									},
+									{
+										"id": 270,
+										"categoryId": 12,
+										"carType": "4",
+										"nuclearLoad": 15,
+										"distMin": 21,
+										"distMax": 60,
+										"price": 4,
+										"priceUnit": null,
+										"createBy": 1,
+										"createDate": null,
+										"updateBy": 1,
+										"updateDate": "2019-08-31 14:32:23"
+									},
+									{
+										"id": 271,
+										"categoryId": 12,
+										"carType": "4",
+										"nuclearLoad": 15,
+										"distMin": 61,
+										"distMax": 120,
+										"price": 3,
+										"priceUnit": null,
+										"createBy": 1,
+										"createDate": null,
+										"updateBy": 1,
+										"updateDate": "2019-08-31 14:32:23"
+									},
+									{
+										"id": 272,
+										"categoryId": 12,
+										"carType": "4",
+										"nuclearLoad": 15,
+										"distMin": 121,
+										"distMax": 200,
+										"price": 2,
+										"priceUnit": null,
+										"createBy": 1,
+										"createDate": null,
+										"updateBy": 1,
+										"updateDate": "2019-08-31 14:32:23"
+									},
+									{
+										"id": 273,
+										"categoryId": 12,
+										"carType": "4",
+										"nuclearLoad": 15,
+										"distMin": 201,
+										"distMax": 800,
+										"price": 1,
+										"priceUnit": null,
+										"createBy": 1,
+										"createDate": null,
+										"updateBy": 1,
+										"updateDate": "2019-08-31 14:32:23"
+									},
+									{
+										"carType": 4,
+										"categoryId": 12,
+										"distMax": 899,
+										"distMin": 801,
+										"id": null,
+										"price": 1.24,
+										"nuclearLoad": 15
+									}
+								],
+								"updateBy": "1",
+								"createBy": "1"
+							}
+						}
+
+			
+		01 因素
+			
+			04 价格单位(元/吨/公里)
+
+			03 运距
+
+			02 车型
+				^
+				|
+			01 介质
+
 	02 匹配
 		
 		02 获取车辆所属车主

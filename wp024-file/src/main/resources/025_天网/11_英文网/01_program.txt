@@ -1,0 +1,11 @@
+04	
+	subdirectory	子目录
+	
+03 
+	mask	面具；口罩；掩饰
+	
+02 
+	release	释放,发布
+	
+01 
+	placeholder	占位符

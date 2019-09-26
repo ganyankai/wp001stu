@@ -1,4 +1,57 @@
-﻿2019年9月3日
+﻿2019年9月24日
+24 部署相关
+	08	前台
+		http://47.104.232.195:8088/dmshShop/
+			用户名: dante 密码: 123456
+		后台
+		http://47.104.232.195:8088/dmshMgr/
+			用户名:admin  密码: 123456
+		
+	07 查看tomcat日志
+		tail -f ../logs/catalina.out
+
+	06 启动
+		
+	05 数据库脚本移植
+	   	
+	04 修改相关配置
+		
+	03 再部署war包
+		
+	02 先部署server o
+		
+		server		project-dmsh-service-impl-shop 
+		server1		project-dmsh-service-impl-order
+		server2		project-dmsh-service-impl
+		
+		java -jar project-dmsh-service-impl-shop.jar
+		java -jar project-dmsh-service-impl-order.jar
+		java  -jar project-dmsh-service-impl.jar 
+		
+		com.catt.dmsh.Server
+		
+		java  -cp project-dmsh-service-impl.jar com.catt.dmsh.Server
+
+	01 路径
+		47.104.232.195
+		root  !@#QAZxsw
+
+		/usr/local/service 
+
+		/usr/local/tomcat
+
+
+23 后台admin数据
+	INSERT INTO `dmsh_prod`.`t_hr_staff`(`I_ID`, `D_CREATE_DATE`, `D_MODIFY_DATE`, `S_ACCOUNT`, `S_NAME`, `ATTRIBUTE_VALUE0`, `ATTRIBUTE_VALUE1`, `ATTRIBUTE_VALUE2`, `ATTRIBUTE_VALUE3`, `ATTRIBUTE_VALUE4`, `ATTRIBUTE_VALUE5`, `ATTRIBUTE_VALUE6`, `ATTRIBUTE_VALUE7`, `ATTRIBUTE_VALUE8`, `ATTRIBUTE_VALUE9`, `D_AVAIL_BEGIN_DATE`, `D_AVAIL_END_DATE`, `D_BIRTHDAY`, `S_FAXCODE`, `I_SEX`, `S_IMAGE_PATH`, `S_IN_EMAIL`, `I_DEL_FLAG`, `I_IS_ENABLED`, `I_IS_LOCKED`, `I_IS_SYNCH`, `I_IS_SYSTEM`, `I_KNOWLEDGE`, `D_LOCK_DATE`, `D_LOGIN_DATE`, `I_LOGIN_FAILURE_COUNT`, `S_LOGIN_IP`, `S_MOBILE`, `S_OUT_EMAIL`, `S_PASSWORD`, `S_TELPHONE`, `S_REGISTER_IP`, `S_REMARK`, `D_UPDATE_PASS_TIME`, `S_WORK_ADDRESS`, `I_DEPT_ID`, `I_DOMAIN_ID`) VALUES (1, '2014-10-25 20:52:58', '2019-08-12 02:00:23', 'admin', '老陈', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-09-17 22:30:27', '2099-01-01 08:00:00', NULL, NULL, 1, NULL, NULL, b'0', b'1', b'0', b'0', b'1', NULL, NULL, '2019-08-02 02:41:12', 6, '183.62.48.226', NULL, NULL, 'e10adc3949ba59abbe56e057f20f883e', NULL, '127.0.0.1', NULL, '2014-09-17 22:30:27', NULL, 1, 1);
+
+
+22 后台用户表
+	t_Hr_Staff
+	
+21 后台地址
+	http://localhost:8080/dmshMgr/login
+	
+2019年9月3日
 20 页面跳转时的请求如何捕获
 	捕捉html请求然后刷新 ?
 	
