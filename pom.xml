@@ -13,6 +13,7 @@
         <module>wp010-procedure</module>
         <module>wp011-web-vue</module>
         <module>wp024-file</module>
+        <module>wp012-test-unit</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

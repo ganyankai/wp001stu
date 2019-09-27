@@ -136,7 +136,7 @@ public class Show {
         System.out.println(1/3);
     }
 
-    //计算每一宫的剩余数字 todo
+    //计算每一宫的剩余数字
 //    @Test
     public List<Integer> remainNumPlace(int arr[][],int place){
 //        生成一个list
@@ -207,7 +207,11 @@ public class Show {
 
         List<Integer> remainLineList = remainNumLine(arr, row);
         List<Integer> remainColList = remainNumCol(arr, col);
-        int place = (row+1)/3 * ((col+1)/3);
+        int place = lineColToPlace(row+1,col+1);
+
+        List<Integer> remainNumPlaceList = remainNumPlace(arr,place);
+
+        //todo 求交集
 
         return list;
     }
@@ -227,4 +231,12 @@ public class Show {
     }
 
 
+    public static int lineToOne(int line){
+        return (line-1)/3+1;
+    }
+
+    //根据行和列求出所在的宫
+    public static int lineColToPlace(int line,int col){
+        return (lineToOne(line)-1)*3+lineToOne(col);
+    }
 }

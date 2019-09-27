@@ -727,6 +727,8 @@
 006 mybatis批量操作(比如批量添加关注人) A o
 
 005 idea快键键 C	continued
+	15 打开文件文件		ctrl+alt+f12
+	14 打开设置			ctrl+alt+s		
 	13 前进				crtl+shift+z
 	12 切换大小写		crtl+shift+u
 	11 快捷添加依赖		alt+insert	

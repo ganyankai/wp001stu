@@ -1,4 +1,34 @@
 0999 current
+110	单一数据演变多数据测试法
+	1 2 3 4 5 6 7 0 0
+	4 5 6 0 0 0 0 0 0
+	7 0 0 0 0 0 0 0 0
+	4 0 0 4 5 6 0 0 0
+	5 0 0 0 0 0 0 0 0
+	6 0 0 0 0 0 0 0 0
+	7 0 0 0 0 0 7 8 9
+	0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 7 8 9
+
+109 多劳多得的管理模式
+	
+108 在git中rename file可能会导致版本冲突?
+
+107 plan
+	02 章法
+		04 最好是建立开发项目,备份项目,测试项目方便项目结构紊乱后可以还原
+
+		03 要求更灵活的单元测试可能需要模拟在一定阶段程序需要的假数据,如何模拟假数据将是一个难点
+
+		02 搞明白代码执行的先后顺序和前面代码不执行可能对后面代码的影响是个难点,这对人理解代码逻辑有
+			很高的要求
+		01 比如说学习新技术,最好是能把相关的内容都搞清楚,不建议都记在脑中,记在文档里争取随时都可以查到
+		
+	01 写单元测试代码,争取灵活性,高可用,上次那个文件导出的问题如果不去网上找资料可能很难搞定,
+		在单元时间类人最快想到的一定是借鉴,借鉴遇到的主要问题是我们并不完全理解别人的代码,
+		循环多一点就会把人搞晕,搞了那么长时间只搞出一个单表,灵活性极地,这样的问题最好是提前
+		练习之后才懂
+		
 106 
 	java.io.InvalidClassException: com.catt.oil.repository.form.lockPrice.CusLockOrderForm;
 	local class incompatible: stream classdesc serialVersionUID = 524395741056887964,
@@ -19,8 +49,6 @@
  	 1000
 102 
 	
-	
-
 	代码jks
 	t_cus_lock_trans_record  CusLockTransRecord cusLockTransRecord
 	t_cus_lock_use_record	 CusLockUseRecord	cusLockUseRecord

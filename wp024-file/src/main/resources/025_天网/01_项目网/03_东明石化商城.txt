@@ -1,5 +1,17 @@
 ﻿2019年9月24日
 24 部署相关
+	
+
+	13 脚本启动同步与异步的问题
+
+	12 一起启动jar包的脚本?
+
+	11 netstat -nltp | grep java
+
+	10 58878 58879 58898
+
+	09 这些脚本能不能一步启动
+
 	08	前台
 		http://47.104.232.195:8088/dmshShop/
 			用户名: dante 密码: 123456
@@ -19,6 +31,7 @@
 	03 再部署war包
 		
 	02 先部署server o
+		cd /usr/local/service-dmsh 
 		
 		server		project-dmsh-service-impl-shop 
 		server1		project-dmsh-service-impl-order

@@ -1,5 +1,13 @@
 063	
-	
+	1 2 3 4 5 6 7 0 0
+	4 5 6 0 0 0 0 0 0
+	7 0 0 0 0 0 0 0 0
+	4 0 0 4 5 6 0 0 0
+	5 0 0 0 0 0 0 0 0
+	6 0 0 0 0 0 0 0 0
+	7 0 0 0 0 0 7 8 9
+	0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 7 8 9
 
 062
 	SELECT DISTINCT info.S_ID AS 'id', info.S_COVER_PIC AS 'coverPic', info.S_NAME AS 'name', info.S_SHORT_NAME AS 'shortName', info.S_EN_NAME AS 'enName', info.S_PROVINCE_NAME AS 'provinceName', info.S_CITY_NAME AS 'cityName', info.S_REGION_NAME AS 'regionName', info.S_ADDRESS AS 'address', info.D_VALIDITY_PERIOD AS 'validaityPeriod', info.I_IS_PARTNERS AS 'isPartners', 
