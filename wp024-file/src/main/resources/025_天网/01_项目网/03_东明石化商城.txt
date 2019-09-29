@@ -11,7 +11,7 @@
 	10 58878 58879 58898
 
 	09 这些脚本能不能一步启动
-
+		
 	08	前台
 		http://47.104.232.195:8088/dmshShop/
 			用户名: dante 密码: 123456
@@ -50,7 +50,7 @@
 		root  !@#QAZxsw
 
 		/usr/local/service 
-
+		
 		/usr/local/tomcat
 
 

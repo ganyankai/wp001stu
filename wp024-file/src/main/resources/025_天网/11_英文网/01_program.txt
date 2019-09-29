@@ -1,3 +1,8 @@
+
+
+05 
+	mandatory	强制的；托管的；命令的
+	
 04	
 	subdirectory	子目录
 	

@@ -1,0 +1,15 @@
+02 短信签名报错
+	01 签名异常
+		01 yml配置文件好像不能读取中文
+
+01 发送短信报错
+	02 说明
+		03 总结
+			static修饰的属性应该用set方法注入,set方法不能用static修饰
+				
+		02 去掉static关键字后测试
+			好像解决了问题,static关键字修饰的属性无法被@Value注入
+
+		01 搞清楚类和配置文件的加载顺序很关键,为什么不能读取配置文件,难道不能用static关键字
+			
+	01 com.aliyuncs.exceptions.ClientException: MissingAccessKeyId : AccessKeyId is mandatory for this action.

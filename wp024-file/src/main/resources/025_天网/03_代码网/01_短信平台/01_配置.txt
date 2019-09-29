@@ -1,0 +1,7 @@
+﻿addDriverAl:
+  sms:
+    #程序中不会读取msgSign
+    msgSign: 油司令
+    accessKeyId: LTAIOkjQjrdNbJQl
+    accessKeySecret: PN1YMbmqT4KGBn5jozetqaIXoV9w9b
+    templateId: SMS_174986506
