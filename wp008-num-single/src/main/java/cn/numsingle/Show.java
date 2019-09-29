@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Show {
@@ -28,8 +29,10 @@ public class Show {
         new Show().dataCollect(arr);
 //        new Show().remainNumLine(arr,0);
 //        new Show().remainNumCol(arr,8);
-        new Show().remainNumPlace(arr,9);
+//        new Show().remainNumPlace(arr,9);
 
+        List<Integer> list = new Show().remainNumCell(arr, 8, 0);
+        System.out.println("list:"+list);
     }
 
     public static void print(int arr[][]){
@@ -200,6 +203,12 @@ public class Show {
 
     //计算每一单元格可能的数字
     public List<Integer> remainNumCell(int arr[][],int row,int col) {
+        if(arr[row][col]!=0){
+            List<Integer> listOne = new ArrayList<>();
+            listOne.add(arr[row][col]);
+            return listOne;
+        }
+
 //        生成一个list
         List<Integer> listOri = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         List<Integer> list = new ArrayList<>();
@@ -212,8 +221,10 @@ public class Show {
         List<Integer> remainNumPlaceList = remainNumPlace(arr,place);
 
         //todo 求交集
+        remainLineList.retainAll(remainColList);
+        remainLineList.retainAll(remainNumPlaceList);
 
-        return list;
+        return remainLineList;
     }
 
 
