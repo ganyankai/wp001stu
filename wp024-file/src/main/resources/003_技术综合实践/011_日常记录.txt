@@ -1,3 +1,5 @@
+005 一定要搞明白整体与局部的关系
+	
 004 遇到logstash配置文件出错的做好方法就是以一个新的配置文件代替老的配置文件
 	你能找出 192.168.1.181-mymini1 目录/root/apps/logstash/myconf 的gs-kafka.txt配置文件出了啥问题吗
 
